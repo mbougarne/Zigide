@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "project": "zigide",
+  "entries": [
+    {
+      "id": "434f2be2-a078-44ff-85bf-ac9fdec09c4b",
+      "timestamp": "2026-08-16T15:23:46Z",
+      "kind": "architecture-bootstrap",
+      "summary": "Defined the initial Zig-first IDE architecture, extension boundary, delivery roadmap, agent governance, and public human-AI trace format.",
+      "intentTags": [
+        "architecture",
+        "agent-governance",
+        "extensions",
+        "traceability",
+        "zig"
+      ],
+      "conversation": "conversations/2026-08-16-15-23-46-434f2be2-a078-44ff-85bf-ac9fdec09c4b.md",
+      "research": "researches/2026-08-16-15-23-46-434f2be2-a078-44ff-85bf-ac9fdec09c4b.md",
+      "artifacts": [
+        "AGENTIC_RULES.md",
+        "AGENTS.md",
+        "docs/architecture/",
+        "agents/"
+      ],
+      "decisions": [
+        "ADR-0001",
+        "ADR-0002",
+        "ADR-0003",
+        "ADR-0004-proposed"
+      ],
+      "verification": [
+        "agents/history.json validated against its Draft 2020-12 schema with ajv-cli 5.0.0",
+        "all local Markdown links resolved",
+        "workspace Markdown diagnostics reported no errors",
+        "direct trailing-whitespace and terminal-newline scan passed for all changed files",
+        "merge-marker scan passed",
+        "educational Python attention example executed successfully"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    }
+  ]
+}
