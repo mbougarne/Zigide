@@ -33,7 +33,7 @@ Illustrative manifest:
 }
 ```
 
-This is a design example, not a frozen schema. The implementation ADR must define JSON Schema, path rules, platform executable selection, and validation errors before packages are accepted.
+This is a design example, not a frozen schema. The implementation ADR must define JSON Schema, path rules, platform executable selection, validation errors, and the protocol version representation (the `"1.0"` string above versus explicit major/minor fields) so the manifest and the initialization handshake use one consistent form before packages are accepted.
 
 ## Runtime Boundary
 

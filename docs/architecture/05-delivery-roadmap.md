@@ -7,6 +7,7 @@ The roadmap builds a vertical user journey before broadening features. Dates are
 Deliverables:
 
 * Zig build, module layout, formatter, test command, and CI.
+* A pinned Zig toolchain version recorded in the repository, plus an upgrade policy. Zig changes incompatibly between minor releases, so builds must name the exact version they were verified against, and toolchain upgrades are deliberate reviewed changes rather than silent drift.
 * Headless application composition with logging, commands, and deterministic shutdown.
 * UI toolkit spike using the criteria in ADR-0004.
 * Text-model benchmark and property-test harness.
@@ -14,7 +15,7 @@ Deliverables:
 
 Exit evidence:
 
-* One documented build/test path works on macOS arm64.
+* One documented build/test path works on macOS arm64 with the pinned Zig version.
 * ADR-0004 is accepted or replaced.
 * Protocol decoder handles split, combined, malformed, oversized, and cancelled messages.
 

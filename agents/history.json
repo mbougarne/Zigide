@@ -40,6 +40,97 @@
         "committed": false,
         "pushed": false
       }
+    },
+    {
+      "id": "190aabd3-771f-4abf-be49-c40706d2b86c",
+      "timestamp": "2026-08-22T16:10:22Z",
+      "kind": "repository-review",
+      "summary": "Read-only review of all repository files against the project's own rules: identified strengths, the publication-semantics question on the first history entry, missing LICENSE/README/.gitignore, traceability process-weight risk, and architecture gaps (toolchain pinning, ADR-0004 candidates, protocol version representation, schema rigor). Record created retroactively after a merged record was split; the prompt preceded 2026-08-22T15:45:29Z in the same session.",
+      "intentTags": [
+        "review",
+        "architecture",
+        "governance",
+        "repository-hygiene"
+      ],
+      "conversation": "conversations/2026-08-22-16-10-22-190aabd3-771f-4abf-be49-c40706d2b86c.md",
+      "research": null,
+      "artifacts": [],
+      "decisions": [],
+      "verification": [
+        "git ls-tree and git log grounded the committed-state finding",
+        "read-only interaction; no build, test, or schema validation applicable"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "dcfdafab-b3a3-4732-a457-0d974ff5bbb7",
+      "timestamp": "2026-08-22T16:10:23Z",
+      "kind": "repository-hygiene-and-architecture-fixes",
+      "summary": "Applied maintainer decisions from the review: added LICENSE (ISC), experimental README, and .gitignore; pinned-Zig-toolchain policy in Milestone 0; named UI toolkit candidates in ADR-0004; protocol version representation obligation in the extension model; documented publication as a point-in-time ledger fact; tightened the research filename pattern in the history schema. Record created retroactively after a merged record was split; the work occurred around 2026-08-22T15:45:29Z.",
+      "intentTags": [
+        "architecture",
+        "governance",
+        "repository-hygiene",
+        "traceability"
+      ],
+      "conversation": "conversations/2026-08-22-16-10-23-dcfdafab-b3a3-4732-a457-0d974ff5bbb7.md",
+      "research": null,
+      "artifacts": [
+        "LICENSE",
+        "README.md",
+        ".gitignore",
+        "docs/architecture/05-delivery-roadmap.md",
+        "docs/architecture/decisions/0004-ui-toolkit-selection.md",
+        "docs/architecture/03-extension-model.md",
+        "agents/README.md",
+        "agents/history.schema.json"
+      ],
+      "decisions": [
+        "ADR-0004-candidates-named"
+      ],
+      "verification": [
+        "agents/history.json validated against agents/history.schema.json with ajv-cli 5.0.0 (Draft 2020-12)",
+        "all local Markdown links in changed files resolved",
+        "trailing-whitespace and terminal-newline scan passed for all changed files after a failed first scan attempt was detected and re-run",
+        "merge-marker scan passed for all changed files",
+        "git ls-tree confirmed prior records are committed in debc6ff, supporting the ledger-semantics clarification"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "945c7f89-f498-4a44-b087-c49052f17e36",
+      "timestamp": "2026-08-22T16:10:24Z",
+      "kind": "trace-record-split-correction",
+      "summary": "Maintainer found two prompts merged into one record (9fbe3cd2-258b-42b2-aa34-69ad87da8089), violating the one-prompt-one-record rule. The merged record was an uncommitted draft, so it was deleted and replaced with per-prompt records 190aabd3 and dcfdafab plus this correction record; agents/README.md now states the anti-merge rule explicitly.",
+      "intentTags": [
+        "traceability",
+        "governance",
+        "correction"
+      ],
+      "conversation": "conversations/2026-08-22-16-10-24-945c7f89-f498-4a44-b087-c49052f17e36.md",
+      "research": null,
+      "artifacts": [
+        "agents/README.md",
+        "agents/history.json",
+        "agents/conversations/"
+      ],
+      "decisions": [],
+      "verification": [
+        "git status confirmed the merged record was untracked before deletion",
+        "agents/history.json validated against agents/history.schema.json with ajv-cli 5.0.0 (Draft 2020-12)",
+        "trailing-whitespace, terminal-newline, and merge-marker scans passed for all changed files",
+        "all local Markdown links in changed files resolved"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
     }
   ]
 }

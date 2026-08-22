@@ -22,7 +22,13 @@ The spike must implement:
 
 ## Candidates
 
-Evaluate maintained native Zig libraries, direct platform adapters, and a lightweight webview approach. Record exact versions, licenses, maintenance health, binding complexity, and which required behaviors work. A custom GPU widget system is acceptable only if the project explicitly accepts its accessibility and text-input cost.
+Evaluate maintained native Zig libraries, direct platform adapters, and a lightweight webview approach. Concrete candidates to score in the spike, as known at proposal time:
+
+* **Direct AppKit adapter** through Zig's C and Objective-C interop. On macOS this is the path most likely to pass IME input, font fallback, and VoiceOver accessibility, because those behaviors come from the platform. Its costs are Objective-C binding work and a per-platform adapter later.
+* **Native Zig toolkits** such as `dvui`, `capy`, and the `mach` ecosystem. These maximize Zig ownership but are young; the spike must verify IDE-grade text input and accessibility rather than assume them.
+* **A lightweight webview** (system WKWebView, not a bundled browser runtime). Fast UI iteration, but it weakens the Zig learning goal and moves the editor surface into web technology.
+
+The spike should expect the IME, accessibility, and text-rendering criteria to be the discriminating tests: they are where young toolkits most often fall short, and platform adapters most often succeed. Record exact versions, licenses, maintenance health, binding complexity, and which required behaviors work. A custom GPU widget system is acceptable only if the project explicitly accepts its accessibility and text-input cost.
 
 ## Decision Criteria
 

@@ -1,0 +1,10 @@
+# Zig build outputs
+zig-out/
+.zig-cache/
+zig-cache/
+
+# Local agent and editor settings
+.claude/settings.local.json
+
+# macOS
+.DS_Store

@@ -21,6 +21,8 @@ The directory name `researches` is retained as a project convention even though 
 
 ## Conversation Record
 
+One prompt, one record. Every substantive prompt gets its own conversation file, its own optional research file, and its own `history.json` entry, even when several prompts arrive in the same working session. Never merge multiple prompts into one record: merging hides which prompt caused which change and makes a long session unreadable. If a merged record is discovered before it is committed, replace it with per-prompt records; after it is committed, append dated correction records instead.
+
 Each substantive prompt that affects the repository gets one Markdown file with:
 
 1. Metadata and visibility.
@@ -45,6 +47,8 @@ Actual model parameters, attention maps, logits, hidden activations, gradients, 
 `history.json` is an append-only index optimized for agents and automation. It must validate against `history.schema.json`. Summaries should be compact and searchable; full prose belongs in Markdown records.
 
 Corrections after publication append a new record or a clearly dated correction. Do not silently rewrite history.
+
+Entries are a ledger: each one describes the state at the moment it was written and is never mutated afterward. In particular, `publication` records whether the work was committed and pushed **when the entry was created**. A later commit or push does not make an older entry wrong and must not be edited into it; Git history is the authority for what eventually happened.
 
 ## Workflow
 
