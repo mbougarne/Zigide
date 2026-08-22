@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    name: Repository checks (Zig)
+    # macOS arm64 is the first-release target platform (docs/architecture/01-vision-and-scope.md).
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - # Resolves the Zig version from minimum_zig_version in build.zig.zon,
+        # which is the pinned toolchain per the Milestone 0 policy.
+        uses: mlugg/setup-zig@v2
+      - name: Hygiene, links, trace ledger, zig fmt
+        run: zig build check
+
+  schema:
+    name: Trace ledger JSON Schema
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate agents/history.json against its schema
+        run: npx -y ajv-cli@5.0.0 validate --spec=draft2020 -s agents/history.schema.json -d agents/history.json

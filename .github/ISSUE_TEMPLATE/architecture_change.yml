@@ -1,0 +1,32 @@
+name: Architecture change
+description: Propose changing a process boundary, persistence format, protocol, or another decision covered by an ADR.
+labels: [architecture]
+body:
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: What forces or evidence motivate the change?
+    validations:
+      required: true
+  - type: input
+    id: affected-adrs
+    attributes:
+      label: Affected ADRs
+      description: Which accepted records would this supersede or amend (e.g. ADR-0002)?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed decision
+      description: The decision as it would appear in a new ADR, with consequences and alternatives. Accepted ADRs are binding until superseded; intentional reversals require a new ADR first (AGENTIC_RULES.md rule 18).
+    validations:
+      required: true
+  - type: textarea
+    id: validation
+    attributes:
+      label: Validation
+      description: What evidence (spike, benchmark, prototype) would prove or disprove this decision?
+    validations:
+      required: true

@@ -1,0 +1,16 @@
+.{
+    .name = .zigide,
+    .version = "0.0.0",
+    .fingerprint = 0x52e79e598ca139d1, // Changing this has security and trust implications.
+    // Pinned toolchain per the Milestone 0 policy in docs/architecture/05-delivery-roadmap.md.
+    // CI resolves its Zig version from this field; upgrades are deliberate reviewed changes.
+    .minimum_zig_version = "0.16.0",
+    .dependencies = .{},
+    .paths = .{
+        "build.zig",
+        "build.zig.zon",
+        "tools",
+        "LICENSE",
+        "README.md",
+    },
+}

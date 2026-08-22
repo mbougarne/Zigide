@@ -1,0 +1,5 @@
+#!/bin/sh
+# Thin shim: all real checks live in Zig (tools/check.zig) so the same
+# implementation runs locally, in this hook, and in CI.
+# Enable once per clone with: zig build hooks
+exec zig build check

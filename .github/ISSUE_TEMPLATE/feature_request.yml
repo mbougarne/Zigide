@@ -1,0 +1,33 @@
+name: Feature request
+description: Propose a capability or improvement.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: User problem
+      description: What real task is hard or impossible today? Features start from problems, not from parity with other editors — "VS Code has it" is not sufficient justification (docs/architecture/05-delivery-roadmap.md).
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: The smallest form of the feature that solves the problem.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Scope check
+      description: Is this within the first-release scope (docs/architecture/01-vision-and-scope.md)?
+      options:
+        - Within first-release scope
+        - Post-preview / deferred track
+        - Not sure
+    validations:
+      required: true

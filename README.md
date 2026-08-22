@@ -24,7 +24,18 @@ The outcome is genuinely unknown. It may succeed, partially succeed, or fail in 
 
 ## Current Status
 
-Architecture phase. There is no product code yet. The design, boundaries, and delivery plan are documented before implementation begins.
+Architecture phase. There is no product code yet; the design, boundaries, and delivery plan are documented before implementation begins. Development tooling exists: a Zig-based repository checker (`tools/check.zig`), a pinned toolchain, git hooks, and CI.
+
+## Working with the Repository
+
+Requires the Zig version pinned in `build.zig.zon` (`minimum_zig_version`).
+
+```sh
+zig build check   # hygiene, Markdown links, trace-ledger consistency, zig fmt
+zig build hooks   # once per clone: points git at .githooks so pre-commit runs the checks
+```
+
+CI runs the same `zig build check` on macOS arm64 plus a JSON Schema validation of the trace ledger. The checks are implemented in Zig so one implementation runs identically in your terminal, the pre-commit hook, and CI.
 
 ## Where to Look
 

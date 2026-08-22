@@ -131,6 +131,43 @@
         "committed": false,
         "pushed": false
       }
+    },
+    {
+      "id": "ed834826-aab2-414a-b06b-e26301cb9aa0",
+      "timestamp": "2026-08-22T19:35:27Z",
+      "kind": "project-tooling-setup",
+      "summary": "Set up the project to work with git and CI: minimal build.zig/build.zig.zon with the pinned 0.16.0 toolchain, a Zig repository checker (tools/check.zig) enforcing hygiene, Markdown links, and trace-ledger consistency via zig build check, a pre-commit hook shim enabled by zig build hooks, a GitHub Actions workflow running the same checks on macOS arm64 plus ajv schema validation, PR and issue templates, and a README workflow section. Custom scripts implemented in Zig per the maintainer's clarification.",
+      "intentTags": [
+        "tooling",
+        "ci",
+        "governance",
+        "zig",
+        "traceability"
+      ],
+      "conversation": "conversations/2026-08-22-19-35-27-ed834826-aab2-414a-b06b-e26301cb9aa0.md",
+      "research": null,
+      "artifacts": [
+        "build.zig",
+        "build.zig.zon",
+        "tools/check.zig",
+        ".githooks/pre-commit",
+        ".github/workflows/ci.yml",
+        ".github/PULL_REQUEST_TEMPLATE.md",
+        ".github/ISSUE_TEMPLATE/",
+        "README.md"
+      ],
+      "decisions": [],
+      "verification": [
+        "zig build check passed on the full repository with Zig 0.16.0 on macOS arm64 (hygiene, links, trace ledger, zig fmt --check)",
+        "agents/history.json validated against agents/history.schema.json with ajv-cli 5.0.0 (Draft 2020-12) after appending this entry",
+        "mlugg/setup-zig@v2 version resolution from build.zig.zon confirmed from its documentation",
+        "package fingerprint taken from the toolchain's suggestion, not invented",
+        "GitHub Actions workflow not yet executed; it runs on the next push"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
     }
   ]
 }
