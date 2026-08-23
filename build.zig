@@ -22,7 +22,15 @@ pub fn build(b: *std.Build) void {
     // The checker resolves repository paths relative to its working directory.
     run_check.setCwd(b.path("."));
 
-    const check_step = b.step("check", "Run repository checks: hygiene, Markdown links, trace ledger, zig fmt");
+    const check_tests = b.addTest(.{
+        .root_module = check_exe.root_module,
+    });
+    const run_tests = b.addRunArtifact(check_tests);
+    const test_step = b.step("test", "Run unit tests");
+    test_step.dependOn(&run_tests.step);
+
+    const check_step = b.step("check", "Run repository checks: unit tests, hygiene, Markdown links, trace ledger, zig fmt");
+    check_step.dependOn(&run_tests.step);
     check_step.dependOn(&fmt_check.step);
     check_step.dependOn(&run_check.step);
 

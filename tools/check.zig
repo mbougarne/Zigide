@@ -358,3 +358,13 @@ fn isUtcTimestamp(value: []const u8) bool {
     }
     return true;
 }
+
+test "isUuidV4 accespt valid values and rejects invalid ones" {
+    // Valid 36
+    try std.testing.expect(isUuidV4("ed834826-aab2-414a-b06b-e26301cb9aa0"));
+    // Invalid 35 and 37
+    try std.testing.expect(!isUuidV4("ed834826-aab2-414a-b06b-e26301cb9aa"));
+    try std.testing.expect(!isUuidV4("ed834826-aab2-414a-b06b-e26301cb9aa01"));
+    // Uppercase not allowed
+    try std.testing.expect(!isUuidV4("ED834826-AAB2-414A-B06B-E26301CB9AA0"));
+}
