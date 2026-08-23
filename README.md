@@ -44,6 +44,7 @@ CI runs the same `zig build check` on macOS arm64 plus a JSON Schema validation 
 | The vision and first-release scope | [docs/architecture/01-vision-and-scope.md](docs/architecture/01-vision-and-scope.md) |
 | The system design | [docs/architecture/](docs/architecture/README.md) |
 | Accepted and proposed decisions | [docs/architecture/decisions/](docs/architecture/decisions/README.md) |
+| The implementation backlog | [tickets/backlog.md](tickets/backlog.md) |
 | The rules every contributor (human or AI) follows | [AGENTIC_RULES.md](AGENTIC_RULES.md) |
 | The public human-AI interaction ledger | [agents/](agents/README.md) |
 

@@ -36,6 +36,7 @@ pub fn main() !void {
     try checkTraceLedger(io, arena, &referenced_records);
     try checkOrphanRecords(io, arena, "agents/conversations", referenced_records.items);
     try checkOrphanRecords(io, arena, "agents/researches", referenced_records.items);
+    try checkOrphanRecords(io, arena, "agents/commands", referenced_records.items);
 
     if (failures != 0) {
         std.debug.print("{d} check failure(s)\n", .{failures});
@@ -234,6 +235,15 @@ fn checkEntry(
             else => fail("{s}: entry {s}: research must be a string or null", .{ ledger_path, id }),
         }
     } else fail("{s}: entry {s}: missing research", .{ ledger_path, id });
+
+    // Optional: present only for interactions that ran shell commands.
+    if (entry.get("commands")) |commands| {
+        switch (commands) {
+            .null => {},
+            .string => |value| try checkRecordPath(io, arena, ledger_path, id, value, "commands/", referenced),
+            else => fail("{s}: entry {s}: commands must be a string or null", .{ ledger_path, id }),
+        }
+    }
 }
 
 fn checkRecordPath(

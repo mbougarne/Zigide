@@ -302,11 +302,13 @@ Human maintainers retain final authority over product direction. That authority 
 
 ### 19. Maintain Public Traceability
 
-For each substantive human-agent interaction that changes the repository:
+For every human-agent interaction, regardless of whether it changes the repository:
 
 * Create one human-readable record in `agents/conversations/`.
-* Create one educational technical record in `agents/researches/` when the interaction includes AI-process research.
+* Create one educational technical record in `agents/researches/`.
+* Create one deduplicated command inventory in `agents/commands/` when the interaction ran shell commands.
 * Add one machine-readable entry to `agents/history.json`.
+* Never edit an existing record file; document mistakes and their fixes in the records of a later interaction.
 * Use the same record ID and filename stem across related records.
 * Summarize changed files and verification honestly.
 * Never claim that a record was committed or published unless that operation was verified.

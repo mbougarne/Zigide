@@ -221,6 +221,197 @@
         "committed": false,
         "pushed": false
       }
+    },
+    {
+      "id": "3743d719-cade-41a5-9394-97bbae5aa30c",
+      "timestamp": "2026-08-23T17:54:40Z",
+      "kind": "backlog-creation",
+      "summary": "Created the first-release backlog: 5 milestone epics and 30 detailed feature tickets numbered ZIT-001 through ZIT-035, with concise indexing, estimates, dependencies, acceptance criteria, validation evidence, risks, and architecture references.",
+      "intentTags": [
+        "backlog",
+        "planning",
+        "architecture",
+        "tickets"
+      ],
+      "conversation": "conversations/2026-08-23-17-54-40-3743d719-cade-41a5-9394-97bbae5aa30c.md",
+      "research": "researches/2026-08-23-17-54-40-3743d719-cade-41a5-9394-97bbae5aa30c.md",
+      "artifacts": [
+        "tickets/",
+        "README.md"
+      ],
+      "decisions": [],
+      "verification": [
+        "custom backlog audit validated 35 unique sequential IDs, one-to-one index/file mapping, required fields, valid dependencies, an acyclic dependency graph, and roadmap coverage",
+        "zig build check passed after newline normalization, including unit tests, hygiene, Markdown links, trace-ledger consistency, and Zig formatting",
+        "agents/history.json validated against its Draft 2020-12 schema with ajv-cli 5.0.0",
+        "workspace diagnostics reported no errors"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "4df0f343-09ef-44e2-97f0-b6693d8dc1bd",
+      "timestamp": "2026-08-23T18:20:46Z",
+      "kind": "backlog-structure-correction",
+      "summary": "Corrected the uncommitted backlog after maintainer clarification: retained 35 feature/epic work packages as grouped files, decomposed them into 216 independently verifiable tickets numbered ZIT-001 through ZIT-216, and rebuilt the flat backlog with direct ticket-section links.",
+      "intentTags": [
+        "backlog",
+        "planning",
+        "correction",
+        "tickets"
+      ],
+      "conversation": "conversations/2026-08-23-18-20-46-4df0f343-09ef-44e2-97f0-b6693d8dc1bd.md",
+      "research": "researches/2026-08-23-18-20-46-4df0f343-09ef-44e2-97f0-b6693d8dc1bd.md",
+      "artifacts": [
+        "tickets/",
+        "agents/history.json",
+        "agents/conversations/"
+      ],
+      "decisions": [],
+      "verification": [
+        "batch audits validated required ticket fields, unique identifiers, and architecture links",
+        "global backlog audit validated 35 work-package files, exactly 216 sequential tickets, exact backlog anchors, valid dependency references, and an acyclic dependency graph",
+        "the initial dependency-cycle finding was corrected and the same global audit passed on rerun",
+        "zig build check passed after terminal-newline normalization, including unit tests, hygiene, Markdown links, trace-ledger consistency, and Zig formatting",
+        "agents/history.json validated against its Draft 2020-12 schema with ajv-cli 5.0.0",
+        "git diff --check reported no whitespace errors"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "08442a28-af01-469b-b450-f65a89172816",
+      "timestamp": "2026-08-23T19:07:47Z",
+      "kind": "prospective-mandatory-research-policy",
+      "summary": "Made research records prospectively required for substantive repository-changing prompts, added this prompt's conversation and educational research pair following the established simulation format, and left all earlier trace records unchanged.",
+      "intentTags": [
+        "traceability",
+        "governance",
+        "research",
+        "learning"
+      ],
+      "conversation": "conversations/2026-08-23-19-07-47-08442a28-af01-469b-b450-f65a89172816.md",
+      "research": "researches/2026-08-23-19-07-47-08442a28-af01-469b-b450-f65a89172816.md",
+      "artifacts": [
+        "AGENTIC_RULES.md",
+        "agents/README.md",
+        "agents/conversations/2026-08-23-19-07-47-08442a28-af01-469b-b450-f65a89172816.md",
+        "agents/researches/2026-08-23-19-07-47-08442a28-af01-469b-b450-f65a89172816.md"
+      ],
+      "decisions": [
+        "research-records-required-prospectively"
+      ],
+      "verification": [
+        "pre-record git diff showed only three prospective policy wording changes and no mutation to an earlier trace record",
+        "pre-record zig build check passed, including tests, hygiene, Markdown links, trace-ledger consistency, and Zig formatting",
+        "pre-record agents/history.json validation passed against its unchanged Draft 2020-12 schema with ajv-cli 5.0.0"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "1f339216-c9e9-4e79-8564-3a8025b16ed0",
+      "timestamp": "2026-08-23T19:27:10Z",
+      "kind": "trace-governance-and-coding-start",
+      "summary": "Added the agents/commands/ convention end to end (README rules, rule 19, optional schema field, checker validation and orphan detection, first inventory); backfilled research records for the two staged backlog entries under the mandatory-research policy without touching committed null entries; completed ZIT-001 with the Milestone 0 exit checklist mapping all exit conditions and deliverables to owner tickets and exact verification.",
+      "intentTags": [
+        "traceability",
+        "governance",
+        "research",
+        "tickets",
+        "milestone-0"
+      ],
+      "conversation": "conversations/2026-08-23-19-27-10-1f339216-c9e9-4e79-8564-3a8025b16ed0.md",
+      "research": "researches/2026-08-23-19-27-10-1f339216-c9e9-4e79-8564-3a8025b16ed0.md",
+      "commands": "commands/2026-08-23-19-27-10-1f339216-c9e9-4e79-8564-3a8025b16ed0.md",
+      "artifacts": [
+        "agents/README.md",
+        "AGENTIC_RULES.md",
+        "agents/history.schema.json",
+        "tools/check.zig",
+        "agents/commands/",
+        "agents/researches/2026-08-23-17-54-40-3743d719-cade-41a5-9394-97bbae5aa30c.md",
+        "agents/researches/2026-08-23-18-20-46-4df0f343-09ef-44e2-97f0-b6693d8dc1bd.md",
+        "docs/milestones/milestone-0-exit-checklist.md",
+        "tickets/foundations-and-spikes.md"
+      ],
+      "decisions": [
+        "command-inventories-per-prompt",
+        "ZIT-001-done"
+      ],
+      "verification": [
+        "zig build check passed after all changes, including the new commands-field validation and agents/commands orphan detection",
+        "agents/history.json validated against the extended schema with ajv-cli 5.0.0 (Draft 2020-12)",
+        "git inspection confirmed no committed ledger entry was modified; backfills amended staged entries only"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "9490a5bc-54c4-49fb-a8f3-191854d144ab",
+      "timestamp": "2026-08-23T19:44:03Z",
+      "kind": "ledger-rule-refinement",
+      "summary": "Maintainer extended the write-once ledger discipline from history entries to the record files themselves: conversations, researches, and commands are never edited after creation, staged or committed; mistakes and fixes are documented in later records. Agent acknowledged, saved the rule to persistent memory, and deferred repository codification. Record created retroactively under the records-for-every-prompt rule; no repository files changed in the interaction itself.",
+      "intentTags": [
+        "traceability",
+        "governance",
+        "correction"
+      ],
+      "conversation": "conversations/2026-08-23-19-44-03-9490a5bc-54c4-49fb-a8f3-191854d144ab.md",
+      "research": "researches/2026-08-23-19-44-03-9490a5bc-54c4-49fb-a8f3-191854d144ab.md",
+      "commands": "commands/2026-08-23-19-44-03-9490a5bc-54c4-49fb-a8f3-191854d144ab.md",
+      "artifacts": [],
+      "decisions": [
+        "record-files-are-write-once"
+      ],
+      "verification": [
+        "no repository checks applicable; the interaction changed no repository files"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "ba5c6a91-899b-49a1-bd64-74ad968b97b8",
+      "timestamp": "2026-08-23T19:44:04Z",
+      "kind": "records-for-every-prompt",
+      "summary": "Maintainer clarified that every prompt gets a full record set regardless of whether it changes the repository. Updated agents/README.md and rule 19 to codify both the records-for-every-prompt rule and the write-once-record-files rule, created the retroactive record set for the previous prompt (id 9490a5bc), and added this prompt's records.",
+      "intentTags": [
+        "traceability",
+        "governance",
+        "research"
+      ],
+      "conversation": "conversations/2026-08-23-19-44-04-ba5c6a91-899b-49a1-bd64-74ad968b97b8.md",
+      "research": "researches/2026-08-23-19-44-04-ba5c6a91-899b-49a1-bd64-74ad968b97b8.md",
+      "commands": "commands/2026-08-23-19-44-04-ba5c6a91-899b-49a1-bd64-74ad968b97b8.md",
+      "artifacts": [
+        "agents/README.md",
+        "AGENTIC_RULES.md",
+        "agents/conversations/2026-08-23-19-44-03-9490a5bc-54c4-49fb-a8f3-191854d144ab.md",
+        "agents/researches/2026-08-23-19-44-03-9490a5bc-54c4-49fb-a8f3-191854d144ab.md",
+        "agents/commands/2026-08-23-19-44-03-9490a5bc-54c4-49fb-a8f3-191854d144ab.md"
+      ],
+      "decisions": [
+        "records-for-every-prompt"
+      ],
+      "verification": [
+        "zig build check passed after all changes, including trace-ledger consistency for the six new record files",
+        "agents/history.json validated against its schema with ajv-cli 5.0.0 (Draft 2020-12)",
+        "no existing record file was edited; all record files added this interaction are new"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
     }
   ]
 }

@@ -11,19 +11,23 @@ agents/
 |-- history.schema.json
 |-- conversations/
 |   `-- YYYY-MM-DD-HH-MM-SS-UUID.md
-`-- researches/
+|-- researches/
+|   `-- YYYY-MM-DD-HH-MM-SS-UUID.md
+`-- commands/
     `-- YYYY-MM-DD-HH-MM-SS-UUID.md
 ```
 
-Timestamps are UTC. UUIDs are lowercase version 4 identifiers. A conversation, its research note, and its history entry share one ID and filename stem.
+Timestamps are UTC. UUIDs are lowercase version 4 identifiers. A conversation, its research note, its command inventory, and its history entry share one ID and filename stem.
 
 The directory name `researches` is retained as a project convention even though "research" is normally uncountable in English.
 
 ## Conversation Record
 
-One prompt, one record. Every substantive prompt gets its own conversation file, its own optional research file, and its own `history.json` entry, even when several prompts arrive in the same working session. Never merge multiple prompts into one record: merging hides which prompt caused which change and makes a long session unreadable. If a merged record is discovered before it is committed, replace it with per-prompt records; after it is committed, append dated correction records instead.
+One prompt, one record. Every prompt gets its own conversation file, its own research file, and its own `history.json` entry — regardless of whether it changes the repository. Feedback, corrections, questions, and rule discussions are collaboration evidence and belong in the ledger as much as code changes do; a records-only-when-code-changed policy would bias the public history toward actions and hide the steering. Never merge multiple prompts into one record: merging hides which prompt caused which change and makes a long session unreadable.
 
-Each substantive prompt that affects the repository gets one Markdown file with:
+Record files are write-once from the moment they exist, staged or committed. Never edit a conversation, research, or command file afterward — not to add cross-references, not to fix omissions. A mistake or gap in a record is documented and repaired through the records of a later prompt; the mistakes and their fixes are part of what this ledger exists to show. (A merged record discovered before commit is the one exception, replaced with per-prompt records as established in the ledger's own history.)
+
+Every prompt gets one Markdown file with:
 
 1. Metadata and visibility.
 2. Raw user input, after explicit redaction review.
@@ -38,9 +42,21 @@ Each substantive prompt that affects the repository gets one Markdown file with:
 
 ## Research Record
 
-The matching `researches` file is educational. It can explain tokenization, embeddings, attention, probability, tool orchestration, retrieval, or verification using small reproducible examples. It must label mocked values and distinguish general model concepts from facts observable in the interaction.
+The matching `researches` file is required and educational. It can explain tokenization, embeddings, attention, probability, tool orchestration, retrieval, or verification using small reproducible examples. It must label mocked values and distinguish general model concepts from facts observable in the interaction.
 
 Actual model parameters, attention maps, logits, hidden activations, gradients, and private reasoning are unavailable unless an explicit diagnostic tool supplies them. A plausible simulation must never be labeled as captured data.
+
+## Command Record
+
+When answering a prompt involved running shell commands, the matching `commands` file records **which** commands were used — not what they produced or when they ran. It is a deduplicated inventory for learning which tools the work actually required, not an execution log; Git history and the conversation record carry outcomes.
+
+Rules:
+
+1. List each distinct command once, with a one-line purpose. Repeated invocations of the same command appear one time.
+2. Deduplicate by command and subcommand (for example, three `git show` runs are one line). Keep flags only when they are the point of the command (`git diff --cached` and `git diff` may be separate lines when the distinction matters).
+3. Omit noise: interactive shells, aborted typos, and commands that only re-ran a listed one.
+4. Apply the same redaction review as other records: no secrets, tokens, private URLs, or personal paths in arguments.
+5. A prompt answered without running any command needs no command record; the history entry's `commands` field is then absent or null.
 
 ## Machine History
 
@@ -55,7 +71,7 @@ Entries are a ledger: each one describes the state at the moment it was written 
 1. Generate the UTC timestamp and UUID when beginning substantive work.
 2. Review the raw input for secrets, personal information, private URLs, proprietary prompts, and redistribution restrictions.
 3. Complete and verify the work.
-4. Add the conversation record and, when educational AI analysis is useful, the research record.
+4. Add the conversation and research records, and the command inventory when commands were run.
 5. Append the machine-readable history entry.
 6. Validate JSON, links, Markdown hygiene, and the repository's relevant tests.
 7. Commit the records with the changes they describe.

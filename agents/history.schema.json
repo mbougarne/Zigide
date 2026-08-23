@@ -76,6 +76,17 @@
             }
           ]
         },
+        "commands": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^commands/[0-9]{4}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9a-f-]{36}\\.md$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "artifacts": {
           "type": "array",
           "uniqueItems": true,
