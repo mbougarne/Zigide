@@ -412,6 +412,125 @@
         "committed": false,
         "pushed": false
       }
+    },
+    {
+      "id": "8e9e4703-5d90-4f79-a2f9-e885d7504367",
+      "timestamp": "2026-08-29T10:45:05Z",
+      "kind": "repository-familiarization",
+      "summary": "Read the agent records, root guidance, architecture and milestone documents, and the complete ticket set to establish the workflow and implementation boundaries before product work begins.",
+      "intentTags": [
+        "orientation",
+        "architecture",
+        "tickets",
+        "traceability"
+      ],
+      "conversation": "conversations/2026-08-29-10-45-05-8e9e4703-5d90-4f79-a2f9-e885d7504367.md",
+      "research": "researches/2026-08-29-10-45-05-8e9e4703-5d90-4f79-a2f9-e885d7504367.md",
+      "commands": "commands/2026-08-29-10-45-05-8e9e4703-5d90-4f79-a2f9-e885d7504367.md",
+      "artifacts": [
+        "agents/",
+        "README.md",
+        "docs/",
+        "tickets/"
+      ],
+      "decisions": [],
+      "verification": [
+        "Requested agents, docs, and tickets files were read",
+        "No product checks were run because this interaction made no product changes"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "afb406df-4b81-48de-988a-987bf5b25180",
+      "timestamp": "2026-08-29T11:21:50Z",
+      "kind": "prospective-trace-identity-policy",
+      "summary": "Defined exact future human_actor and agent metadata, tightened timestamped lowercase UUID v4 record paths, and preserved all historical records unchanged.",
+      "intentTags": [
+        "traceability",
+        "governance",
+        "metadata",
+        "research"
+      ],
+      "conversation": "conversations/2026-08-29-11-21-50-afb406df-4b81-48de-988a-987bf5b25180.md",
+      "research": "researches/2026-08-29-11-21-50-afb406df-4b81-48de-988a-987bf5b25180.md",
+      "commands": "commands/2026-08-29-11-21-50-afb406df-4b81-48de-988a-987bf5b25180.md",
+      "artifacts": [
+        "agents/README.md",
+        "AGENTIC_RULES.md",
+        "agents/history.schema.json",
+        "tools/check.zig"
+      ],
+      "decisions": [
+        "future-record-identity-values",
+        "strict-research-filename-pattern"
+      ],
+      "verification": [
+        "Git identity was read from local configuration",
+        "Existing trace files were not edited"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "073fe009-9dad-4d7a-880f-29274aaa56d9",
+      "timestamp": "2026-08-29T11:23:41Z",
+      "kind": "append-only-record-correction",
+      "summary": "Recorded an agent transcription typo in the preceding raw-input quotation without editing the original write-once record.",
+      "intentTags": [
+        "traceability",
+        "correction",
+        "governance"
+      ],
+      "conversation": "conversations/2026-08-29-11-23-41-073fe009-9dad-4d7a-880f-29274aaa56d9.md",
+      "research": "researches/2026-08-29-11-23-41-073fe009-9dad-4d7a-880f-29274aaa56d9.md",
+      "commands": "commands/2026-08-29-11-23-41-073fe009-9dad-4d7a-880f-29274aaa56d9.md",
+      "artifacts": [
+        "agents/conversations/2026-08-29-11-21-50-afb406df-4b81-48de-988a-987bf5b25180.md"
+      ],
+      "decisions": [
+        "record-files-are-write-once"
+      ],
+      "verification": [
+        "Original record was not edited"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "57ba2dfc-eeaa-4684-b6a7-9da2100d8cc2",
+      "timestamp": "2026-08-29T11:32:36Z",
+      "kind": "dynamic-trace-identity-correction",
+      "summary": "Replaced literal participant values with dynamic shape-based identity metadata for future conversation, research, and command records.",
+      "intentTags": [
+        "traceability",
+        "governance",
+        "correction"
+      ],
+      "conversation": "conversations/2026-08-29-11-32-36-57ba2dfc-eeaa-4684-b6a7-9da2100d8cc2.md",
+      "research": "researches/2026-08-29-11-32-36-57ba2dfc-eeaa-4684-b6a7-9da2100d8cc2.md",
+      "commands": "commands/2026-08-29-11-32-36-57ba2dfc-eeaa-4684-b6a7-9da2100d8cc2.md",
+      "artifacts": [
+        "agents/README.md",
+        "AGENTIC_RULES.md",
+        "tools/check.zig"
+      ],
+      "decisions": [
+        "dynamic-record-participant-metadata"
+      ],
+      "verification": [
+        "Existing records were not edited"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
     }
   ]
 }

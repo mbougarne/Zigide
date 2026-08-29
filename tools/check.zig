@@ -9,6 +9,7 @@
 const std = @import("std");
 
 const max_file_bytes = 16 * 1024 * 1024;
+const identity_policy_cutover = "2026-08-29T11:21:50Z";
 
 const skip_dirs = [_][]const u8{ ".git", ".zig-cache", "zig-out", ".claude" };
 const text_extensions = [_][]const u8{ ".md", ".json", ".zig", ".zon", ".yml", ".yaml" };
@@ -270,7 +271,41 @@ fn checkRecordPath(
     std.Io.Dir.cwd().access(io, full, .{}) catch {
         fail("{s}: entry {s}: record file missing: {s}", .{ ledger_path, id, record });
     };
+    try checkGeneratedRecordIdentity(io, arena, full);
     try referenced.append(arena, full);
+}
+
+fn checkGeneratedRecordIdentity(io: std.Io, arena: std.mem.Allocator, path: []const u8) !void {
+    const content = std.Io.Dir.cwd().readFileAlloc(io, path, arena, .limited(max_file_bytes)) catch |err| {
+        fail("{s}: unable to inspect generated-record identity ({s})", .{ path, @errorName(err) });
+        return;
+    };
+    const created_at_marker = "created_at: ";
+    const marker_start = std.mem.indexOf(u8, content, created_at_marker) orelse return;
+    const value_start = marker_start + created_at_marker.len;
+    const value_end = std.mem.indexOfScalarPos(u8, content, value_start, '\n') orelse content.len;
+    const created_at = content[value_start..value_end];
+    if (std.mem.order(u8, created_at, identity_policy_cutover) == .lt) return;
+    var human_actor_found = false;
+    var agent_found = false;
+    var lines = std.mem.splitScalar(u8, content, '\n');
+    while (lines.next()) |line| {
+        if (std.mem.startsWith(u8, line, "human_actor: ")) {
+            human_actor_found = true;
+            if (line["human_actor: ".len..].len == 0) {
+                fail("{s}: generated record has an empty human_actor value", .{path});
+            }
+        }
+        if (std.mem.startsWith(u8, line, "agent: ")) {
+            agent_found = true;
+            const value = line["agent: ".len..];
+            if (value.len == 0 or std.mem.indexOfScalar(u8, value, '(') == null or !std.mem.endsWith(u8, value, ")")) {
+                fail("{s}: generated record agent must have the shape platform/provider (model name)", .{path});
+            }
+        }
+    }
+    if (!human_actor_found) fail("{s}: generated record is missing human_actor", .{path});
+    if (!agent_found) fail("{s}: generated record is missing agent", .{path});
 }
 
 fn checkOrphanRecords(io: std.Io, arena: std.mem.Allocator, dir_path: []const u8, referenced: []const []const u8) !void {

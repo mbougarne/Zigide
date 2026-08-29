@@ -310,6 +310,7 @@ For every human-agent interaction, regardless of whether it changes the reposito
 * Add one machine-readable entry to `agents/history.json`.
 * Never edit an existing record file; document mistakes and their fixes in the records of a later interaction.
 * Use the same record ID and filename stem across related records.
+* From the current trace-policy cutover onward, generated conversation, research, and command files must include the dynamic `human_actor` and `agent` frontmatter fields with the shapes documented in `agents/README.md`; values must identify the actual participants and historical records are not backfilled.
 * Summarize changed files and verification honestly.
 * Never claim that a record was committed or published unless that operation was verified.
 

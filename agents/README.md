@@ -17,11 +17,22 @@ agents/
     `-- YYYY-MM-DD-HH-MM-SS-UUID.md
 ```
 
-Timestamps are UTC. UUIDs are lowercase version 4 identifiers. A conversation, its research note, its command inventory, and its history entry share one ID and filename stem.
+Timestamps are UTC. UUIDs are lowercase version 4 identifiers. A conversation, its research note, its command inventory, and its history entry share one ID and filename stem. Research filenames must use the exact form `YYYY-MM-DD-HH-MM-SS-UUID.md`, where the timestamp is UTC and `UUID` is a lowercase version 4 UUID, for example `2026-08-23-19-07-47-08442a28-af01-469b-b450-f65a89172816.md`.
 
 The directory name `researches` is retained as a project convention even though "research" is normally uncountable in English.
 
 ## Conversation Record
+
+### Required generated-record identity
+
+From the policy cutover recorded in `tools/check.zig`, every newly generated file under `conversations/`, `researches/`, or `commands/` must include these frontmatter fields. The values are dynamic and identify the actual participants in that interaction:
+
+```yaml
+human_actor: <role> (<optional email> <optional display name>)
+agent: <platform/provider> (<model name>)
+```
+
+The human actor may be a role alone or a role with an email and display name. The agent identifies the platform/provider and model used, such as `Codex (GPT-5.6 Luna)`, `Claude (Fable 5)`, or `Gemini (<model>)`. These fields apply prospectively. Existing records are historical, write-once artifacts and are intentionally not backfilled or edited.
 
 One prompt, one record. Every prompt gets its own conversation file, its own research file, and its own `history.json` entry — regardless of whether it changes the repository. Feedback, corrections, questions, and rule discussions are collaboration evidence and belong in the ledger as much as code changes do; a records-only-when-code-changed policy would bias the public history toward actions and hide the steering. Never merge multiple prompts into one record: merging hides which prompt caused which change and makes a long session unreadable.
 
