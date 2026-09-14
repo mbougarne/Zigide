@@ -19,7 +19,7 @@
 
 ## ZIT-002: Publish Milestone 0 Evidence Report
 
-- **Status:** Planned
+- **Status:** In Progress
 - **Priority:** P0
 - **Estimate:** 1-2 days
 - **Dependencies:** ZIT-007, ZIT-013, ZIT-019, ZIT-026, ZIT-033, ZIT-041
@@ -27,3 +27,4 @@
 - **Acceptance criteria:**
   - [ ] The report links all required test, benchmark, protocol, and UI evidence.
   - [ ] Known limitations and unverified assumptions are explicit before Milestone 1 is declared started.
+- **Evidence:** [Milestone 0 evidence report](../docs/milestones/milestone-0-evidence-report.md)
