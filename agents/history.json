@@ -531,6 +531,79 @@
         "committed": false,
         "pushed": false
       }
+    },
+    {
+      "id": "dd8b103b-b9b6-4d28-b2f2-33592be1aad6",
+      "timestamp": "2026-09-14T10:10:20Z",
+      "kind": "milestone-0-exit-checklist",
+      "summary": "Tightened the Milestone 0 exit checklist with explicit owner tickets, exact verification commands, concrete evidence requirements, and traceable baseline toolchain evidence.",
+      "intentTags": [
+        "ZIT-001",
+        "milestone-0",
+        "traceability",
+        "documentation"
+      ],
+      "conversation": "conversations/2026-09-14-10-10-20-dd8b103b-b9b6-4d28-b2f2-33592be1aad6.md",
+      "research": "researches/2026-09-14-10-10-20-dd8b103b-b9b6-4d28-b2f2-33592be1aad6.md",
+      "commands": "commands/2026-09-14-10-10-20-dd8b103b-b9b6-4d28-b2f2-33592be1aad6.md",
+      "artifacts": [
+        "docs/milestones/milestone-0-exit-checklist.md",
+        "tickets/foundations-and-spikes.md",
+        "docs/architecture/05-delivery-roadmap.md",
+        ".github/workflows/ci.yml"
+      ],
+      "decisions": [
+        "use-final-ticket-as-evidence-owner",
+        "record-pre-backlog-tooling-as-baseline-evidence",
+        "keep-checklist-as-a-stable-map"
+      ],
+      "verification": [
+        "zig build passed",
+        "zig build test passed",
+        "zig build check passed",
+        "git diff --check passed"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "e0bbc10c-b24c-46c9-84c7-f0194dc21507",
+      "timestamp": "2026-09-14T10:29:35Z",
+      "kind": "milestone-0-evidence-report",
+      "summary": "Published the Milestone 0 evidence snapshot, separating verified repository health from missing product and spike evidence and keeping ZIT-002 In Progress.",
+      "intentTags": [
+        "ZIT-002",
+        "milestone-0",
+        "evidence",
+        "verification"
+      ],
+      "conversation": "conversations/2026-09-14-10-29-35-e0bbc10c-b24c-46c9-84c7-f0194dc21507.md",
+      "research": "researches/2026-09-14-10-29-35-e0bbc10c-b24c-46c9-84c7-f0194dc21507.md",
+      "commands": "commands/2026-09-14-10-29-35-e0bbc10c-b24c-46c9-84c7-f0194dc21507.md",
+      "artifacts": [
+        "docs/milestones/milestone-0-evidence-report.md",
+        "docs/milestones/milestone-0-exit-checklist.md",
+        "tickets/foundations-and-spikes.md",
+        "build.zig.zon",
+        ".github/workflows/ci.yml"
+      ],
+      "decisions": [
+        "publish-incomplete-evidence-honestly",
+        "keep-zit002-in-progress-until-dependencies-complete",
+        "defer-milestone1-until-milestone0-exit-evidence-exists"
+      ],
+      "verification": [
+        "zig build passed",
+        "zig build test passed",
+        "zig build check passed",
+        "git diff --check passed"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
     }
   ]
 }
