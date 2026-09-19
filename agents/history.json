@@ -604,6 +604,78 @@
         "committed": false,
         "pushed": false
       }
+    },
+    {
+      "id": "eb86af3a-a6ec-47ef-8aaf-9679440a54c4",
+      "timestamp": "2026-09-19T21:06:53Z",
+      "kind": "automatic-pr-review-alignment",
+      "summary": "Added a disabled-by-default, trust-separated automatic PR review configuration using repository-specific rules and HIGH, MEDIUM, and LOW findings.",
+      "intentTags": [
+        "automation",
+        "code-review",
+        "security",
+        "github-actions"
+      ],
+      "conversation": "conversations/2026-09-19-21-06-53-eb86af3a-a6ec-47ef-8aaf-9679440a54c4.md",
+      "research": "researches/2026-09-19-21-06-53-eb86af3a-a6ec-47ef-8aaf-9679440a54c4.md",
+      "commands": "commands/2026-09-19-21-06-53-eb86af3a-a6ec-47ef-8aaf-9679440a54c4.md",
+      "artifacts": [
+        ".github/skills/code-review/SKILL.md",
+        ".github/review/checks.md",
+        ".github/review/prompt.md",
+        ".github/workflows/ai-review.yml"
+      ],
+      "decisions": [
+        "use-high-medium-low-severities",
+        "load-review-policy-from-base-sha",
+        "isolate-head-checkout-as-untrusted-evidence",
+        "separate-model-analysis-from-comment-publication",
+        "defer-credentials-and-activation"
+      ],
+      "verification": [
+        "actionlint 1.7.12 passed for all four workflows",
+        "YAML and skill structural checks passed",
+        "workflow hashes matched across repositories",
+        "git diff --check passed before trace creation",
+        "zig build check pending after trace creation"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "6c99059c-62e3-4751-bdc4-8903fea2bad2",
+      "timestamp": "2026-09-19T21:20:51Z",
+      "kind": "anthropic-only-pr-review",
+      "summary": "Removed the OpenAI hosted-review path and retained Anthropic as the sole GitHub PR reviewer after local maintainer and OpenAI collaboration.",
+      "intentTags": [
+        "automation",
+        "code-review",
+        "anthropic",
+        "workflow-simplification"
+      ],
+      "conversation": "conversations/2026-09-19-21-20-51-6c99059c-62e3-4751-bdc4-8903fea2bad2.md",
+      "research": "researches/2026-09-19-21-20-51-6c99059c-62e3-4751-bdc4-8903fea2bad2.md",
+      "commands": "commands/2026-09-19-21-20-51-6c99059c-62e3-4751-bdc4-8903fea2bad2.md",
+      "artifacts": [
+        ".github/workflows/ai-review.yml"
+      ],
+      "decisions": [
+        "use-anthropic-only-for-hosted-pr-review",
+        "keep-openai-collaboration-local-before-push",
+        "remove-unused-provider-selection",
+        "retain-disabled-by-default-activation"
+      ],
+      "verification": [
+        "actionlint 1.7.12 passed for all four workflows",
+        "OpenAI configuration search passed for requested review files",
+        "zig build check and history schema validation pending after trace creation"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
     }
   ]
 }
