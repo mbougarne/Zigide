@@ -24,16 +24,21 @@ The outcome is genuinely unknown. It may succeed, partially succeed, or fail in 
 
 ## Current Status
 
-Architecture phase. There is no product code yet; the design, boundaries, and delivery plan are documented before implementation begins. Development tooling exists: a Zig-based repository checker (`tools/check.zig`), a pinned toolchain, git hooks, and CI.
+Initial implementation phase. The repository contains the private product module graph, a minimal side-effect-free executable, and separate unit/integration test targets. Product behavior is added by the milestone tickets. Development tooling includes a Zig-based repository checker (`tools/check.zig`), a pinned toolchain, git hooks, and CI.
 
 ## Working with the Repository
 
 Requires the Zig version pinned in `build.zig.zon` (`minimum_zig_version`).
 
 ```sh
-zig build check   # hygiene, Markdown links, trace-ledger consistency, zig fmt
+zig build         # build and install the Zigide executable
+zig build run     # run the minimal executable
+zig build test    # repository, product unit, integration, and module-boundary tests
+zig build check   # all tests plus hygiene, Markdown links, trace ledger, and zig fmt
 zig build hooks   # once per clone: points git at .githooks so pre-commit runs the checks
 ```
+
+Product test targets can also be run separately with `zig build unit-test` and `zig build integration-test`.
 
 CI runs the same `zig build check` on macOS arm64 plus a JSON Schema validation of the trace ledger. The checks are implemented in Zig so one implementation runs identically in your terminal, the pre-commit hook, and CI.
 

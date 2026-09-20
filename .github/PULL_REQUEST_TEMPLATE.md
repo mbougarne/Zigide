@@ -2,13 +2,6 @@
 
 <!-- What changes and why. Keep it focused; unrelated changes belong in another PR. -->
 
-## Related Decisions and Records
-
-<!-- Link relevant ADRs (docs/architecture/decisions/) and trace records (agents/). -->
-
-- ADRs:
-- Trace records:
-
 ## Verification
 
 <!-- Name the exact checks you ran. Per AGENTIC_RULES.md, never claim a check that was not run. -->

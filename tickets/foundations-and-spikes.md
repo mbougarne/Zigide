@@ -27,4 +27,4 @@
 - **Acceptance criteria:**
   - [ ] The report links all required test, benchmark, protocol, and UI evidence.
   - [ ] Known limitations and unverified assumptions are explicit before Milestone 1 is declared started.
-- **Evidence:** [Milestone 0 evidence report](../docs/milestones/milestone-0-evidence-report.md)
+- **Evidence:** [Milestone 0 evidence report](../docs/milestones/milestone-0-evidence-report.md); [ZIT-003–ZIT-007 evidence addendum](../docs/milestones/application-module-layout-evidence.md)
