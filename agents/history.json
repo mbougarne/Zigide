@@ -804,6 +804,80 @@
         "committed": false,
         "pushed": false
       }
+    },
+    {
+      "id": "6322bdb9-cc4d-4383-a286-51da0276dbd7",
+      "timestamp": "2026-09-20T16:02:47Z",
+      "kind": "commit-hook-diagnosis",
+      "summary": "Confirmed the local pre-commit hook was not installed for the ZIT-003–ZIT-007 commit and distinguished it from the failed Claude review action.",
+      "intentTags": [
+        "git-hooks",
+        "zig-build-check",
+        "ci"
+      ],
+      "conversation": "conversations/2026-09-20-16-02-47-6322bdb9-cc4d-4383-a286-51da0276dbd7.md",
+      "research": "researches/2026-09-20-16-02-47-6322bdb9-cc4d-4383-a286-51da0276dbd7.md",
+      "commands": "commands/2026-09-20-16-02-47-6322bdb9-cc4d-4383-a286-51da0276dbd7.md",
+      "artifacts": [
+        ".githooks/pre-commit",
+        "README.md",
+        "build.zig",
+        ".github/workflows/ci.yml",
+        ".github/workflows/ai-review.yml"
+      ],
+      "decisions": [
+        "local-hook-installation-is-per-clone",
+        "feature-branch-pushes-do-not-trigger-main-only-push-ci",
+        "distinguish-ai-review-failure-from-zig-ci"
+      ],
+      "verification": [
+        "core.hooksPath was unset in the current clone",
+        "Git default .git/hooks contained only the sample pre-commit hook",
+        "checked-in .githooks/pre-commit runs zig build check and documents zig build hooks setup",
+        "CI workflow triggers are push to main and pull_request",
+        "provided log reports a not-a-Git-repository failure in the separate Claude review workflow"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "15a59c62-a92d-40f7-9fa8-7b5a1e984485",
+      "timestamp": "2026-09-20T16:12:41Z",
+      "kind": "anthropic-max-turn-false-positive-workaround",
+      "summary": "Kept Zigide's 20-round Claude budget while allowing the strict result extractor to recover successful runs rejected by the pinned action's mismatched turn counter.",
+      "intentTags": [
+        "automation",
+        "code-review",
+        "anthropic",
+        "github-actions",
+        "cost-control"
+      ],
+      "conversation": "conversations/2026-09-20-16-12-41-15a59c62-a92d-40f7-9fa8-7b5a1e984485.md",
+      "research": "researches/2026-09-20-16-12-41-15a59c62-a92d-40f7-9fa8-7b5a1e984485.md",
+      "commands": "commands/2026-09-20-16-12-41-15a59c62-a92d-40f7-9fa8-7b5a1e984485.md",
+      "artifacts": [
+        ".github/workflows/ai-review.yml"
+      ],
+      "decisions": [
+        "preserve-twenty-api-round-budget",
+        "tolerate-only-action-wrapper-failure",
+        "retain-fail-closed-result-extraction",
+        "defer-upstream-action-upgrade-until-fix-is-merged-and-pinned"
+      ],
+      "verification": [
+        "workflow parsed as YAML",
+        "synthetic successful 25-count result was accepted",
+        "synthetic error_max_turns result was rejected",
+        "history JSON and git diff whitespace checks passed",
+        "zig build check passed",
+        "hosted acceptance pending"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
     }
   ]
 }
