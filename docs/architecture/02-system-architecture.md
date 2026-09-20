@@ -6,10 +6,13 @@ Zigide is a modular application with strict dependency direction and process bou
 
 ```mermaid
 flowchart TB
-    UI[UI Adapter] --> APP[Application Services]
-    CLI[Headless CLI and Tests] --> APP
-    APP --> DOMAIN[Editor and Workspace Domain]
-    APP --> PORTS[Ports]
+    COMPOSITION[Executable Composition Root] --> UI[UI Adapter]
+    COMPOSITION --> APPLICATION[Application Services]
+    COMPOSITION --> ADAPTERS[Platform and Protocol Adapters]
+    UI --> APPLICATION
+    CLI[Headless CLI and Tests] --> APPLICATION
+    APPLICATION --> DOMAIN[Editor and Workspace Domain]
+    APPLICATION --> PORTS[Ports]
     PORTS --> FS[File System Adapter]
     PORTS --> PROC[Process and Task Adapter]
     PORTS --> STORE[Settings and State Adapter]
@@ -31,11 +34,39 @@ The implementation should begin with the following conceptual modules. Exact dir
 | `text` | Buffers, positions, ranges, edits, selections, undo/redo, line index | Filesystem or UI |
 | `workspace` | Documents, folders, dirty state, resource identity | Native dialogs or process launch |
 | `commands` | Command registry, arguments, enablement, dispatch | Menu rendering |
-| `application` | Use cases and service orchestration | Toolkit-specific widgets |
+| `application` | Use cases and service orchestration | Toolkit-specific widgets, executable startup |
 | `ports` | Interfaces for files, storage, processes, clipboard, watchers, UI scheduling | Platform implementation |
 | `adapters` | macOS/platform services, JSON storage, LSP, extension RPC | Domain policy |
 | `ui` | Views, input mapping, layout, rendering, accessibility bridge | Text-buffer algorithms |
-| `app` | Composition root, startup, shutdown, dependency wiring | Reusable domain behavior |
+| `composition` | Executable entry point, startup, shutdown, dependency wiring | Reusable workflows and domain behavior |
+
+`application` and `composition` are separate layers, not alternate names for the same module. `application` owns reusable product workflows; `composition` is the executable root that assembles those workflows with concrete adapters and UI. The composition root may depend on these outer modules, but application services must not depend on the composition root. Avoid the ambiguous shorthand `app` for either boundary.
+
+The build graph exposes only these direct module imports. An arrow means the source module on the left may import the module on the right; transitive imports are not implicitly available.
+
+```mermaid
+flowchart LR
+    text --> foundation
+    workspace --> foundation
+    workspace --> text
+    commands --> foundation
+    ports --> foundation
+    ports --> text
+    ports --> workspace
+    application --> foundation
+    application --> workspace
+    application --> commands
+    application --> ports
+    adapters --> foundation
+    adapters --> ports
+    ui --> application
+    ui --> ports
+    composition --> application
+    composition --> adapters
+    composition --> ui
+```
+
+`build.zig` is the enforced source of the named imports. Module roots establish these seams without exporting placeholder APIs; behavior and public declarations arrive with the tickets that implement them. A compile-failure fixture is compiled with the same import set as `foundation` and verifies that it cannot import `ui` unless that domain import set explicitly grants the edge.
 
 ## State and Concurrency
 

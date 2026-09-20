@@ -676,6 +676,134 @@
         "committed": false,
         "pushed": false
       }
+    },
+    {
+      "id": "ceaa06de-3c41-45db-a987-12741a4ff5f7",
+      "timestamp": "2026-09-20T13:43:25Z",
+      "kind": "application-module-layout",
+      "summary": "Implemented ZIT-003 through ZIT-007 with private product modules, a side-effect-free executable, isolated test targets, and a mutation-verified import-boundary guard.",
+      "intentTags": [
+        "ZIT-003",
+        "ZIT-004",
+        "ZIT-005",
+        "ZIT-006",
+        "ZIT-007",
+        "milestone-0",
+        "architecture",
+        "testing"
+      ],
+      "conversation": "conversations/2026-09-20-13-43-25-ceaa06de-3c41-45db-a987-12741a4ff5f7.md",
+      "research": "researches/2026-09-20-13-43-25-ceaa06de-3c41-45db-a987-12741a4ff5f7.md",
+      "commands": "commands/2026-09-20-13-43-25-ceaa06de-3c41-45db-a987-12741a4ff5f7.md",
+      "artifacts": [
+        "build.zig",
+        "build.zig.zon",
+        "src",
+        "tests",
+        "README.md",
+        "docs/architecture/02-system-architecture.md",
+        "docs/milestones/application-module-layout-evidence.md",
+        "tickets/application-module-layout.md",
+        "tickets/foundations-and-spikes.md"
+      ],
+      "decisions": [
+        "keep-product-modules-private-to-the-executable-build",
+        "preserve-module-seams-without-placeholder-public-apis",
+        "isolate-integration-executable-in-temporary-workspace-and-empty-environment",
+        "test-forbidden-import-with-expected-compile-diagnostic"
+      ],
+      "verification": [
+        "zig build passed",
+        "zig build run passed",
+        "zig build unit-test passed",
+        "zig build integration-test passed",
+        "zig build test passed",
+        "zig build check passed",
+        "git diff --check passed",
+        "jq empty agents/history.json passed",
+        "adding the forbidden foundation-to-ui edge caused the controlled test to fail; the edge was reverted"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "26b607fe-a9f3-4958-a1c6-68bc65b20601",
+      "timestamp": "2026-09-20T14:54:43Z",
+      "kind": "application-composition-boundary-clarification",
+      "summary": "Renamed the ambiguous executable app module to composition and clarified its separation from reusable application services.",
+      "intentTags": [
+        "architecture",
+        "module-layout",
+        "naming-clarity"
+      ],
+      "conversation": "conversations/2026-09-20-14-54-43-26b607fe-a9f3-4958-a1c6-68bc65b20601.md",
+      "research": "researches/2026-09-20-14-54-43-26b607fe-a9f3-4958-a1c6-68bc65b20601.md",
+      "commands": "commands/2026-09-20-14-54-43-26b607fe-a9f3-4958-a1c6-68bc65b20601.md",
+      "artifacts": [
+        "build.zig",
+        "src/app/main.zig",
+        "src/composition/main.zig",
+        "tests/unit.zig",
+        "docs/architecture/02-system-architecture.md",
+        "tickets/application-module-layout.md",
+        "docs/milestones/application-module-layout-evidence.md"
+      ],
+      "decisions": [
+        "reserve-application-for-use-cases-and-service-orchestration",
+        "name-executable-wiring-module-composition",
+        "preserve-accepted-modular-architecture"
+      ],
+      "verification": [
+        "zig fmt build.zig src tests passed",
+        "zig build check passed after module rename",
+        "zig build run exited successfully",
+        "git diff --check passed",
+        "final zig build check after trace records passed"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "f9c67d1a-55c7-49f7-8b11-321711a59fb8",
+      "timestamp": "2026-09-20T15:49:39Z",
+      "kind": "anthropic-review-pilot-rollout",
+      "summary": "Propagated the complete Sama-accepted Anthropic review repair to Job Board, BZTAM, and Zigide.",
+      "intentTags": [
+        "automation",
+        "code-review",
+        "anthropic",
+        "github-actions",
+        "rollout"
+      ],
+      "conversation": "conversations/2026-09-20-15-49-39-f9c67d1a-55c7-49f7-8b11-321711a59fb8.md",
+      "research": "researches/2026-09-20-15-49-39-f9c67d1a-55c7-49f7-8b11-321711a59fb8.md",
+      "commands": "commands/2026-09-20-15-49-39-f9c67d1a-55c7-49f7-8b11-321711a59fb8.md",
+      "artifacts": [
+        ".github/workflows/ai-review.yml"
+      ],
+      "decisions": [
+        "propagate-complete-pilot-repair-set",
+        "retain-immutable-action-pins",
+        "remove-bare-mode-for-oauth",
+        "extract-successful-text-result",
+        "preserve-existing-staged-work"
+      ],
+      "verification": [
+        "all three workflows parsed as YAML",
+        "all three workflow hashes matched",
+        "git diff --check passed",
+        "obsolete bare and structured-output wiring was absent",
+        "actionlint unavailable in the current shell",
+        "hosted acceptance pending outside Sama"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
     }
   ]
 }
