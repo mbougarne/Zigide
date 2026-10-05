@@ -82,6 +82,13 @@ pub fn build(b: *std.Build) void {
     const unit_tests = b.addTest(.{ .root_module = unit_module });
     const run_unit_tests = b.addRunArtifact(unit_tests);
 
+    // Imported modules compile lazily; run their test roots explicitly so the
+    // public-module smoke test cannot silently omit behavioral tests.
+    const foundation_tests = b.addTest(.{ .root_module = modules.get("foundation").? });
+    const run_foundation_tests = b.addRunArtifact(foundation_tests);
+    const adapter_tests = b.addTest(.{ .root_module = modules.get("adapters").? });
+    const run_adapter_tests = b.addRunArtifact(adapter_tests);
+
     const integration_options = b.addOptions();
     integration_options.addOptionPath("zigide_executable", zigide.getEmittedBin());
     const integration_module = b.createModule(.{
@@ -112,8 +119,23 @@ pub fn build(b: *std.Build) void {
     });
     forbidden_import.expect_errors = .{ .contains = "error: no module named 'ui' available within module 'root'" };
 
+    const mixed_ids_root = b.createModule(.{
+        .root_source_file = b.path("tests/fixtures/mixed_foundation_ids.zig"),
+        .target = target,
+        .optimize = optimize,
+    });
+    mixed_ids_root.addImport("foundation", modules.get("foundation").?);
+    const mixed_ids = b.addTest(.{
+        .name = "mixed-foundation-ids-fixture",
+        .root_module = mixed_ids_root,
+    });
+    mixed_ids.expect_errors = .{ .contains = "expected type 'ids.CorrelationId', found 'ids.OperationId'" };
+
     const unit_test_step = b.step("unit-test", "Run product unit tests");
     unit_test_step.dependOn(&run_unit_tests.step);
+    unit_test_step.dependOn(&mixed_ids.step);
+    unit_test_step.dependOn(&run_foundation_tests.step);
+    unit_test_step.dependOn(&run_adapter_tests.step);
 
     const integration_test_step = b.step("integration-test", "Run product integration tests");
     integration_test_step.dependOn(&run_integration_tests.step);
@@ -123,6 +145,9 @@ pub fn build(b: *std.Build) void {
     test_step.dependOn(&run_unit_tests.step);
     test_step.dependOn(&run_integration_tests.step);
     test_step.dependOn(&forbidden_import.step);
+    test_step.dependOn(&mixed_ids.step);
+    test_step.dependOn(&run_foundation_tests.step);
+    test_step.dependOn(&run_adapter_tests.step);
 
     const check_step = b.step("check", "Run repository checks: unit tests, hygiene, Markdown links, trace ledger, zig fmt");
     check_step.dependOn(test_step);

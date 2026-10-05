@@ -878,6 +878,51 @@
         "committed": false,
         "pushed": false
       }
+    },
+    {
+      "id": "5bf246d8-2d21-4c51-ac0e-c851cea42f02",
+      "timestamp": "2026-10-05T11:59:44Z",
+      "kind": "foundation-primitives-implementation",
+      "summary": "Implement ZIT-008 through ZIT-013 with typed IDs, injectable clocks, atomic cancellation, scoped events, safe error/logging contracts and allocator-failure tests.",
+      "intentTags": [
+        "foundation",
+        "zig",
+        "ownership",
+        "testing",
+        "privacy"
+      ],
+      "conversation": "conversations/2026-10-05-11-59-44-5bf246d8-2d21-4c51-ac0e-c851cea42f02.md",
+      "research": "researches/2026-10-05-11-59-44-5bf246d8-2d21-4c51-ac0e-c851cea42f02.md",
+      "commands": "commands/2026-10-05-11-59-44-5bf246d8-2d21-4c51-ac0e-c851cea42f02.md",
+      "artifacts": [
+        "src/foundation",
+        "src/adapters/clock.zig",
+        "src/adapters/module.zig",
+        "build.zig",
+        "tests/fixtures/mixed_foundation_ids.zig",
+        "tickets/foundation-primitives.md",
+        "docs/milestones/foundation-primitives-evidence.md"
+      ],
+      "decisions": [
+        "process-local-domain-typed-identifiers",
+        "platform-clock-in-adapters",
+        "borrowed-atomic-cancellation-state",
+        "defer-context-destruction-until-outermost-dispatch",
+        "closed-safe-log-schema",
+        "explicit-module-test-roots"
+      ],
+      "verification": [
+        "Zig 0.16.0 on macOS 27.0.1 arm64",
+        "zig build check: 20 tests and both negative compile fixtures passed",
+        "ReleaseSafe check passed",
+        "standalone build and run passed",
+        "git diff --check passed",
+        "final trace/schema revalidation and hosted exact-head CI pending at record creation"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
     }
   ]
 }
