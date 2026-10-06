@@ -1,8 +1,3 @@
 //! Application use cases and orchestration across domain services and ports.
-
-comptime {
-    _ = @import("foundation");
-    _ = @import("workspace");
-    _ = @import("commands");
-    _ = @import("ports");
-}
+pub const Context = @import("context.zig").Context;
+pub const ExternalPorts = @import("context.zig").ExternalPorts;

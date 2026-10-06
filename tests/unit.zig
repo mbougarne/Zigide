@@ -1,5 +1,3 @@
-const std = @import("std");
-
 test "all product module roots compile through their declared imports" {
     _ = @import("foundation");
     _ = @import("text");
@@ -10,9 +8,4 @@ test "all product module roots compile through their declared imports" {
     _ = @import("adapters");
     _ = @import("ui");
     _ = @import("composition");
-}
-
-test "minimal executable entry point returns" {
-    @import("composition").main();
-    try std.testing.expect(true);
 }

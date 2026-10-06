@@ -1,5 +1,7 @@
-//! UI-independent command registration, validation, enablement, and dispatch.
+//! UI-independent command registration and lookup.
+pub const Registry = @import("registry.zig").Registry;
+pub const Handler = @import("registry.zig").Handler;
 
-comptime {
-    _ = @import("foundation");
+test {
+    _ = @import("registry.zig");
 }
