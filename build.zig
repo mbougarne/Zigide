@@ -89,6 +89,9 @@ pub fn build(b: *std.Build) void {
     const adapter_tests = b.addTest(.{ .root_module = modules.get("adapters").? });
     const run_adapter_tests = b.addRunArtifact(adapter_tests);
 
+    const command_tests = b.addTest(.{ .root_module = modules.get("commands").? });
+    const run_command_tests = b.addRunArtifact(command_tests);
+
     const integration_options = b.addOptions();
     integration_options.addOptionPath("zigide_executable", zigide.getEmittedBin());
     const integration_module = b.createModule(.{
@@ -97,6 +100,8 @@ pub fn build(b: *std.Build) void {
         .optimize = optimize,
     });
     integration_module.addOptions("build_options", integration_options);
+    integration_module.addImport("application", modules.get("application").?);
+    integration_module.addImport("foundation", modules.get("foundation").?);
     const integration_tests = b.addTest(.{ .root_module = integration_module });
     const run_integration_tests = b.addRunArtifact(integration_tests);
     run_integration_tests.setCwd(b.path("."));
@@ -136,6 +141,7 @@ pub fn build(b: *std.Build) void {
     unit_test_step.dependOn(&mixed_ids.step);
     unit_test_step.dependOn(&run_foundation_tests.step);
     unit_test_step.dependOn(&run_adapter_tests.step);
+    unit_test_step.dependOn(&run_command_tests.step);
 
     const integration_test_step = b.step("integration-test", "Run product integration tests");
     integration_test_step.dependOn(&run_integration_tests.step);
@@ -148,6 +154,7 @@ pub fn build(b: *std.Build) void {
     test_step.dependOn(&mixed_ids.step);
     test_step.dependOn(&run_foundation_tests.step);
     test_step.dependOn(&run_adapter_tests.step);
+    test_step.dependOn(&run_command_tests.step);
 
     const check_step = b.step("check", "Run repository checks: unit tests, hygiene, Markdown links, trace ledger, zig fmt");
     check_step.dependOn(test_step);

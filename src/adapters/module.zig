@@ -5,6 +5,8 @@ comptime {
     _ = @import("ports");
 }
 
+pub const DiscardLog = @import("discard_log.zig").DiscardLog;
+
 pub const SystemClock = @import("clock.zig").SystemClock;
 
 test {

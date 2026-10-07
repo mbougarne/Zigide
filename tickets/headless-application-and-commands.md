@@ -7,25 +7,27 @@
 
 ## ZIT-014: Define Application Service Composition
 
-- **Status:** Planned
+- **Status:** Implemented
 - **Priority:** P0
 - **Estimate:** 1-2 days
 - **Dependencies:** ZIT-005, ZIT-013
 - **Description:** Define the composition context that wires explicit services and ports without a general dependency-injection container.
 - **Acceptance criteria:**
-  - [ ] The composition root is the only place that chooses concrete adapters.
-  - [ ] Headless tests can replace every external port.
+  - [x] The composition root is the only place that chooses concrete adapters.
+  - [x] Headless tests can replace every external port.
 
 ## ZIT-015: Implement Command Registration and Lookup
 
-- **Status:** Planned
+- **Status:** Implemented
 - **Priority:** P0
 - **Estimate:** 1-2 days
 - **Dependencies:** ZIT-010, ZIT-014
 - **Description:** Register stable namespaced command IDs and resolve handlers without UI ownership.
 - **Acceptance criteria:**
-  - [ ] Duplicate and unknown IDs return explicit errors.
-  - [ ] Registration order does not alter lookup semantics.
+  - [x] Duplicate and unknown IDs return explicit errors.
+  - [x] Registration order does not alter lookup semantics.
+
+Evidence for ZIT-014 and ZIT-015: [headless composition and registry addendum](../docs/milestones/headless-application-commands-evidence.md).
 
 ## ZIT-016: Validate Command Arguments and Preconditions
 

@@ -35,3 +35,74 @@ test "executable exits cleanly in an isolated workspace" {
     var entries = workspace.dir.iterate();
     try std.testing.expect((try entries.next(std.testing.io)) == null);
 }
+
+const application = @import("application");
+const foundation = @import("foundation");
+
+const CaptureLog = struct {
+    event: ?foundation.logging.Event = null,
+    unavailable: bool = false,
+
+    fn write(raw: *anyopaque, event: foundation.logging.Event) error{Unavailable}!void {
+        const self: *CaptureLog = @ptrCast(@alignCast(raw));
+        if (self.unavailable) return error.Unavailable;
+        self.event = event;
+    }
+
+    fn sink(self: *CaptureLog) foundation.logging.Sink {
+        return .{ .context = self, .write = write };
+    }
+};
+
+const HeadlessService = struct {
+    context: *application.Context,
+    calls: usize = 0,
+
+    fn run(raw: *anyopaque) !void {
+        const self: *HeadlessService = @ptrCast(@alignCast(raw));
+        self.calls += 1;
+        if (!self.context.logger.emit(.info, .application, .operation_completed, @enumFromInt(7), null))
+            return error.LogUnavailable;
+    }
+};
+
+test "headless composition substitutes every current external port and wires services" {
+    var clock: foundation.clock.ManualClock = .{ .wall_time = .{ .ns = 100 } };
+    var log: CaptureLog = .{};
+    var context = application.Context.init(std.testing.allocator, .{ .clock = clock.clock(), .log_sink = log.sink() });
+    defer context.deinit();
+    var service: HeadlessService = .{ .context = &context };
+    try context.commands.register("test.complete", .{ .context = &service, .call = HeadlessService.run });
+    const handler = try context.commands.lookup("test.complete");
+    try handler.call(handler.context);
+    try std.testing.expectEqual(@as(usize, 1), service.calls);
+    try std.testing.expectEqual(@as(i96, 100), log.event.?.timestamp.ns);
+    try std.testing.expectEqual(foundation.logging.Subsystem.application, log.event.?.subsystem);
+    try std.testing.expectEqual(@as(foundation.ids.CorrelationId, @enumFromInt(7)), log.event.?.correlation_id);
+    try clock.advance(25);
+    try handler.call(handler.context);
+    try std.testing.expectEqual(@as(i96, 125), log.event.?.timestamp.ns);
+    log.unavailable = true;
+    try std.testing.expectError(error.LogUnavailable, handler.call(handler.context));
+    try std.testing.expectEqual(@as(usize, 3), service.calls);
+}
+
+test "application contexts are isolated and release only owned registry storage" {
+    var clock: foundation.clock.ManualClock = .{};
+    var log: CaptureLog = .{};
+    const external: application.ExternalPorts = .{ .clock = clock.clock(), .log_sink = log.sink() };
+    var first = application.Context.init(std.testing.allocator, external);
+    // The nested scope guarantees cleanup before proving borrowed ports survive.
+    {
+        defer first.deinit();
+        var second = application.Context.init(std.testing.allocator, external);
+        defer second.deinit();
+        var service: HeadlessService = .{ .context = &first };
+        try first.commands.register("test.complete", .{ .context = &service, .call = HeadlessService.run });
+        try std.testing.expectError(error.UnknownCommand, second.commands.lookup("test.complete"));
+    }
+    try clock.advance(1);
+    const logger: foundation.logging.Logger = .{ .clock = clock.clock(), .sink = log.sink() };
+    try std.testing.expect(logger.emit(.info, .application, .operation_completed, @enumFromInt(1), null));
+    try std.testing.expectEqual(@as(i96, 1), log.event.?.timestamp.ns);
+}

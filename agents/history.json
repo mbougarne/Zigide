@@ -809,7 +809,7 @@
       "id": "6322bdb9-cc4d-4383-a286-51da0276dbd7",
       "timestamp": "2026-09-20T16:02:47Z",
       "kind": "commit-hook-diagnosis",
-      "summary": "Confirmed the local pre-commit hook was not installed for the ZIT-003–ZIT-007 commit and distinguished it from the failed Claude review action.",
+      "summary": "Confirmed the local pre-commit hook was not installed for the ZIT-003\u2013ZIT-007 commit and distinguished it from the failed Claude review action.",
       "intentTags": [
         "git-hooks",
         "zig-build-check",
@@ -918,6 +918,53 @@
         "standalone build and run passed",
         "git diff --check passed",
         "final trace/schema revalidation and hosted exact-head CI pending at record creation"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "5337d914-5657-48f2-ad24-2e7ce67201f9",
+      "timestamp": "2026-10-06T11:10:04Z",
+      "kind": "headless-application-command-registration",
+      "summary": "Implement grouped ZIT-014 and ZIT-015 with explicit application composition, owned namespaced command IDs and headless/allocation-failure tests.",
+      "intentTags": [
+        "application",
+        "commands",
+        "composition",
+        "ownership",
+        "testing"
+      ],
+      "conversation": "conversations/2026-10-06-11-10-04-5337d914-5657-48f2-ad24-2e7ce67201f9.md",
+      "research": "researches/2026-10-06-11-10-04-5337d914-5657-48f2-ad24-2e7ce67201f9.md",
+      "commands": "commands/2026-10-06-11-10-04-5337d914-5657-48f2-ad24-2e7ce67201f9.md",
+      "artifacts": [
+        "src/application",
+        "src/commands",
+        "src/adapters/discard_log.zig",
+        "src/adapters/module.zig",
+        "src/composition/main.zig",
+        "build.zig",
+        "tests/integration.zig",
+        "tests/unit.zig",
+        "tickets/headless-application-and-commands.md",
+        "docs/milestones/headless-application-commands-evidence.md"
+      ],
+      "decisions": [
+        "explicit-borrowed-clock-and-log-ports",
+        "concrete-adapters-selected-only-by-composition-root",
+        "owned-case-sensitive-namespaced-command-ids",
+        "value-lookup-borrows-service-context",
+        "defer-later-headless-tickets"
+      ],
+      "verification": [
+        "Remote main and merged PR #3 verified; no duplicate open PRs",
+        "Zig 0.16.0 native macOS arm64",
+        "Debug and ReleaseSafe checks: 27 tests and both negative fixtures pass",
+        "Standalone build and run pass",
+        "Pinned AJV schema validation and diff whitespace pass before final trace entry",
+        "Final trace validation, publication, hosted exact-head checks and owned assertion cleanup pending at record creation"
       ],
       "publication": {
         "committed": false,
