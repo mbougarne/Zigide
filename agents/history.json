@@ -809,7 +809,7 @@
       "id": "6322bdb9-cc4d-4383-a286-51da0276dbd7",
       "timestamp": "2026-09-20T16:02:47Z",
       "kind": "commit-hook-diagnosis",
-      "summary": "Confirmed the local pre-commit hook was not installed for the ZIT-003\u2013ZIT-007 commit and distinguished it from the failed Claude review action.",
+      "summary": "Confirmed the local pre-commit hook was not installed for the ZIT-003–ZIT-007 commit and distinguished it from the failed Claude review action.",
       "intentTags": [
         "git-hooks",
         "zig-build-check",
@@ -965,6 +965,80 @@
         "Standalone build and run pass",
         "Pinned AJV schema validation and diff whitespace pass before final trace entry",
         "Final trace validation, publication, hosted exact-head checks and owned assertion cleanup pending at record creation"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "5989129e-8117-4b8b-be87-79b21167fea1",
+      "timestamp": "2026-10-07T12:24:59Z",
+      "kind": "command-validation-headless-lifecycle",
+      "summary": "Implement grouped ZIT-016–019: typed dispatch, disposable registrations, ordered lifecycle and deterministic headless ports.",
+      "intentTags": [
+        "commands",
+        "lifecycle",
+        "ownership",
+        "headless",
+        "testing"
+      ],
+      "conversation": "conversations/2026-10-07-12-24-59-5989129e-8117-4b8b-be87-79b21167fea1.md",
+      "research": "researches/2026-10-07-12-24-59-5989129e-8117-4b8b-be87-79b21167fea1.md",
+      "commands": "commands/2026-10-07-12-24-59-5989129e-8117-4b8b-be87-79b21167fea1.md",
+      "artifacts": [
+        "src/application",
+        "src/commands",
+        "src/ports/module.zig",
+        "src/composition/main.zig",
+        "tests",
+        "build.zig",
+        "tickets/headless-application-and-commands.md",
+        "docs/milestones/headless-lifecycle-evidence.md"
+      ],
+      "decisions": [
+        "application-thread-lifecycle-with-reentrant-pins",
+        "registration-identities-replace-raw-handler-lookup",
+        "cooperative-deadlines-and-one-time-service-release",
+        "explicit-optional-port-capabilities-and-deterministic-doubles"
+      ],
+      "verification": [
+        "PR #4 merged; origin/main base 5465aef; clean checkout and no duplicate PR",
+        "Zig 0.16.0 on macOS 27.0.1 arm64",
+        "Debug and ReleaseSafe checks: 41 tests and both negative fixtures pass",
+        "Standalone build/run, pinned AJV and whitespace checks pass before final records",
+        "Final records/docs validation, publication, exact-head hosted CI and owned assertion cleanup pending at record creation"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "d8828cd8-f57c-434b-b0de-8fb2c79120fe",
+      "timestamp": "2026-10-07T12:26:47Z",
+      "kind": "implementation-checkpoint",
+      "summary": "Report verified ZIT-014/015 prerequisites, completed ZIT-016–019 implementation, passing local checks and pending publication.",
+      "intentTags": [
+        "checkpoint",
+        "prerequisites",
+        "verification"
+      ],
+      "conversation": "conversations/2026-10-07-12-26-47-d8828cd8-f57c-434b-b0de-8fb2c79120fe.md",
+      "research": "researches/2026-10-07-12-26-47-d8828cd8-f57c-434b-b0de-8fb2c79120fe.md",
+      "commands": "commands/2026-10-07-12-26-47-d8828cd8-f57c-434b-b0de-8fb2c79120fe.md",
+      "artifacts": [
+        "agents/history.json"
+      ],
+      "decisions": [
+        "continue-implementation-publication-with-no-prerequisite-blocker",
+        "retain-exact-owned-process-identity-in-private-task-output"
+      ],
+      "verification": [
+        "PR #4 and base 5465aef verified",
+        "41 Debug/ReleaseSafe tests, both negative fixtures, standalone build/run and final schema pass",
+        "Owned temporary sleep assertion verified active",
+        "Commit/push and exact-head CI still pending"
       ],
       "publication": {
         "committed": false,
