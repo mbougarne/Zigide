@@ -6,10 +6,14 @@ test "executable exits cleanly in an isolated workspace" {
 
     const project_root = try std.process.currentPathAlloc(std.testing.io, std.testing.allocator);
     defer std.testing.allocator.free(project_root);
-    const executable_path = try std.fs.path.join(std.testing.allocator, &.{
-        project_root,
-        @import("build_options").zigide_executable,
-    });
+    const emitted_path = @import("build_options").zigide_executable;
+    const executable_path = if (std.fs.path.isAbsolute(emitted_path))
+        try std.testing.allocator.dupe(u8, emitted_path)
+    else
+        try std.fs.path.join(std.testing.allocator, &.{
+            project_root,
+            emitted_path,
+        });
     defer std.testing.allocator.free(executable_path);
 
     var environment = std.process.Environ.Map.init(std.testing.allocator);
@@ -58,7 +62,7 @@ const HeadlessService = struct {
     context: *application.Context,
     calls: usize = 0,
 
-    fn run(raw: *anyopaque) !void {
+    fn run(raw: *anyopaque, _: @import("commands").Arguments, _: foundation.cancellation.Token) !void {
         const self: *HeadlessService = @ptrCast(@alignCast(raw));
         self.calls += 1;
         if (!self.context.logger.emit(.info, .application, .operation_completed, @enumFromInt(7), null))
@@ -71,19 +75,22 @@ test "headless composition substitutes every current external port and wires ser
     var log: CaptureLog = .{};
     var context = application.Context.init(std.testing.allocator, .{ .clock = clock.clock(), .log_sink = log.sink() });
     defer context.deinit();
+    try context.start(&.{});
+    defer context.shutdown(clock.clock().monotonic()) catch unreachable;
+    var source: foundation.cancellation.Source = .{};
     var service: HeadlessService = .{ .context = &context };
-    try context.commands.register("test.complete", .{ .context = &service, .call = HeadlessService.run });
+    _ = try context.commands.register("test.complete", .{ .context = &service, .call = HeadlessService.run });
     const handler = try context.commands.lookup("test.complete");
-    try handler.call(handler.context);
+    try handler.dispatch(.none, source.token());
     try std.testing.expectEqual(@as(usize, 1), service.calls);
     try std.testing.expectEqual(@as(i96, 100), log.event.?.timestamp.ns);
     try std.testing.expectEqual(foundation.logging.Subsystem.application, log.event.?.subsystem);
     try std.testing.expectEqual(@as(foundation.ids.CorrelationId, @enumFromInt(7)), log.event.?.correlation_id);
     try clock.advance(25);
-    try handler.call(handler.context);
+    try handler.dispatch(.none, source.token());
     try std.testing.expectEqual(@as(i96, 125), log.event.?.timestamp.ns);
     log.unavailable = true;
-    try std.testing.expectError(error.LogUnavailable, handler.call(handler.context));
+    try std.testing.expectError(error.HandlerFailed, handler.dispatch(.none, source.token()));
     try std.testing.expectEqual(@as(usize, 3), service.calls);
 }
 
@@ -98,11 +105,15 @@ test "application contexts are isolated and release only owned registry storage"
         var second = application.Context.init(std.testing.allocator, external);
         defer second.deinit();
         var service: HeadlessService = .{ .context = &first };
-        try first.commands.register("test.complete", .{ .context = &service, .call = HeadlessService.run });
+        _ = try first.commands.register("test.complete", .{ .context = &service, .call = HeadlessService.run });
         try std.testing.expectError(error.UnknownCommand, second.commands.lookup("test.complete"));
     }
     try clock.advance(1);
     const logger: foundation.logging.Logger = .{ .clock = clock.clock(), .sink = log.sink() };
     try std.testing.expect(logger.emit(.info, .application, .operation_completed, @enumFromInt(1), null));
     try std.testing.expectEqual(@as(i96, 1), log.event.?.timestamp.ns);
+}
+
+test {
+    _ = @import("headless.zig");
 }

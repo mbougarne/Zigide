@@ -31,44 +31,46 @@ Evidence for ZIT-014 and ZIT-015: [headless composition and registry addendum](.
 
 ## ZIT-016: Validate Command Arguments and Preconditions
 
-- **Status:** Planned
+- **Status:** Done
 - **Priority:** P0
 - **Estimate:** 2-3 days
 - **Dependencies:** ZIT-015
 - **Description:** Validate typed command arguments and enablement preconditions before invoking handlers.
 - **Acceptance criteria:**
-  - [ ] Invalid arguments and failed preconditions do not call handlers.
-  - [ ] Errors distinguish unknown, disabled, invalid, cancelled, and handler-failure states.
+  - [x] Invalid arguments and failed preconditions do not call handlers.
+  - [x] Errors distinguish unknown, disabled, invalid, cancelled, and handler-failure states.
 
 ## ZIT-017: Implement Command Registration Lifetimes
 
-- **Status:** Planned
+- **Status:** Done
 - **Priority:** P1
 - **Estimate:** 1-2 days
 - **Dependencies:** ZIT-015
 - **Description:** Make command ownership disposable so services and future extensions can unregister cleanly.
 - **Acceptance criteria:**
-  - [ ] Disposal removes only registrations owned by that handle.
-  - [ ] Dispatch cannot use freed handler context during concurrent lifecycle events.
+  - [x] Disposal removes only registrations owned by that handle.
+  - [x] Dispatch cannot use freed handler context during concurrent lifecycle events.
 
 ## ZIT-018: Implement Deterministic Startup and Shutdown
 
-- **Status:** Planned
+- **Status:** Done
 - **Priority:** P0
 - **Estimate:** 2-3 days
 - **Dependencies:** ZIT-014
 - **Description:** Implement ordered, idempotent application startup and shutdown with deadlines for future workers and child processes.
 - **Acceptance criteria:**
-  - [ ] Shutdown rejects new commands after transition begins.
-  - [ ] Repeated shutdown calls preserve the documented order and release all services once.
+  - [x] Shutdown rejects new commands after transition begins.
+  - [x] Repeated shutdown calls preserve the documented order and release all services once.
 
 ## ZIT-019: Build Headless Port Test Doubles
 
-- **Status:** Planned
+- **Status:** Done
 - **Priority:** P0
 - **Estimate:** 2-3 days
 - **Dependencies:** ZIT-014, ZIT-018
 - **Description:** Provide deterministic fake file, storage, clock, process, and UI-scheduling ports for behavioral tests.
 - **Acceptance criteria:**
-  - [ ] Tests can inject successes, expected failures, delays, and cancellation without real OS effects.
-  - [ ] ADR-0001 headless-substitution validation is demonstrably satisfied.
+  - [x] Tests can inject successes, expected failures, delays, and cancellation without real OS effects.
+  - [x] ADR-0001 headless-substitution validation is demonstrably satisfied.
+
+Validation: [ZIT-016–019 evidence](../docs/milestones/headless-lifecycle-evidence.md).

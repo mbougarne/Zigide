@@ -102,6 +102,8 @@ pub fn build(b: *std.Build) void {
     integration_module.addOptions("build_options", integration_options);
     integration_module.addImport("application", modules.get("application").?);
     integration_module.addImport("foundation", modules.get("foundation").?);
+    integration_module.addImport("commands", modules.get("commands").?);
+    integration_module.addImport("ports", modules.get("ports").?);
     const integration_tests = b.addTest(.{ .root_module = integration_module });
     const run_integration_tests = b.addRunArtifact(integration_tests);
     run_integration_tests.setCwd(b.path("."));
