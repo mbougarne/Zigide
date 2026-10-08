@@ -1044,6 +1044,39 @@
         "committed": false,
         "pushed": false
       }
+    },
+    {
+      "id": "224f1759-a558-45b3-a81d-f13a9cff20a3",
+      "timestamp": "2026-10-08T11:22:11Z",
+      "kind": "remove-automated-review",
+      "summary": "Remove automated Claude PR review integration and stale milestone descriptions; prepare requested no-ticket PR.",
+      "intentTags": [
+        "ci",
+        "maintenance",
+        "review-removal"
+      ],
+      "conversation": "conversations/2026-10-08-11-22-11-224f1759-a558-45b3-a81d-f13a9cff20a3.md",
+      "research": "researches/2026-10-08-11-22-11-224f1759-a558-45b3-a81d-f13a9cff20a3.md",
+      "commands": "commands/2026-10-08-11-22-11-224f1759-a558-45b3-a81d-f13a9cff20a3.md",
+      "artifacts": [
+        ".github",
+        "docs/milestones/foundation-primitives-evidence.md",
+        "docs/milestones/headless-application-commands-evidence.md"
+      ],
+      "decisions": [
+        "remove-complete-review-integration",
+        "preserve-independent-ci-and-historical-records"
+      ],
+      "verification": [
+        "Initial checkout clean and main matched remote; no duplicate PR",
+        "Four-file staged whitespace check and remaining workflow YAML parse passed",
+        "Zig repository checks passed before new records",
+        "Final record checks, commit, push, PR and hosted CI pending at record creation"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
     }
   ]
 }
