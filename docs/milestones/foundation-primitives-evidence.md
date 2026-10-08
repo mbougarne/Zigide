@@ -26,4 +26,4 @@ Local verification uses Zig `0.16.0` on macOS `27.0.1`, `arm64`, with an isolate
 
 The foundation and adapter roots are explicitly registered as test artifacts. Importing these modules from a smoke test alone does not run their test bodies.
 
-Hosted exact-head CI will be checked after PR publication; this file records local evidence. The Anthropic review workflow is expected to skip its jobs because its existing condition excludes drafts. Full headless service composition, real worker shutdown orchestration, protocol integration, persisted/global IDs, log storage/rotation and UI behavior remain with later tickets; none is claimed by this phase.
+Hosted exact-head CI will be checked after PR publication; this file records local evidence. Full headless service composition, real worker shutdown orchestration, protocol integration, persisted/global IDs, log storage/rotation and UI behavior remain with later tickets; none is claimed by this phase.
