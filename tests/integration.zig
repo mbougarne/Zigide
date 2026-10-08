@@ -116,4 +116,6 @@ test "application contexts are isolated and release only owned registry storage"
 
 test {
     _ = @import("headless.zig");
+    _ = @import("protocol_transport.zig");
+    _ = @import("protocol_stress.zig");
 }

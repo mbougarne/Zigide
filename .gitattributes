@@ -1,0 +1,2 @@
+# Wire fixtures intentionally contain CRLF delimiters and truncated payloads.
+tests/fixtures/protocol/*.frame binary

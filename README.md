@@ -38,6 +38,8 @@ zig build check   # all tests plus hygiene, Markdown links, trace ledger, and zi
 zig build hooks   # once per clone: points git at .githooks so pre-commit runs the checks
 ```
 
+The [protocol spike](src/adapters/protocol/README.md) adds bounded framing and a real-server fixture: `zig build zls-spike -Dzls=/absolute/path/to/zls` requires ZLS 0.16.0.
+
 Product test targets can also be run separately with `zig build unit-test` and `zig build integration-test`.
 
 CI runs the same `zig build check` on macOS arm64 plus a JSON Schema validation of the trace ledger. The checks are implemented in Zig so one implementation runs identically in your terminal, the pre-commit hook, and CI.
