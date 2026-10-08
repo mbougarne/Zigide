@@ -37,7 +37,7 @@ These passes establish repository health only. They do not satisfy the future pr
 | --- | --- | --- | --- | --- |
 | E1 | Documented macOS arm64 build/test path with pinned Zig | [ZIT-006](../../tickets/application-module-layout.md#zit-006-add-product-unit-and-integration-test-targets) | Partial | Local baseline commands pass above. Product test targets, clean-clone verification, and hosted CI acceptance remain pending. |
 | E2 | ADR-0004 accepted or replaced | [ZIT-041](../../tickets/ui-toolkit-spike.md#zit-041-score-candidates-and-resolve-adr-0004) | Blocked | [ADR-0004](../architecture/decisions/0004-ui-toolkit-selection.md) remains Proposed; no scored UI comparison has been published. |
-| E3 | Protocol decoder handles split, combined, malformed, oversized, and cancelled messages | [ZIT-026](../../tickets/protocol-framing-and-zls-spike.md#zit-026-fuzz-and-stress-the-framing-prototype) | Blocked | No framing implementation, fuzz/stress suite, or retained regression fixtures exist yet. |
+| E3 | Protocol decoder handles split, combined, malformed, oversized, and cancelled messages | [ZIT-026](../../tickets/protocol-framing-and-zls-spike.md#zit-026-fuzz-and-stress-the-framing-prototype) | Evidenced | [ZIT-020–026 evidence](protocol-framing-zls-evidence.md): bounded framing, seeded fuzz/stress, cancellation and retained regressions pass; optional coverage-guided runner is separately blocked by a Zig toolchain defect. |
 
 ## Deliverables
 
@@ -48,7 +48,7 @@ These passes establish repository health only. They do not satisfy the future pr
 | D3 | Headless application composition with logging, commands, and deterministic shutdown | [ZIT-019](../../tickets/headless-application-and-commands.md#zit-019-build-headless-port-test-doubles) | Not evidenced | Requires headless composition tests with substituted file, clock, process, and UI ports. |
 | D4 | UI toolkit spike per ADR-0004 criteria | [ZIT-041](../../tickets/ui-toolkit-spike.md#zit-041-score-candidates-and-resolve-adr-0004) | Not evidenced | Requires spike code, screenshots, IME and accessibility observations, measurements, packaging results, and scored comparison. |
 | D5 | Text-model benchmark and property-test harness | [ZIT-033](../../tickets/text-model-spike.md#zit-033-publish-text-model-recommendation) | Not evidenced | Requires property/equivalence tests, representative workloads, benchmark measurements, and a published storage recommendation. |
-| D6 | ZLS process and framing spike | [ZIT-026](../../tickets/protocol-framing-and-zls-spike.md#zit-026-fuzz-and-stress-the-framing-prototype) | Not evidenced | Requires the ZIT-025 real-ZLS initialize/shutdown fixture plus framing fuzz/stress evidence and exact environment assumptions. |
+| D6 | ZLS process and framing spike | [ZIT-026](../../tickets/protocol-framing-and-zls-spike.md#zit-026-fuzz-and-stress-the-framing-prototype) | Evidenced | [Protocol/ZLS evidence](protocol-framing-zls-evidence.md): real ZLS 0.16.0 initialize/shutdown/exit passed with Zig 0.16.0 and recorded workspace/command assumptions. |
 
 ## Decisions
 

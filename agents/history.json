@@ -1077,6 +1077,77 @@
         "committed": false,
         "pushed": false
       }
+    },
+    {
+      "id": "49f95771-a222-444d-9155-7716aecfc6ce",
+      "timestamp": "2026-10-08T12:05:30Z",
+      "kind": "protocol-framing-zls-spike",
+      "summary": "Implement ZIT-020–026 bounded framing, correlation, cancellation, child transport and verified real ZLS handshake.",
+      "intentTags": [
+        "protocol",
+        "zls",
+        "framing",
+        "verification"
+      ],
+      "conversation": "conversations/2026-10-08-12-05-30-49f95771-a222-444d-9155-7716aecfc6ce.md",
+      "research": "researches/2026-10-08-12-05-30-49f95771-a222-444d-9155-7716aecfc6ce.md",
+      "commands": "commands/2026-10-08-12-05-30-49f95771-a222-444d-9155-7716aecfc6ce.md",
+      "artifacts": [
+        "src/adapters/protocol",
+        "tests/protocol_transport.zig",
+        "tests/protocol_stress.zig",
+        "tools/zls_spike.zig",
+        "docs/milestones/protocol-framing-zls-evidence.md",
+        ".github/workflows/ci.yml"
+      ],
+      "decisions": [
+        "preserve-adapter-boundary",
+        "isolate-checkout-and-resources",
+        "report-coverage-guided-toolchain-failure-separately"
+      ],
+      "verification": [
+        "Remote f0cb2ec includes merged prerequisite PR #5 and no duplicate PR",
+        "Debug/ReleaseSafe checks: 52 tests and both negative compile fixtures pass",
+        "Real Zig 0.16.0/ZLS 0.16.0 handshake exits 0 with no pending requests",
+        "Seeded generated stress, allocation failure checks and product build/run pass",
+        "Coverage-guided campaign did not run: Zig test runner StackTrace compilation error",
+        "Final records/schema, publication, exact-head CI and owned assertion cleanup pending"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "1e8a9916-8733-42f3-96a8-b7c5b5fb304f",
+      "timestamp": "2026-10-08T12:23:47Z",
+      "kind": "protocol-spike-checkpoint",
+      "summary": "Report implementation, verified live ZLS, passing checks and separately blocked coverage-guided runner.",
+      "intentTags": [
+        "checkpoint",
+        "verification"
+      ],
+      "conversation": "conversations/2026-10-08-12-23-47-1e8a9916-8733-42f3-96a8-b7c5b5fb304f.md",
+      "research": "researches/2026-10-08-12-23-47-1e8a9916-8733-42f3-96a8-b7c5b5fb304f.md",
+      "commands": "commands/2026-10-08-12-23-47-1e8a9916-8733-42f3-96a8-b7c5b5fb304f.md",
+      "artifacts": [
+        "agents/history.json",
+        ".gitattributes"
+      ],
+      "decisions": [
+        "continue-authorized-publication",
+        "report-unconfirmed-parent-message"
+      ],
+      "verification": [
+        "Debug and ReleaseSafe: 52 tests plus negative compile fixtures pass",
+        "Real ZLS handshake and AJV schema validation pass",
+        "Direct parent messaging returned thread not found",
+        "Final publication, exact-head CI and owned assertion cleanup pending"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
     }
   ]
 }

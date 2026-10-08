@@ -92,13 +92,18 @@ pub fn build(b: *std.Build) void {
     const command_tests = b.addTest(.{ .root_module = modules.get("commands").? });
     const run_command_tests = b.addRunArtifact(command_tests);
 
+    const protocol_child_module = b.createModule(.{ .root_source_file = b.path("tests/fixtures/protocol_child.zig"), .target = target, .optimize = optimize });
+    protocol_child_module.addImport("adapters", modules.get("adapters").?);
+    const protocol_child = b.addExecutable(.{ .name = "protocol-child", .root_module = protocol_child_module });
     const integration_options = b.addOptions();
+    integration_options.addOptionPath("protocol_child", protocol_child.getEmittedBin());
     integration_options.addOptionPath("zigide_executable", zigide.getEmittedBin());
     const integration_module = b.createModule(.{
         .root_source_file = b.path("tests/integration.zig"),
         .target = target,
         .optimize = optimize,
     });
+    integration_module.addImport("adapters", modules.get("adapters").?);
     integration_module.addOptions("build_options", integration_options);
     integration_module.addImport("application", modules.get("application").?);
     integration_module.addImport("foundation", modules.get("foundation").?);
@@ -162,6 +167,18 @@ pub fn build(b: *std.Build) void {
     check_step.dependOn(test_step);
     check_step.dependOn(&fmt_check.step);
     check_step.dependOn(&run_check.step);
+
+    const spike_options = b.addOptions();
+    spike_options.addOption([]const u8, "zls", b.option([]const u8, "zls", "Absolute path to ZLS 0.16.0 for the opt-in live fixture") orelse "zls");
+    spike_options.addOption([]const u8, "zig", b.graph.zig_exe);
+    const spike_module = b.createModule(.{ .root_source_file = b.path("tools/zls_spike.zig"), .target = target, .optimize = optimize });
+    spike_module.addImport("adapters", modules.get("adapters").?);
+    spike_module.addImport("foundation", modules.get("foundation").?);
+    spike_module.addOptions("spike_options", spike_options);
+    const spike = b.addExecutable(.{ .name = "zls-spike", .root_module = spike_module });
+    const run_spike = b.addRunArtifact(spike);
+    run_spike.setCwd(b.path("."));
+    b.step("zls-spike", "Validate initialize/shutdown against real ZLS 0.16.0 (requires -Dzls=/absolute/path)").dependOn(&run_spike.step);
 
     const hooks_cmd = b.addSystemCommand(&.{ "git", "config", "core.hooksPath", ".githooks" });
     const hooks_step = b.step("hooks", "Point git at .githooks so pre-commit runs the repository checks");

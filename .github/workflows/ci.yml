@@ -18,6 +18,21 @@ jobs:
       - name: Hygiene, links, trace ledger, zig fmt
         run: zig build check
 
+  zls-spike:
+    name: Real ZLS 0.16.0 handshake
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: mlugg/setup-zig@v2
+      - name: Install pinned ZLS
+        run: |
+          curl --fail --location --retry 3 https://github.com/zigtools/zls/releases/download/0.16.0/zls-aarch64-macos.tar.xz -o "$RUNNER_TEMP/zls.tar.xz"
+          echo "b93ec549f8558a7e85984a840e9276d274f1059b54ade4254296ef4982958359  $RUNNER_TEMP/zls.tar.xz" | shasum -a 256 --check
+          mkdir -p "$RUNNER_TEMP/zigide-zls"
+          tar -xJf "$RUNNER_TEMP/zls.tar.xz" -C "$RUNNER_TEMP/zigide-zls"
+      - name: Initialize and cleanly stop real ZLS
+        run: zig build zls-spike -Dzls="$RUNNER_TEMP/zigide-zls/zls" --summary all
+
   schema:
     name: Trace ledger JSON Schema
     runs-on: ubuntu-latest
