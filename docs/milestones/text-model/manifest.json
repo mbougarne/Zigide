@@ -1,0 +1,33 @@
+{
+  "date": "2026-10-12",
+  "baseline": "e9903d734b8d824ddd715aca734857cd3242ea8b",
+  "zig": "0.16.0",
+  "optimize": "ReleaseFast",
+  "target": "aarch64-macos",
+  "hardware": {
+    "model": "Mac15,6",
+    "cpu": "Apple M3 Pro",
+    "logical_cpus": 11,
+    "ram_bytes": 19327352832,
+    "os": "macOS 27.0.1",
+    "os_build": "26A434"
+  },
+  "samples_per_ordinary_operation": 31,
+  "sustained_edits_per_fixture_model": 1024,
+  "churn_cycles_per_fixture_model": 64,
+  "observations_per_run": 14340,
+  "source_sha256": {
+    "tools/text_benchmark.zig": "fb641e3a75a762623842cc799ae51ca1768ac69c2416efb9fe9c94fa42a9377f",
+    "tools/text_memory.zig": "c754453aa2493243f8517e2f057ce0677cc54dc7bfaed4e7368b42c26d7bbd71",
+    "src/text/module.zig": "7e176de8d3d7ed1920fe968dc95dbbfae30e6b6714e015f47fd0b4ee978cc0ad",
+    "src/text/semantics.zig": "97e4a06d7fdac185c8014c1c0ff1551e49f0ca078f7542b9808d867202af20f1",
+    "src/text/reference.zig": "7f1ff6329332b363fd691fe15f7690af9a334bd8ab367c8791df426c10f9c2b9",
+    "src/text/piece_table.zig": "372c67685f3e36930ca1e1478cb0a8e18a95558fb35d36e6553d54c33e8cea4e"
+  },
+  "artifact_sha256": {
+    "raw-run1.csv": "3fca828fa71e4fc0d09814a883f00be87de770bc533171dfe7ac0eea641ed7a0",
+    "raw-run2.csv": "64696880bb3883df6d50bb26875e2ee1bb2b957e9e57cb2d0667ce457160ff92",
+    "summary-run1.csv": "52fc69d6f5b6a8a8a7c98dd7c8434778996aee18742972711655eee6cba29624",
+    "summary-run2.csv": "e0594d131b590dc96adc2cf6e9b15a76f19e43c238caf881e578293da32f0e1f"
+  }
+}
