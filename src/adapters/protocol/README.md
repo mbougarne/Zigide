@@ -64,4 +64,4 @@ allocation-failure tests without requiring an installed server. The optional
 runner. On the tested Zig 0.16.0 installation that runner fails to compile in
 `compiler/test_runner.zig` due to incompatible StackTrace types; a normal test
 run of its corpus is not a successful coverage-guided campaign. See the
-[evidence report](../../../docs/milestones/protocol-framing-zls-evidence.md).
+CI run logs and artifacts.

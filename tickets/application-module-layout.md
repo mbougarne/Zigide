@@ -4,7 +4,7 @@
 - **Milestone:** 0 - Foundations and Spikes
 - **Goal:** Create the minimal Zig product build graph and enforce inward module dependencies.
 - **Architecture:** [Source boundaries](../docs/architecture/02-system-architecture.md#source-boundaries), [ADR-0001](../docs/architecture/decisions/0001-zig-first-modular-architecture.md)
-- **Verification evidence:** [ZIT-003–ZIT-007 evidence addendum](../docs/milestones/application-module-layout-evidence.md)
+- **Verification:** `zig build check` exercises module boundaries and product smoke tests.
 
 ## ZIT-003: Create Product Source and Test Directories
 

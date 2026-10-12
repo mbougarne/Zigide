@@ -89,6 +89,17 @@ pub fn build(b: *std.Build) void {
     const adapter_tests = b.addTest(.{ .root_module = modules.get("adapters").? });
     const run_adapter_tests = b.addRunArtifact(adapter_tests);
 
+    const text_tests = b.addTest(.{ .root_module = modules.get("text").? });
+    const run_text_tests = b.addRunArtifact(text_tests);
+
+    const equivalence_module = b.createModule(.{ .root_source_file = b.path("tests/text_equivalence.zig"), .target = target, .optimize = optimize });
+    equivalence_module.addImport("text", modules.get("text").?);
+    const equivalence_tests = b.addTest(.{ .root_module = equivalence_module });
+    const run_equivalence = b.addRunArtifact(equivalence_tests);
+    const text_test_step = b.step("text-test", "Run text correctness, seeded differential tests and fuzz corpus replay");
+    text_test_step.dependOn(&run_text_tests.step);
+    text_test_step.dependOn(&run_equivalence.step);
+
     const command_tests = b.addTest(.{ .root_module = modules.get("commands").? });
     const run_command_tests = b.addRunArtifact(command_tests);
 
@@ -149,6 +160,7 @@ pub fn build(b: *std.Build) void {
     unit_test_step.dependOn(&run_foundation_tests.step);
     unit_test_step.dependOn(&run_adapter_tests.step);
     unit_test_step.dependOn(&run_command_tests.step);
+    unit_test_step.dependOn(text_test_step);
 
     const integration_test_step = b.step("integration-test", "Run product integration tests");
     integration_test_step.dependOn(&run_integration_tests.step);
@@ -162,6 +174,7 @@ pub fn build(b: *std.Build) void {
     test_step.dependOn(&run_foundation_tests.step);
     test_step.dependOn(&run_adapter_tests.step);
     test_step.dependOn(&run_command_tests.step);
+    test_step.dependOn(text_test_step);
 
     const check_step = b.step("check", "Run repository checks: unit tests, hygiene, Markdown links, trace ledger, zig fmt");
     check_step.dependOn(test_step);
@@ -179,6 +192,17 @@ pub fn build(b: *std.Build) void {
     const run_spike = b.addRunArtifact(spike);
     run_spike.setCwd(b.path("."));
     b.step("zls-spike", "Validate initialize/shutdown against real ZLS 0.16.0 (requires -Dzls=/absolute/path)").dependOn(&run_spike.step);
+
+    const benchmark_module = b.createModule(.{ .root_source_file = b.path("tools/text_benchmark.zig"), .target = target, .optimize = optimize });
+    benchmark_module.addImport("text", modules.get("text").?);
+    const benchmark_tests = b.addTest(.{ .root_module = benchmark_module });
+    const run_benchmark_tests = b.addRunArtifact(benchmark_tests);
+    test_step.dependOn(&run_benchmark_tests.step);
+    const text_benchmark = b.addExecutable(.{ .name = "text-benchmark", .root_module = benchmark_module });
+    const run_benchmark = b.addRunArtifact(text_benchmark);
+    run_benchmark.setCwd(b.path("."));
+    if (b.args) |args| run_benchmark.addArgs(args);
+    b.step("text-benchmark", "Measure storage candidates and retain raw CSV (use -Doptimize=ReleaseFast)").dependOn(&run_benchmark.step);
 
     const hooks_cmd = b.addSystemCommand(&.{ "git", "config", "core.hooksPath", ".githooks" });
     const hooks_step = b.step("hooks", "Point git at .githooks so pre-commit runs the repository checks");

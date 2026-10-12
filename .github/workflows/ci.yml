@@ -40,3 +40,18 @@ jobs:
       - uses: actions/checkout@v4
       - name: Validate agents/history.json against its schema
         run: npx -y ajv-cli@5.0.0 validate --spec=draft2020 -s agents/history.schema.json -d agents/history.json
+
+  text-spike:
+    name: Text equivalence and benchmark evidence
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: mlugg/setup-zig@v2
+      - name: ReleaseSafe text correctness and seeded equivalence
+        run: zig build text-test -Doptimize=ReleaseSafe -j2 --summary all
+      - name: Retain ReleaseFast measurements (budgets require recorded target hardware)
+        run: zig build text-benchmark -Doptimize=ReleaseFast -j2 --summary all -- .zig-cache/text-benchmark-ci.csv
+      - uses: actions/upload-artifact@v4
+        with:
+          name: zigide-text-model-${{ github.sha }}
+          path: .zig-cache/text-benchmark-ci.csv

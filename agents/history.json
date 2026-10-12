@@ -1148,6 +1148,256 @@
         "committed": false,
         "pushed": false
       }
+    },
+    {
+      "id": "d964be19-bb58-410d-9624-1494228d44cf",
+      "timestamp": "2026-10-12T13:47:51Z",
+      "kind": "repository-entry-instructions",
+      "summary": "Apply repository entry and architectural rules.",
+      "intentTags": [
+        "text-model",
+        "spike",
+        "verification"
+      ],
+      "conversation": "conversations/2026-10-12-13-47-51-d964be19-bb58-410d-9624-1494228d44cf.md",
+      "research": "researches/2026-10-12-13-47-51-d964be19-bb58-410d-9624-1494228d44cf.md",
+      "artifacts": [
+        "src/text",
+        "tests/text_equivalence.zig",
+        "tools/text_benchmark.zig",
+        "tools/text_memory.zig",
+        "tools/summarize_text_benchmark.py",
+        "docs/milestones/text-model-evidence.md",
+        "docs/milestones/text-model",
+        ".github/workflows/ci.yml",
+        "tickets/text-model-spike.md"
+      ],
+      "decisions": [
+        "independent-reference-oracle",
+        "piece-table-provisional-starting-point",
+        "separate-coverage-guided-blocker",
+        "preserve-measured-evidence"
+      ],
+      "verification": [
+        "Remote baseline e9903d7 and merged PR #7 confirmed; no duplicate open PR",
+        "Debug and ReleaseSafe code checks: 61 tests and negative compile fixtures pass",
+        "Two measured ReleaseFast runs, 14340 observations each; proposed-budget comparisons pass",
+        "Product ReleaseSafe build/run and workflow YAML parse pass",
+        "Coverage-guided campaign did not run: pinned Zig runner StackTrace compilation error",
+        "Trace-aware checks, JSON Schema, publication and exact-head CI pending at record creation"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "fbcc4603-da2d-4227-93d2-082e4cabf1d7",
+      "timestamp": "2026-10-12T13:47:52Z",
+      "kind": "text-model-spike",
+      "summary": "Implement ZIT-027–033 reference, piece table, index, equivalence and measured recommendation.",
+      "intentTags": [
+        "text-model",
+        "spike",
+        "verification"
+      ],
+      "conversation": "conversations/2026-10-12-13-47-52-fbcc4603-da2d-4227-93d2-082e4cabf1d7.md",
+      "research": "researches/2026-10-12-13-47-52-fbcc4603-da2d-4227-93d2-082e4cabf1d7.md",
+      "artifacts": [
+        "src/text",
+        "tests/text_equivalence.zig",
+        "tools/text_benchmark.zig",
+        "tools/text_memory.zig",
+        "tools/summarize_text_benchmark.py",
+        "docs/milestones/text-model-evidence.md",
+        "docs/milestones/text-model",
+        ".github/workflows/ci.yml",
+        "tickets/text-model-spike.md"
+      ],
+      "decisions": [
+        "independent-reference-oracle",
+        "piece-table-provisional-starting-point",
+        "separate-coverage-guided-blocker",
+        "preserve-measured-evidence"
+      ],
+      "verification": [
+        "Remote baseline e9903d7 and merged PR #7 confirmed; no duplicate open PR",
+        "Debug and ReleaseSafe code checks: 61 tests and negative compile fixtures pass",
+        "Two measured ReleaseFast runs, 14340 observations each; proposed-budget comparisons pass",
+        "Product ReleaseSafe build/run and workflow YAML parse pass",
+        "Coverage-guided campaign did not run: pinned Zig runner StackTrace compilation error",
+        "Trace-aware checks, JSON Schema, publication and exact-head CI pending at record creation"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      },
+      "commands": "commands/2026-10-12-13-47-52-fbcc4603-da2d-4227-93d2-082e4cabf1d7.md"
+    },
+    {
+      "id": "af7a26dc-52c6-400b-8d3c-6b1ebd44990a",
+      "timestamp": "2026-10-12T13:47:53Z",
+      "kind": "text-spike-progress-checkpoint",
+      "summary": "Report current isolated branch, verified local writes, tests and fuzz blocker.",
+      "intentTags": [
+        "text-model",
+        "spike",
+        "verification"
+      ],
+      "conversation": "conversations/2026-10-12-13-47-53-af7a26dc-52c6-400b-8d3c-6b1ebd44990a.md",
+      "research": "researches/2026-10-12-13-47-53-af7a26dc-52c6-400b-8d3c-6b1ebd44990a.md",
+      "artifacts": [
+        "src/text",
+        "tests/text_equivalence.zig",
+        "tools/text_benchmark.zig",
+        "tools/text_memory.zig",
+        "tools/summarize_text_benchmark.py",
+        "docs/milestones/text-model-evidence.md",
+        "docs/milestones/text-model",
+        ".github/workflows/ci.yml",
+        "tickets/text-model-spike.md"
+      ],
+      "decisions": [
+        "independent-reference-oracle",
+        "piece-table-provisional-starting-point",
+        "separate-coverage-guided-blocker",
+        "preserve-measured-evidence"
+      ],
+      "verification": [
+        "Remote baseline e9903d7 and merged PR #7 confirmed; no duplicate open PR",
+        "Debug and ReleaseSafe code checks: 61 tests and negative compile fixtures pass",
+        "Two measured ReleaseFast runs, 14340 observations each; proposed-budget comparisons pass",
+        "Product ReleaseSafe build/run and workflow YAML parse pass",
+        "Coverage-guided campaign did not run: pinned Zig runner StackTrace compilation error",
+        "Trace-aware checks, JSON Schema, publication and exact-head CI pending at record creation"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "170e896d-f1ab-4eaf-a8dc-b94f76137bce",
+      "timestamp": "2026-10-12T14:51:26Z",
+      "kind": "benchmark-row-explanation",
+      "summary": "Explain milestone evidence and exact benchmark CSV units.",
+      "intentTags": [
+        "git-tracking",
+        "milestones",
+        "benchmark-evidence"
+      ],
+      "conversation": "conversations/2026-10-12-14-51-26-170e896d-f1ab-4eaf-a8dc-b94f76137bce.md",
+      "research": "researches/2026-10-12-14-51-26-170e896d-f1ab-4eaf-a8dc-b94f76137bce.md",
+      "commands": "commands/2026-10-12-14-51-26-170e896d-f1ab-4eaf-a8dc-b94f76137bce.md",
+      "artifacts": [
+        ".gitignore",
+        "src/text/README.md",
+        "src/adapters/protocol/README.md",
+        "tickets/text-model-spike.md",
+        "tickets/foundations-and-spikes.md",
+        "tickets/application-module-layout.md",
+        "tickets/foundation-primitives.md",
+        "tickets/headless-application-and-commands.md",
+        "tickets/protocol-framing-and-zls-spike.md"
+      ],
+      "decisions": [
+        "honor-latest-entire-directory-scope",
+        "preserve-local-files-and-published-history",
+        "repair-active-links-without-relocating-reports",
+        "keep-maintained-code-and-corpus-tracked"
+      ],
+      "verification": [
+        "Existing PR #8 remains open/draft at initial follow-up head",
+        "Fourteen milestone files preserved by hash comparison after untracking",
+        "Fresh ReleaseFast benchmark generated 14340 observations; CSV/summary/log ignored and untracked",
+        "Final exported-tree/schema/publication/exact-head CI checks pending at record creation"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "ba955372-7bf2-4c57-8a4b-59e91d32dc69",
+      "timestamp": "2026-10-12T14:51:27Z",
+      "kind": "ignore-generated-benchmark-outputs",
+      "summary": "Untrack generated outputs while preserving local evidence.",
+      "intentTags": [
+        "git-tracking",
+        "milestones",
+        "benchmark-evidence"
+      ],
+      "conversation": "conversations/2026-10-12-14-51-27-ba955372-7bf2-4c57-8a4b-59e91d32dc69.md",
+      "research": "researches/2026-10-12-14-51-27-ba955372-7bf2-4c57-8a4b-59e91d32dc69.md",
+      "commands": "commands/2026-10-12-14-51-27-ba955372-7bf2-4c57-8a4b-59e91d32dc69.md",
+      "artifacts": [
+        ".gitignore",
+        "src/text/README.md",
+        "src/adapters/protocol/README.md",
+        "tickets/text-model-spike.md",
+        "tickets/foundations-and-spikes.md",
+        "tickets/application-module-layout.md",
+        "tickets/foundation-primitives.md",
+        "tickets/headless-application-and-commands.md",
+        "tickets/protocol-framing-and-zls-spike.md"
+      ],
+      "decisions": [
+        "honor-latest-entire-directory-scope",
+        "preserve-local-files-and-published-history",
+        "repair-active-links-without-relocating-reports",
+        "keep-maintained-code-and-corpus-tracked"
+      ],
+      "verification": [
+        "Existing PR #8 remains open/draft at initial follow-up head",
+        "Fourteen milestone files preserved by hash comparison after untracking",
+        "Fresh ReleaseFast benchmark generated 14340 observations; CSV/summary/log ignored and untracked",
+        "Final exported-tree/schema/publication/exact-head CI checks pending at record creation"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "20be1a1f-d6e3-432b-9fee-1361306d53c4",
+      "timestamp": "2026-10-12T14:51:28Z",
+      "kind": "ignore-entire-milestones-directory",
+      "summary": "Keep the entire ZigIDE milestone directory local and ignored.",
+      "intentTags": [
+        "git-tracking",
+        "milestones",
+        "benchmark-evidence"
+      ],
+      "conversation": "conversations/2026-10-12-14-51-28-20be1a1f-d6e3-432b-9fee-1361306d53c4.md",
+      "research": "researches/2026-10-12-14-51-28-20be1a1f-d6e3-432b-9fee-1361306d53c4.md",
+      "commands": "commands/2026-10-12-14-51-28-20be1a1f-d6e3-432b-9fee-1361306d53c4.md",
+      "artifacts": [
+        ".gitignore",
+        "src/text/README.md",
+        "src/adapters/protocol/README.md",
+        "tickets/text-model-spike.md",
+        "tickets/foundations-and-spikes.md",
+        "tickets/application-module-layout.md",
+        "tickets/foundation-primitives.md",
+        "tickets/headless-application-and-commands.md",
+        "tickets/protocol-framing-and-zls-spike.md"
+      ],
+      "decisions": [
+        "honor-latest-entire-directory-scope",
+        "preserve-local-files-and-published-history",
+        "repair-active-links-without-relocating-reports",
+        "keep-maintained-code-and-corpus-tracked"
+      ],
+      "verification": [
+        "Existing PR #8 remains open/draft at initial follow-up head",
+        "Fourteen milestone files preserved by hash comparison after untracking",
+        "Fresh ReleaseFast benchmark generated 14340 observations; CSV/summary/log ignored and untracked",
+        "Final exported-tree/schema/publication/exact-head CI checks pending at record creation"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
     }
   ]
 }

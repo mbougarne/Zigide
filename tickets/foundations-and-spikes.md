@@ -15,7 +15,6 @@
 - **Acceptance criteria:**
   - [x] Every roadmap exit condition maps to at least one ticket in this epic.
   - [x] The checklist distinguishes automated checks, benchmarks, manual UI evidence, and ADR decisions.
-- **Evidence:** [Milestone 0 exit checklist](../docs/milestones/milestone-0-exit-checklist.md)
 
 ## ZIT-002: Publish Milestone 0 Evidence Report
 
@@ -27,4 +26,3 @@
 - **Acceptance criteria:**
   - [ ] The report links all required test, benchmark, protocol, and UI evidence.
   - [ ] Known limitations and unverified assumptions are explicit before Milestone 1 is declared started.
-- **Evidence:** [Milestone 0 evidence report](../docs/milestones/milestone-0-evidence-report.md); [ZIT-003–ZIT-007 evidence addendum](../docs/milestones/application-module-layout-evidence.md)

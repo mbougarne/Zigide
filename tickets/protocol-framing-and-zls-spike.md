@@ -84,4 +84,4 @@
 
 ## Validation evidence
 
-See the [protocol framing and ZLS evidence report](../docs/milestones/protocol-framing-zls-evidence.md) for executable coverage, the recorded real ZLS handshake, and the separately blocked optional coverage-guided runner.
+See the [protocol contract and reproduction commands](../src/adapters/protocol/README.md). CI runs the real ZLS handshake separately from ordinary tests; the optional coverage-guided campaign remains blocked by the pinned runner.
