@@ -5,7 +5,7 @@
 - **Goal:** Implement only the shared primitives required by concrete application services.
 - **Architecture:** [State and concurrency](../docs/architecture/02-system-architecture.md#state-and-concurrency), [Observability](../docs/architecture/04-data-safety-and-operations.md#observability)
 
-- **Verification evidence:** [ZIT-008–ZIT-013 evidence addendum](../docs/milestones/foundation-primitives-evidence.md)
+- **Verification:** `zig build unit-test` exercises foundation behavior and allocation failures.
 
 ## ZIT-008: Implement Typed IDs and Injectable Clocks
 

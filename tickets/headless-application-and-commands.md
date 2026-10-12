@@ -27,7 +27,7 @@
   - [x] Duplicate and unknown IDs return explicit errors.
   - [x] Registration order does not alter lookup semantics.
 
-Evidence for ZIT-014 and ZIT-015: [headless composition and registry addendum](../docs/milestones/headless-application-commands-evidence.md).
+Verification for ZIT-014 and ZIT-015: `zig build unit-test` and `zig build integration-test`.
 
 ## ZIT-016: Validate Command Arguments and Preconditions
 
@@ -73,4 +73,4 @@ Evidence for ZIT-014 and ZIT-015: [headless composition and registry addendum](.
   - [x] Tests can inject successes, expected failures, delays, and cancellation without real OS effects.
   - [x] ADR-0001 headless-substitution validation is demonstrably satisfied.
 
-Validation: [ZIT-016–019 evidence](../docs/milestones/headless-lifecycle-evidence.md).
+Validation: `zig build check`.

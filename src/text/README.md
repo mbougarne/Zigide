@@ -59,11 +59,16 @@ case. `zig build check` includes this suite and ordinary repository checks.
 
 `zig build text-test --fuzz=10000` requests a separate coverage-guided campaign.
 Corpus replay during ordinary tests does **not** establish that a campaign ran.
-The pinned runner currently fails to compile in fuzz mode; the
-[evidence report](../../docs/milestones/text-model-evidence.md) records the failure.
+The pinned Zig 0.16.0 runner fails to compile in fuzz mode at
+`compiler/test_runner.zig:566` because `builtin.StackTrace` and `debug.StackTrace`
+are incompatible. The coverage-guided campaign has not run.
 
 `zig build text-benchmark -Doptimize=ReleaseFast -- .zig-cache/text-benchmark.csv`
 runs the generated workloads and writes raw timings and requested-byte accounting.
-`python3 tools/summarize_text_benchmark.py .zig-cache/text-benchmark.csv` emits
+`python3 tools/summarize_text_benchmark.py .zig-cache/text-benchmark.csv > .zig-cache/text-benchmark-summary.csv` emits
 median, nearest-rank p95, maximum, sample counts, and memory checkpoints using
 only Python's standard library. Benchmarks are separate acceptance evidence.
+
+Generated measurements, summaries and logs stay in ignored `.zig-cache/`; they
+are not IDE runtime inputs. CI uploads its raw CSV as a downloadable artifact.
+Maintained regression fixtures stay tracked.

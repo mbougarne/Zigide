@@ -82,6 +82,6 @@
   - [x] Trade-offs and rejected alternatives are explicit.
   - [x] Disposable prototype code is removed if it is not the production starting point.
 
-## Spike evidence
+## Spike verification
 
-See the [contract](../src/text/README.md) and [measured recommendation](../docs/milestones/text-model-evidence.md). Seeded equivalence and allocation tests, retained benchmark observations, and the blocked coverage-guided campaign are reported separately. Production transactions, compaction, and budget confirmation remain in ZIT-044–051.
+See the [contract and reproduction commands](../src/text/README.md). Seeded equivalence and allocation tests run through `zig build text-test`; ReleaseFast benchmarks and the blocked coverage-guided campaign are separate evidence. CI uploads raw benchmark observations. The piece table remains a provisional production starting point; transactions, index improvements, compaction and budget confirmation remain in ZIT-044–051.

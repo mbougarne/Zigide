@@ -1275,6 +1275,129 @@
         "committed": false,
         "pushed": false
       }
+    },
+    {
+      "id": "170e896d-f1ab-4eaf-a8dc-b94f76137bce",
+      "timestamp": "2026-10-12T14:51:26Z",
+      "kind": "benchmark-row-explanation",
+      "summary": "Explain milestone evidence and exact benchmark CSV units.",
+      "intentTags": [
+        "git-tracking",
+        "milestones",
+        "benchmark-evidence"
+      ],
+      "conversation": "conversations/2026-10-12-14-51-26-170e896d-f1ab-4eaf-a8dc-b94f76137bce.md",
+      "research": "researches/2026-10-12-14-51-26-170e896d-f1ab-4eaf-a8dc-b94f76137bce.md",
+      "commands": "commands/2026-10-12-14-51-26-170e896d-f1ab-4eaf-a8dc-b94f76137bce.md",
+      "artifacts": [
+        ".gitignore",
+        "src/text/README.md",
+        "src/adapters/protocol/README.md",
+        "tickets/text-model-spike.md",
+        "tickets/foundations-and-spikes.md",
+        "tickets/application-module-layout.md",
+        "tickets/foundation-primitives.md",
+        "tickets/headless-application-and-commands.md",
+        "tickets/protocol-framing-and-zls-spike.md"
+      ],
+      "decisions": [
+        "honor-latest-entire-directory-scope",
+        "preserve-local-files-and-published-history",
+        "repair-active-links-without-relocating-reports",
+        "keep-maintained-code-and-corpus-tracked"
+      ],
+      "verification": [
+        "Existing PR #8 remains open/draft at initial follow-up head",
+        "Fourteen milestone files preserved by hash comparison after untracking",
+        "Fresh ReleaseFast benchmark generated 14340 observations; CSV/summary/log ignored and untracked",
+        "Final exported-tree/schema/publication/exact-head CI checks pending at record creation"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "ba955372-7bf2-4c57-8a4b-59e91d32dc69",
+      "timestamp": "2026-10-12T14:51:27Z",
+      "kind": "ignore-generated-benchmark-outputs",
+      "summary": "Untrack generated outputs while preserving local evidence.",
+      "intentTags": [
+        "git-tracking",
+        "milestones",
+        "benchmark-evidence"
+      ],
+      "conversation": "conversations/2026-10-12-14-51-27-ba955372-7bf2-4c57-8a4b-59e91d32dc69.md",
+      "research": "researches/2026-10-12-14-51-27-ba955372-7bf2-4c57-8a4b-59e91d32dc69.md",
+      "commands": "commands/2026-10-12-14-51-27-ba955372-7bf2-4c57-8a4b-59e91d32dc69.md",
+      "artifacts": [
+        ".gitignore",
+        "src/text/README.md",
+        "src/adapters/protocol/README.md",
+        "tickets/text-model-spike.md",
+        "tickets/foundations-and-spikes.md",
+        "tickets/application-module-layout.md",
+        "tickets/foundation-primitives.md",
+        "tickets/headless-application-and-commands.md",
+        "tickets/protocol-framing-and-zls-spike.md"
+      ],
+      "decisions": [
+        "honor-latest-entire-directory-scope",
+        "preserve-local-files-and-published-history",
+        "repair-active-links-without-relocating-reports",
+        "keep-maintained-code-and-corpus-tracked"
+      ],
+      "verification": [
+        "Existing PR #8 remains open/draft at initial follow-up head",
+        "Fourteen milestone files preserved by hash comparison after untracking",
+        "Fresh ReleaseFast benchmark generated 14340 observations; CSV/summary/log ignored and untracked",
+        "Final exported-tree/schema/publication/exact-head CI checks pending at record creation"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "20be1a1f-d6e3-432b-9fee-1361306d53c4",
+      "timestamp": "2026-10-12T14:51:28Z",
+      "kind": "ignore-entire-milestones-directory",
+      "summary": "Keep the entire ZigIDE milestone directory local and ignored.",
+      "intentTags": [
+        "git-tracking",
+        "milestones",
+        "benchmark-evidence"
+      ],
+      "conversation": "conversations/2026-10-12-14-51-28-20be1a1f-d6e3-432b-9fee-1361306d53c4.md",
+      "research": "researches/2026-10-12-14-51-28-20be1a1f-d6e3-432b-9fee-1361306d53c4.md",
+      "commands": "commands/2026-10-12-14-51-28-20be1a1f-d6e3-432b-9fee-1361306d53c4.md",
+      "artifacts": [
+        ".gitignore",
+        "src/text/README.md",
+        "src/adapters/protocol/README.md",
+        "tickets/text-model-spike.md",
+        "tickets/foundations-and-spikes.md",
+        "tickets/application-module-layout.md",
+        "tickets/foundation-primitives.md",
+        "tickets/headless-application-and-commands.md",
+        "tickets/protocol-framing-and-zls-spike.md"
+      ],
+      "decisions": [
+        "honor-latest-entire-directory-scope",
+        "preserve-local-files-and-published-history",
+        "repair-active-links-without-relocating-reports",
+        "keep-maintained-code-and-corpus-tracked"
+      ],
+      "verification": [
+        "Existing PR #8 remains open/draft at initial follow-up head",
+        "Fourteen milestone files preserved by hash comparison after untracking",
+        "Fresh ReleaseFast benchmark generated 14340 observations; CSV/summary/log ignored and untracked",
+        "Final exported-tree/schema/publication/exact-head CI checks pending at record creation"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
     }
   ]
 }
