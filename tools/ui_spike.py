@@ -162,7 +162,9 @@ def main():
     OUT.mkdir(parents=True, exist_ok=True)
     app = bundle(args.candidate, args.input_fixture)
     if args.action == "bundle":
-        print(app)
+        archive = app.with_suffix(".zip")
+        subprocess.run(["ditto", "-c", "-k", "--keepParent", str(app), str(archive)], check=True)
+        print(json.dumps({"bundle": str(app), "archive": str(archive)}))
     elif args.action == "launch":
         log = OUT / f"{args.candidate}-interactive.jsonl"
         with log.open("a") as stream:

@@ -88,6 +88,9 @@ python3 tools/ui_spike.py measure webview --repetitions 5
 python3 tools/ui_spike.py measure dvui --repetitions 5
 ```
 
+Bundle commands also create ZIP archives with executable permissions preserved.
+CI uploads these archives so downloaded bundles remain launchable.
+
 JSON/JSONL evidence and all bundles remain in ignored `zig-out/ui-spike/`.
 `docs/milestones/` stays ignored and no milestone report is generated. Measurements
 retain OS/hardware, build mode, executable hash, source head/dirty state, full
