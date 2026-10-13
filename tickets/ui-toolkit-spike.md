@@ -104,8 +104,13 @@ no milestone document is added.
 
 ZIT-038 and ZIT-039 remain blocked: automated contracts and AppKit device inspection
 exist, but physical Japanese IME and VoiceOver checks for every viable candidate do
-not. No Japanese IME is enabled on the target Mac, settings approval is pending,
-and the computer-use transport closed before the remaining inspections.
+not. The user chose the existing Arabic input source and silent/offscreen tests;
+the user has since added Japanese Kana input, verified read-only. No agent input
+switching or VoiceOver activation is authorized, and timing approval for visible
+interaction is pending. Arabic/RTL
+coverage is separate from marked-text composition. The computer-use transport
+closed before the remaining inspections. Visible checks are deferred until an
+uninterrupted, explicitly authorized review.
 ZIT-040 has reproducible warm-launch, RSS, fixture-scroll, background and packaging
 measurements; physical scrolling under input, display-scale changes, cold launches
 and complete WebKit process memory remain unverified. ZIT-041 has a scored

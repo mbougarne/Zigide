@@ -7,17 +7,28 @@ pub const main = dvui.App.main;
 pub const panic = dvui.App.panic;
 pub const std_options: std.Options = .{ .logFn = dvui.App.logFn };
 pub const dvui_app: dvui.App = .{
-    .config = .{ .options = .{
+    .config = .{ .startFn = &startOptions },
+    .initFn = initialize,
+    .frameFn = frame,
+    .deinitFn = deinitialize,
+};
+
+fn startOptions() dvui.App.StartOptions {
+    const init = dvui.App.main_init.?;
+    const args = init.minimal.args.toSlice(init.arena.allocator()) catch @panic("OOM");
+    var hidden = false;
+    for (args[1..]) |arg| {
+        if (std.mem.eql(u8, arg, "--probe")) hidden = true;
+    }
+    return .{
         .size = .{ .w = scenario.width, .h = scenario.height },
         .min_size = .{ .w = 640, .h = 480 },
         .title = "Zigide UI spike · DVUI",
         .org = "zigide-spike",
         .persist_window_geometry = false,
-    } },
-    .initFn = initialize,
-    .frameFn = frame,
-    .deinitFn = deinitialize,
-};
+        .hidden = hidden,
+    };
+}
 
 const Search = struct {
     bytes: []const u8,
@@ -160,7 +171,7 @@ fn frame() !dvui.App.Result {
     }
     if (frames == 3) {
         ready_at = clock();
-        emit("{{\"event\":\"ready\",\"candidate\":\"dvui\",\"startup_ms\":{d},\"fixture_bytes\":{d},\"scale\":{d},\"build_mode\":\"{s}\"}}", .{ milliseconds(ready_at - started), worker.bytes.len, win.content_scale, @tagName(@import("builtin").mode) });
+        emit("{{\"event\":\"ready\",\"candidate\":\"dvui\",\"startup_ms\":{d},\"fixture_bytes\":{d},\"scale\":{d},\"build_mode\":\"{s}\",\"offscreen\":{}}}", .{ milliseconds(ready_at - started), worker.bytes.len, win.content_scale, @tagName(@import("builtin").mode), probe });
     }
     if (probe) {
         dvui.refresh(null, @src(), null);

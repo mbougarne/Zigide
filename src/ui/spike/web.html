@@ -30,6 +30,7 @@
 const editor = document.getElementById('editor');
 const result = document.getElementById('result');
 let version = 0;
+let clipboardSample = '';
 let composing = false;
 let compositionInputs = 0;
 const send = body => window.webkit.messageHandlers.spike.postMessage(body);
@@ -42,7 +43,7 @@ editor.addEventListener('input', event => {
 });
 document.getElementById('file').onclick = () => editor.focus();
 document.getElementById('search').onclick = () => send({type: 'search', version});
-window.spikeLoad = text => { editor.value = text; editor.focus(); send({type: 'ready'}); };
+window.spikeLoad = (text, sample) => { editor.value = text; clipboardSample = sample; editor.focus(); send({type: 'ready'}); };
 window.spikeResult = (sourceVersion, count) => {
   if (sourceVersion !== version || composing) return false;
   result.textContent = `${count} matches · version ${sourceVersion}`;
@@ -52,7 +53,7 @@ window.spikeResult = (sourceVersion, count) => {
 // These are contract probes. Trusted clipboard/IME and VoiceOver require device inspection.
 window.spikeProbe = () => {
   const original = editor.value;
-  const sample = 'café 😀\n日本語\né\n';
+  const sample = clipboardSample;
   editor.value = sample;
   editor.setSelectionRange(0, sample.length);
   const selection = editor.value.slice(editor.selectionStart, editor.selectionEnd) === sample;

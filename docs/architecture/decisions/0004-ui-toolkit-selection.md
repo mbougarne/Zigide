@@ -66,7 +66,11 @@ worker delivery. These probes do not establish physical IME or VoiceOver success
 Target-device AppKit inspection exposed labels, editor text/selection, scroll
 controls, focus and results, and a Unicode paste was observed. The remaining
 interactive checks were blocked by the closed computer-use transport. The target
-Mac has no Japanese IME enabled; adding one requires explicit settings approval.
+Mac initially had no Japanese IME enabled. The user subsequently added the
+built-in Japanese Kana input source, whose availability was verified read-only.
+The user requested silent testing; no input switching, visible interaction or
+VoiceOver activation is authorized while timing approval is pending. Arabic round-trip coverage does not establish marked-text composition
+or rendered RTL correctness.
 
 ### Preliminary scored comparison
 
@@ -96,6 +100,8 @@ not committed. `tools/ui_spike.py` retains individual samples, hardware, build m
 executable hash, fixture, startup bounds, RSS limitations, scrolling method,
 background latency and package size under ignored `zig-out/ui-spike/`. CI builds
 and uploads bundles; CI does not certify physical-device input or screen-reader use.
+Automated probes are now offscreen and report that mode explicitly; offscreen
+timings must not replace the retained earlier visible-window observations.
 
 **Status remains Proposed.** ZIT-038–ZIT-041 cannot be declared complete until the
 remaining target-device input/accessibility and performance observations exist.

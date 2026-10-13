@@ -15,6 +15,10 @@ a worker and delivers a versioned result on the UI thread. This is intentionally
 fixture search, not a production workspace search service. Stale results are
 suppressed. All candidates allow edits, selection and clipboard interaction.
 
+The clipboard contract includes Arabic text as well as Japanese, emoji and a
+combining accent. Arabic Unicode round-trip is separate from rendered RTL and
+marked-text composition verification.
+
 `scenario.zig` defines behavior, fixture, result validity and scoring. Weights are
 input 35, accessibility 25, performance 15, packaging 10, Zig ownership 10 and
 maintenance 5. Observations score 0 (failed/unverified), 1 (partial) or 2 (passed),
@@ -91,6 +95,12 @@ python3 tools/ui_spike.py measure dvui --repetitions 5
 Bundle commands also create ZIP archives with executable permissions preserved.
 CI uploads these archives so downloaded bundles remain launchable.
 
+Automated `measure`/`--probe` runs are offscreen: they neither show nor focus the
+candidate window. They retain `*-measurements-offscreen.json` and clearly identify
+the offscreen mode. These timings cannot certify visible-window startup or physical
+scrolling. Interactive `launch` is an explicit opt-in for an uninterrupted manual
+review; do not repeatedly launch/focus visible windows during automated work.
+
 JSON/JSONL evidence and all bundles remain in ignored `zig-out/ui-spike/`.
 `docs/milestones/` stays ignored and no milestone report is generated. Measurements
 retain OS/hardware, build mode, executable hash, source head/dirty state, full
@@ -110,12 +120,14 @@ results; it does not falsely label input or VoiceOver as verified.
 
 For **every viable candidate**, use the same interactive fixture to:
 
-1. Paste multiline `café 😀`, Japanese and a combining accent; select with the
+1. Use the existing Arabic input source. Paste multiline `café 😀`, Arabic,
+   Japanese and a combining accent; select with the
    keyboard, copy, replace and paste back; check newlines and grapheme rendering.
-2. Use an installed Japanese IME: update a mark, select a candidate, commit and
+2. When a composing IME is already available and interaction is approved: update a mark, select a candidate, commit and
    cancel another composition. Watch text/selection and ensure background delivery
-   does not interrupt composition. Paste alone does not establish IME correctness.
-3. Use VoiceOver to traverse explorer, file/search actions, editor and results;
+   does not interrupt composition. Arabic input/RTL and paste do not establish
+   marked-text IME correctness; these checks remain pending without an appropriate IME.
+3. When explicitly approved, use VoiceOver to traverse explorer, file/search actions, editor and results;
    inspect labels, text, selection, focus order/restoration and perform an edit.
 4. Scroll the large fixture, resize the window, move between display scales and
    type while background results arrive. Record failures and the actual environment.

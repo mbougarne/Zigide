@@ -3,6 +3,7 @@
 #import <mach/mach.h>
 #import <stdbool.h>
 
+extern const char *zigide_ui_clipboard_sample(void);
 extern const char *zigide_ui_build_mode(void);
 extern size_t zigide_ui_search(const unsigned char *bytes, size_t length);
 
@@ -74,8 +75,10 @@ static void emit(NSDictionary *record) {
     } else {
         [self buildNativeViews];
     }
-    [self.window makeKeyAndOrderFront:nil];
-    [NSApp activateIgnoringOtherApps:YES];
+    if (!self.probe) {
+        [self.window makeKeyAndOrderFront:nil];
+        [NSApp activateIgnoringOtherApps:YES];
+    }
     self.lastTick = nowMs();
     self.heartbeat = [NSMutableArray new];
     self.timer = [NSTimer scheduledTimerWithTimeInterval:0.01 repeats:YES block:^(NSTimer *timer) {
@@ -159,7 +162,8 @@ static void emit(NSDictionary *record) {
     emit(@{@"event": @"ready", @"candidate": self.useWeb ? @"webview" : @"appkit",
            @"startup_ms": @(nowMs() - self.started), @"fixture_bytes": @(self.fixture.length),
            @"scale": @(self.window.backingScaleFactor),
-           @"build_mode": [NSString stringWithUTF8String:zigide_ui_build_mode()]});
+           @"build_mode": [NSString stringWithUTF8String:zigide_ui_build_mode()],
+           @"offscreen": @(self.probe)});
     if (self.probe) {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC), dispatch_get_main_queue(), ^{
             struct mach_task_basic_info idle;
@@ -189,7 +193,7 @@ static void emit(NSDictionary *record) {
 
 - (void)probeNative {
     NSString *original = [self.editor.string copy];
-    NSString *sample = @"café 😀\n日本語\né\n";
+    NSString *sample = [NSString stringWithUTF8String:zigide_ui_clipboard_sample()];
     self.editor.string = sample;
     self.editor.selectedRange = NSMakeRange(0, sample.length);
     NSPasteboard *pasteboard = [NSPasteboard pasteboardWithUniqueName];
@@ -294,9 +298,9 @@ static void emit(NSDictionary *record) {
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
     (void)navigation;
     NSString *text = [[NSString alloc] initWithData:self.fixture encoding:NSUTF8StringEncoding];
-    NSData *json = [NSJSONSerialization dataWithJSONObject:@[text] options:0 error:nil];
+    NSData *json = [NSJSONSerialization dataWithJSONObject:@[text, [NSString stringWithUTF8String:zigide_ui_clipboard_sample()]] options:0 error:nil];
     NSString *array = [[NSString alloc] initWithData:json encoding:NSUTF8StringEncoding];
-    NSString *script = [NSString stringWithFormat:@"window.spikeLoad(%@[0])", array];
+    NSString *script = [NSString stringWithFormat:@"window.spikeLoad(...%@)", array];
     [webView evaluateJavaScript:script completionHandler:^(id value, NSError *error) {
         (void)value;
         if (error) {
@@ -377,7 +381,7 @@ size_t zigide_ui_fixture_lines(void) {
 int zigide_ui_run(const unsigned char *bytes, size_t length, bool web, bool probe) {
     @autoreleasepool {
         [NSApplication sharedApplication];
-        [NSApp setActivationPolicy:NSApplicationActivationPolicyRegular];
+        [NSApp setActivationPolicy:probe ? NSApplicationActivationPolicyProhibited : NSApplicationActivationPolicyRegular];
         installMenu();
         Spike *spike = [Spike new];
         spike.fixture = [NSData dataWithBytes:bytes length:length];

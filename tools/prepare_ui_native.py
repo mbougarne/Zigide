@@ -4,6 +4,7 @@ import argparse
 from pathlib import Path
 import subprocess
 import tarfile
+import time
 import urllib.request
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -15,10 +16,15 @@ PACKAGES = (
 )
 
 
-def extract_checked(archive, destination):
+def extract_checked(archive, destination, prefix=None):
     """Only regular files/directories with paths contained by the destination."""
     with tarfile.open(archive) as source:
         for entry in source.getmembers():
+            if prefix is not None:
+                parts = Path(entry.name).parts
+                if not parts or parts[0] != prefix:
+                    raise ValueError(f"Unexpected package prefix: {entry.name}")
+                entry.name = str(Path(*parts[1:]))
             target = (destination / entry.name).resolve()
             if destination.resolve() not in (target, *target.parents) or not (entry.isfile() or entry.isdir()):
                 raise ValueError(f"Unsafe package entry: {entry.name}")
@@ -47,8 +53,14 @@ def main():
         if actual != expected:
             raise RuntimeError(f"{name} package hash mismatch: {actual}")
         destination = packages / expected
+        marker = "build.zig" if name == "dvui" else "include/accesskit.h"
+        if destination.exists() and not (destination / marker).is_file():
+            # Preserve a previously generated nested layout while repairing it.
+            destination.rename(storage / f"{name}-old-layout-{time.monotonic_ns()}")
         if not destination.exists():
-            extract_checked(storage / "p" / (expected + ".tar.gz"), destination)
+            extract_checked(storage / "p" / (expected + ".tar.gz"), destination, prefix=expected)
+        if not (destination / marker).is_file():
+            raise RuntimeError(f"{name} extraction lacks {marker}")
         print(f"Verified {name}: {expected}", flush=True)
     if not args.prepare_only:
         version = subprocess.check_output(["pkg-config", "--modversion", "sdl3"], text=True).strip()

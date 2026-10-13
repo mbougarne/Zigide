@@ -112,7 +112,7 @@ def process_memory(pid):
 def measure(candidate, app, repetitions):
     measurements = []
     for iteration in range(repetitions):
-        log = OUT / f"{candidate}-{iteration}.jsonl"
+        log = OUT / f"{candidate}-offscreen-{iteration}.jsonl"
         peak = {"host_rss_bytes": 0, "descendant_rss_bytes": 0, "descendant_count": 0}
         ready_wall_ms = None
         started = time.monotonic()
@@ -199,7 +199,9 @@ def main():
                              "local ad-hoc integrity signatures only; distribution signing/notarization are outside this spike"],
             "samples": rows,
         }
-        path = OUT / f"{args.candidate}-measurements.json"
+        report["offscreen"] = all(event.get("offscreen") for row in rows for event in row["events"] if event["event"] == "ready")
+        report["limitations"].append("offscreen probes do not establish visible-window startup, physical scrolling or interactive behavior")
+        path = OUT / f"{args.candidate}-measurements-offscreen.json"
         path.write_text(json.dumps(report, indent=2) + "\n")
         startups = [event["startup_ms"] for row in rows for event in row["events"] if event["event"] == "ready"]
         print(json.dumps({"candidate": args.candidate, "startup_median_ms": statistics.median(startups),

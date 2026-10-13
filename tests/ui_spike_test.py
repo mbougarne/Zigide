@@ -73,6 +73,27 @@ class ExtractionTests(unittest.TestCase):
                     prepare.extract_checked(archive, root / "output")
                 self.assertFalse((root / "escape").exists())
 
+    def test_fetch_archive_prefix_is_removed(self):
+        with tempfile.TemporaryDirectory() as storage:
+            root = Path(storage)
+            archive = root / "package.tar.gz"
+            with tarfile.open(archive, "w:gz") as stream:
+                entry = tarfile.TarInfo("hash-id/build.zig")
+                entry.size = 4
+                stream.addfile(entry, io.BytesIO(b"test"))
+            prepare.extract_checked(archive, root / "output", prefix="hash-id")
+            self.assertEqual((root / "output/build.zig").read_bytes(), b"test")
+            self.assertFalse((root / "output/hash-id").exists())
+
+    def test_unexpected_fetch_archive_prefix_is_rejected(self):
+        with tempfile.TemporaryDirectory() as storage:
+            root = Path(storage)
+            archive = root / "package.tar.gz"
+            with tarfile.open(archive, "w:gz") as stream:
+                stream.addfile(tarfile.TarInfo("unexpected/file"))
+            with self.assertRaises(ValueError):
+                prepare.extract_checked(archive, root / "output", prefix="hash-id")
+
     def test_contained_regular_file_is_extracted(self):
         with tempfile.TemporaryDirectory() as storage:
             root = Path(storage)

@@ -5,6 +5,10 @@ const scenario = @import("ui_scenario");
 extern fn zigide_ui_fixture_lines() usize;
 extern fn zigide_ui_run(bytes: [*]const u8, len: usize, web: bool, probe: bool) c_int;
 
+export fn zigide_ui_clipboard_sample() [*:0]const u8 {
+    return scenario.clipboard_text.ptr;
+}
+
 export fn zigide_ui_build_mode() [*:0]const u8 {
     return @tagName(@import("builtin").mode);
 }

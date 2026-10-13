@@ -3,7 +3,7 @@ const std = @import("std");
 
 pub const line = "const café = \"日本語 😀 é\"; // needle\n";
 pub const line_count = 100_000;
-pub const clipboard_text = "café 😀\n日本語\né\n";
+pub const clipboard_text: [:0]const u8 = "café 😀\nالعربية\n日本語\né\n";
 pub const width = 1100;
 pub const height = 760;
 pub const explorer_width = 220;
@@ -67,6 +67,7 @@ test "same large Unicode fixture and background result for every candidate" {
     const bytes = try fixture(std.testing.allocator, line_count);
     defer std.testing.allocator.free(bytes);
     try std.testing.expect(std.unicode.utf8ValidateSlice(bytes));
+    try std.testing.expect(std.unicode.utf8ValidateSlice(clipboard_text));
     try std.testing.expectEqual(line_count, search(bytes));
     try std.testing.expectEqual(line_count * line.len, bytes.len);
     try std.testing.expect(std.mem.endsWith(u8, bytes, "\n"));
