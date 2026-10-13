@@ -43,3 +43,67 @@ Correct text input and recoverable editing outrank visual novelty. Then consider
 ## Validation
 
 Publish the spike code, measurements, screenshots, failures, and a scored comparison. Update this record with the accepted choice or supersede it.
+
+## Spike implementation and decision gate (2026-10-13)
+
+ZIT-034–ZIT-041 have one shared scenario and three isolated candidate adapters.
+See the [spike contract and reproduction commands](../../../src/ui/spike/README.md).
+The main application and its package dependency graph remain toolkit-independent.
+
+Direct AppKit and system WKWebView build through a Zig entry point and an
+Objective-C C ABI. The native candidate is DVUI 0.5.0-dev at
+`475280a68b79aa1fae2be08c5726367b5e560943` (MIT), with installed SDL3 3.4.14 and
+pinned static AccessKit-C 0.23.0. DVUI is selected for the native comparison because
+it supports the pinned Zig 0.16 toolchain and maintained multiline/accessibility
+primitives. Capy's documented macOS text controls are missing; Mach would require
+a custom widget system. No custom UI framework is part of this spike.
+
+All three adapters compile and produce local bundles. Automated AppKit probes
+cover Unicode private-pasteboard round-trip, marked-text updates, commit,
+cancellation and accessibility value. Web probes cover selection, composition
+message deferral and stale results. DVUI probes cover full-fixture rendering and
+worker delivery. These probes do not establish physical IME or VoiceOver success.
+Target-device AppKit inspection exposed labels, editor text/selection, scroll
+controls, focus and results, and a Unicode paste was observed. The remaining
+interactive checks were blocked by the closed computer-use transport. The target
+Mac initially had no Japanese IME enabled. The user subsequently added the
+built-in Japanese Kana input source, whose availability was verified read-only.
+The user requested silent testing; no input switching, visible interaction or
+VoiceOver activation is authorized while timing approval is pending. Arabic round-trip coverage does not establish marked-text composition
+or rendered RTL correctness.
+
+### Preliminary scored comparison
+
+Each cell is 0 (failed/unverified), 1 (partial), or 2 (passed). Scores use the shared
+weights: input 35, accessibility 25, performance 15, packaging 10, Zig ownership 10,
+maintenance 5. This table scores available evidence and implementation costs,
+not undocumented claims about toolkit capabilities.
+
+| Candidate | Input | Accessibility | Performance | Packaging | Zig ownership | Maintenance | Score / 200 | Production eligible |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| AppKit | 1 | 1 | 1 | 2 | 1 | 2 | 115 | No |
+| DVUI + SDL3 + AccessKit | 0 | 0 | 1 | 2 | 2 | 1 | 60 | No |
+| System WKWebView | 1 | 0 | 1 | 2 | 0 | 2 | 80 | No |
+
+AppKit is the provisional recommendation because its input-client probes and
+observed native text exposure provide the strongest evidence so far. Its binding
+surface, platform-specific implementation and large-document layout/memory costs
+remain material. DVUI offers the most Zig UI ownership but its physical composition,
+font fallback and VoiceOver costs are unverified. WKWebView adds HTML/CSS/JavaScript,
+asynchronous debugging and a web/native bridge; reparented WebKit processes prevent
+host RSS from establishing total memory cost. The first accessibility snapshot
+exposed only the outer WebView container; its label override was removed, but the
+corrected tree could not be reinspected after transport loss.
+
+Measurements and screenshots remain local evidence; generated data and logs are
+not committed. `tools/ui_spike.py` retains individual samples, hardware, build mode,
+executable hash, fixture, startup bounds, RSS limitations, scrolling method,
+background latency and package size under ignored `zig-out/ui-spike/`. CI builds
+and uploads bundles; CI does not certify physical-device input or screen-reader use.
+Automated probes are now offscreen and report that mode explicitly; offscreen
+timings must not replace the retained earlier visible-window observations.
+
+**Status remains Proposed.** ZIT-038–ZIT-041 cannot be declared complete until the
+remaining target-device input/accessibility and performance observations exist.
+The production editor view remains blocked. A later independent Zig UI project
+can replace the chosen adapter through the same boundary after its own evidence.

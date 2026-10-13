@@ -7,51 +7,51 @@
 
 ## ZIT-034: Build the Shared UI Spike Scenario
 
-- **Status:** Planned
+- **Status:** Done
 - **Priority:** P0
 - **Estimate:** 2-3 days
 - **Dependencies:** ZIT-005, ZIT-012
 - **Description:** Define the same explorer/editor/panel scenario, document fixture, background result, measurements, and scoring weights for all candidates.
 - **Acceptance criteria:**
-  - [ ] Candidate implementations are compared against identical required behavior.
-  - [ ] Correct input and accessibility carry more weight than visual novelty.
+  - [x] Candidate implementations are compared against identical required behavior.
+  - [x] Correct input and accessibility carry more weight than visual novelty.
 
 ## ZIT-035: Spike Direct AppKit Integration
 
-- **Status:** Planned
+- **Status:** Done
 - **Priority:** P0
 - **Estimate:** 3-5 days
 - **Dependencies:** ZIT-034
 - **Description:** Implement the shared scenario through Zig-to-AppKit integration and record binding and platform costs.
 - **Acceptance criteria:**
-  - [ ] The scenario builds and bundles on macOS arm64 or documents the exact blocker.
-  - [ ] Toolkit types remain confined to the spike adapter.
+  - [x] The scenario builds and bundles on macOS arm64 or documents the exact blocker.
+  - [x] Toolkit types remain confined to the spike adapter.
 
 ## ZIT-036: Spike the Strongest Native Zig Toolkit
 
-- **Status:** Planned
+- **Status:** Done
 - **Priority:** P0
 - **Estimate:** 3-5 days
 - **Dependencies:** ZIT-034
 - **Description:** Select the best-maintained candidate among the documented native Zig options and implement the shared scenario.
 - **Acceptance criteria:**
-  - [ ] Exact version, license, maintenance evidence, and missing IDE capabilities are recorded.
-  - [ ] Build or behavior failures remain published evidence rather than being hidden.
+  - [x] Exact version, license, maintenance evidence, and missing IDE capabilities are recorded.
+  - [x] Build or behavior failures remain published evidence rather than being hidden.
 
 ## ZIT-037: Spike the System WebView Option
 
-- **Status:** Planned
+- **Status:** Done
 - **Priority:** P1
 - **Estimate:** 3-5 days
 - **Dependencies:** ZIT-034
 - **Description:** Implement the shared scenario with WKWebView without bundling a browser runtime and measure the non-Zig surface.
 - **Acceptance criteria:**
-  - [ ] Native/web boundary, packaging, startup, memory, and debugging costs are recorded.
-  - [ ] The scenario does not imply future webview extension support.
+  - [x] Native/web boundary, packaging, startup, memory, and debugging costs are recorded.
+  - [x] The scenario does not imply future webview extension support.
 
 ## ZIT-038: Verify Clipboard and IME Behavior
 
-- **Status:** Planned
+- **Status:** Blocked
 - **Priority:** P0
 - **Estimate:** 1-2 days per viable candidate
 - **Dependencies:** ZIT-035, ZIT-036, ZIT-037
@@ -62,7 +62,7 @@
 
 ## ZIT-039: Verify UI Accessibility Behavior
 
-- **Status:** Planned
+- **Status:** Blocked
 - **Priority:** P0
 - **Estimate:** 1-2 days per viable candidate
 - **Dependencies:** ZIT-035, ZIT-036, ZIT-037
@@ -73,7 +73,7 @@
 
 ## ZIT-040: Measure UI Performance and Packaging
 
-- **Status:** Planned
+- **Status:** Blocked
 - **Priority:** P1
 - **Estimate:** 2-3 days
 - **Dependencies:** ZIT-035, ZIT-036, ZIT-037
@@ -84,7 +84,7 @@
 
 ## ZIT-041: Score Candidates and Resolve ADR-0004
 
-- **Status:** Planned
+- **Status:** Blocked
 - **Priority:** P0
 - **Estimate:** 1-2 days
 - **Dependencies:** ZIT-038, ZIT-039, ZIT-040
@@ -92,3 +92,27 @@
 - **Acceptance criteria:**
   - [ ] Source, versions, licenses, measurements, screenshots, and failures are linked.
   - [ ] Production editor UI work remains blocked until an accepted ADR exists.
+
+## Implementation evidence and remaining acceptance
+
+The [shared contract, adapters and commands](../src/ui/spike/README.md) implement
+all three candidates in one spike. ZIT-034–ZIT-037 are implemented and build on the
+target Mac. The [ADR comparison](../docs/architecture/decisions/0004-ui-toolkit-selection.md#preliminary-scored-comparison)
+records exact native pins, source-based selection, adapter costs and provisional
+scores. All generated measurements, bundles and logs remain ignored build artifacts;
+no milestone document is added.
+
+ZIT-038 and ZIT-039 remain blocked: automated contracts and AppKit device inspection
+exist, but physical Japanese IME and VoiceOver checks for every viable candidate do
+not. The user chose the existing Arabic input source and silent/offscreen tests;
+the user has since added Japanese Kana input, verified read-only. No agent input
+switching or VoiceOver activation is authorized, and timing approval for visible
+interaction is pending. Arabic/RTL
+coverage is separate from marked-text composition. The computer-use transport
+closed before the remaining inspections. Visible checks are deferred until an
+uninterrupted, explicitly authorized review.
+ZIT-040 has reproducible warm-launch, RSS, fixture-scroll, background and packaging
+measurements; physical scrolling under input, display-scale changes, cold launches
+and complete WebKit process memory remain unverified. ZIT-041 has a scored
+provisional recommendation, but ADR-0004 remains Proposed and production editor UI
+remains blocked. These gaps are not replaced by synthetic events or CI success.

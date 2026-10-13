@@ -55,3 +55,27 @@ jobs:
         with:
           name: zigide-text-model-${{ github.sha }}
           path: .zig-cache/text-benchmark-ci.csv
+
+  ui-spike:
+    name: UI candidate builds and artifact tests
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: mlugg/setup-zig@v2
+      - name: Shared scenario and system candidate build
+        run: zig build ui-test ui-spike -Doptimize=ReleaseSafe -j2 --summary all
+      - name: Bundle and package regression tests
+        run: PYTHONPYCACHEPREFIX=.zig-cache/python python3 tests/ui_spike_test.py
+      - name: Native candidate system dependencies
+        run: brew install sdl3 pkg-config
+      - name: Pinned DVUI and AccessKit candidate build
+        run: python3 tools/prepare_ui_native.py
+      - name: Bundle all candidates
+        run: |
+          python3 tools/ui_spike.py bundle appkit
+          python3 tools/ui_spike.py bundle webview
+          python3 tools/ui_spike.py bundle dvui
+      - uses: actions/upload-artifact@v4
+        with:
+          name: zigide-ui-candidates-${{ github.sha }}
+          path: zig-out/ui-spike/*.zip

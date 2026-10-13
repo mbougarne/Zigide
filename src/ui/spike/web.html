@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zigide UI spike · WKWebView</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 14px system-ui; background: #fafafa; color: #242424; }
+  main { display: grid; grid-template-columns: 220px 1fr; height: 100vh; }
+  nav { border-right: 1px solid #bbb; padding: 18px; }
+  h1, h2 { font-size: 14px; margin: 0 0 16px; }
+  button { display: block; margin: 8px 0; }
+  section { display: grid; grid-template-rows: 1fr 140px; min-width: 0; min-height: 0; }
+  textarea { resize: none; border: 0; padding: 16px; width: 100%; height: 100%; white-space: pre;
+    font: 14px monospace; color: inherit; background: white; overflow: auto; }
+  aside { padding: 16px; border-top: 1px solid #bbb; overflow: auto; }
+  :focus-visible { outline: 3px solid #196ac7; outline-offset: -3px; }
+</style>
+<main>
+  <nav aria-label="Explorer"><h1>Explorer</h1><button id="file">fixture.zig</button>
+    <button id="search">Search needle</button></nav>
+  <section aria-label="Editor and results">
+    <textarea id="editor" aria-label="Zig source editor" spellcheck="false" autocapitalize="off" wrap="off"></textarea>
+    <aside aria-label="Search results" tabindex="0"><h2>Search results</h2>
+      <output id="result" aria-live="polite">Waiting for background search</output></aside>
+  </section>
+</main>
+<script>
+'use strict';
+const editor = document.getElementById('editor');
+const result = document.getElementById('result');
+let version = 0;
+let clipboardSample = '';
+let composing = false;
+let compositionInputs = 0;
+const send = body => window.webkit.messageHandlers.spike.postMessage(body);
+const changed = () => send({type: 'edit', version: ++version});
+editor.addEventListener('compositionstart', () => { composing = true; });
+editor.addEventListener('compositionend', () => { composing = false; });
+editor.addEventListener('input', event => {
+  if (composing || event.isComposing) { compositionInputs++; return; }
+  changed();
+});
+document.getElementById('file').onclick = () => editor.focus();
+document.getElementById('search').onclick = () => send({type: 'search', version});
+window.spikeLoad = (text, sample) => { editor.value = text; clipboardSample = sample; editor.focus(); send({type: 'ready'}); };
+window.spikeResult = (sourceVersion, count) => {
+  if (sourceVersion !== version || composing) return false;
+  result.textContent = `${count} matches · version ${sourceVersion}`;
+  send({type: 'result'});
+  return true;
+};
+// These are contract probes. Trusted clipboard/IME and VoiceOver require device inspection.
+window.spikeProbe = () => {
+  const original = editor.value;
+  const sample = clipboardSample;
+  editor.value = sample;
+  editor.setSelectionRange(0, sample.length);
+  const selection = editor.value.slice(editor.selectionStart, editor.selectionEnd) === sample;
+  editor.dispatchEvent(new CompositionEvent('compositionstart', {data: ''}));
+  const before = version;
+  editor.dispatchEvent(new InputEvent('input', {isComposing: true, data: 'に'}));
+  const deferred = version === before && composing && compositionInputs === 1;
+  editor.dispatchEvent(new CompositionEvent('compositionend', {data: '日本'}));
+  editor.dispatchEvent(new InputEvent('input', {data: '日本'}));
+  const committed = version === before + 1 && !composing;
+  const stale = !window.spikeResult(version - 1, 100000);
+  const start = performance.now();
+  editor.value = original;
+  for (let index = 0; index < 120; index++) editor.scrollTop = index % 2 ? editor.scrollHeight : 0;
+  const scrollMs = performance.now() - start;
+  return {selection, deferred, committed, stale, scroll_ms: scrollMs,
+    label: editor.getAttribute('aria-label'), utf16_units: original.length};
+};
+</script>
+</html>
