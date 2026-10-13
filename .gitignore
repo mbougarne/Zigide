@@ -1,6 +1,7 @@
 # Zig build outputs
 zig-out/
 .zig-cache/
+zig-pkg/
 zig-cache/
 
 # Local agent and editor settings

@@ -58,7 +58,7 @@ pub fn build(b: *std.Build) void {
     });
 
     const fmt_check = b.addFmt(.{
-        .paths = &.{ "build.zig", "build.zig.zon", "src", "tests", "tools" },
+        .paths = &.{ "build.zig", "build.zig.zon", "src", "tests", "tools", "spikes/ui-native/build.zig", "spikes/ui-native/build.zig.zon" },
         .check = true,
     });
 
@@ -203,6 +203,28 @@ pub fn build(b: *std.Build) void {
     run_benchmark.setCwd(b.path("."));
     if (b.args) |args| run_benchmark.addArgs(args);
     b.step("text-benchmark", "Measure storage candidates and retain raw CSV (use -Doptimize=ReleaseFast)").dependOn(&run_benchmark.step);
+
+    const ui_scenario = b.createModule(.{ .root_source_file = b.path("src/ui/spike/scenario.zig"), .target = target, .optimize = optimize });
+    const ui_tests = b.addTest(.{ .root_module = ui_scenario });
+    const run_ui_tests = b.addRunArtifact(ui_tests);
+    test_step.dependOn(&run_ui_tests.step);
+    b.step("ui-test", "Run toolkit-independent shared scenario and scoring tests").dependOn(&run_ui_tests.step);
+
+    if (target.result.os.tag == .macos) {
+        // The platform bridge is a separate opt-in spike, never a domain import.
+        const bridge = b.addSystemCommand(&.{ "xcrun", "clang", "-fobjc-arc", "-O2", "-Wall", "-Wextra", "-Werror", "-c" });
+        bridge.addFileArg(b.path("src/ui/spike/macos.m"));
+        bridge.addArg("-o");
+        const object = bridge.addOutputFileArg("ui-spike.o");
+        const ui_module = b.createModule(.{ .root_source_file = b.path("tools/ui_spike.zig"), .target = target, .optimize = optimize, .link_libc = true });
+        ui_module.addImport("ui_scenario", ui_scenario);
+        ui_module.addObjectFile(object);
+        ui_module.linkFramework("AppKit", .{});
+        ui_module.linkFramework("WebKit", .{});
+        const ui_spike = b.addExecutable(.{ .name = "ui-spike", .root_module = ui_module });
+        const install_ui = b.addInstallArtifact(ui_spike, .{});
+        b.step("ui-spike", "Build the AppKit/WKWebView spike executable (bundle with tools/ui_spike.py)").dependOn(&install_ui.step);
+    }
 
     const hooks_cmd = b.addSystemCommand(&.{ "git", "config", "core.hooksPath", ".githooks" });
     const hooks_step = b.step("hooks", "Point git at .githooks so pre-commit runs the repository checks");

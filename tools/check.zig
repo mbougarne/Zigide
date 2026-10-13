@@ -11,7 +11,7 @@ const std = @import("std");
 const max_file_bytes = 16 * 1024 * 1024;
 const identity_policy_cutover = "2026-08-29T11:21:50Z";
 
-const skip_dirs = [_][]const u8{ ".git", ".zig-cache", "zig-out", ".claude" };
+const skip_dirs = [_][]const u8{ ".git", ".zig-cache", "zig-out", "zig-pkg", ".claude" };
 const text_extensions = [_][]const u8{ ".md", ".json", ".zig", ".zon", ".yml", ".yaml" };
 const text_basenames = [_][]const u8{ "LICENSE", ".gitignore", "pre-commit" };
 
