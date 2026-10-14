@@ -181,6 +181,26 @@ pub fn build(b: *std.Build) void {
     check_step.dependOn(&fmt_check.step);
     check_step.dependOn(&run_check.step);
 
+    const editor_suite = b.createModule(.{ .root_source_file = b.path("tests/dependable_editor/suite.zig"), .target = target, .optimize = optimize });
+    const editor_contract_tests = b.addTest(.{ .root_module = editor_suite });
+    const editor_preflight_module = b.createModule(.{ .root_source_file = b.path("tools/dependable_editor.zig"), .target = target, .optimize = optimize });
+    editor_preflight_module.addImport("editor_suite", editor_suite);
+    editor_preflight_module.addAnonymousImport("journey_main", .{ .root_source_file = b.path("tests/dependable_editor/fixtures/main.zig") });
+    editor_preflight_module.addAnonymousImport("journey_message", .{ .root_source_file = b.path("tests/dependable_editor/fixtures/message.zig") });
+    const editor_preflight_tests = b.addTest(.{ .root_module = editor_preflight_module });
+    const run_editor_preflight_tests = b.addRunArtifact(editor_preflight_tests);
+    run_editor_preflight_tests.setCwd(b.path("."));
+    const journey_fixture = b.addExecutable(.{ .name = "editing-journey-fixture", .root_module = b.createModule(.{ .root_source_file = b.path("tests/dependable_editor/fixtures/main.zig"), .target = target, .optimize = optimize }) });
+    const editor_test_step = b.step("dependable-editor-test", "Validate exit contract, prerequisite parsing and maintained Zig project fixture (does not qualify the journey)");
+    editor_test_step.dependOn(&b.addRunArtifact(editor_contract_tests).step);
+    editor_test_step.dependOn(&run_editor_preflight_tests.step);
+    editor_test_step.dependOn(&journey_fixture.step);
+    test_step.dependOn(editor_test_step);
+    const editor_preflight = b.addExecutable(.{ .name = "dependable-editor-preflight", .root_module = editor_preflight_module });
+    const run_editor_preflight = b.addRunArtifact(editor_preflight);
+    run_editor_preflight.setCwd(b.path("."));
+    b.step("dependable-editor-preflight", "Report journey blockers to ignored JSON; exits 2 for blocked/unrun acceptance").dependOn(&run_editor_preflight.step);
+
     const spike_options = b.addOptions();
     spike_options.addOption([]const u8, "zls", b.option([]const u8, "zls", "Absolute path to ZLS 0.16.0 for the opt-in live fixture") orelse "zls");
     spike_options.addOption([]const u8, "zig", b.graph.zig_exe);

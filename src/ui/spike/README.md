@@ -2,8 +2,9 @@
 
 This is an isolated comparison, not the production editor. Toolkit types remain
 inside `src/ui/spike`; no product-domain import or dependency is added. The
-production executable remains headless until ADR-0004 is accepted. A later Zig
-UI can replace this adapter without becoming part of this spike.
+production executable remains headless. ADR-0004 now accepts DVUI as the production
+direction; integration belongs to the production feature tickets, with target-device
+qualification still pending. A later custom Zig UI is a separate future project.
 
 ## Shared scenario
 
@@ -133,6 +134,6 @@ For **every viable candidate**, use the same interactive fixture to:
    type while background results arrive. Record failures and the actual environment.
 
 Until these target-device checks are complete, input/accessibility scores remain
-partial or unverified and production eligibility remains false. ADR-0004 records
-the current recommendation and gate; do not interpret successful compilation or
-synthetic composition events as an accepted production decision.
+partial or unverified and production qualification remains incomplete. ADR-0004
+records Mourad's accepted DVUI choice separately from these observations; successful
+compilation, synthetic composition events and adapter selection do not pass them.

@@ -1,17 +1,32 @@
 # ADR-0004: UI Toolkit Selection by Evidence
 
-* Status: Proposed
+* Status: Accepted
 * Date: 2026-08-16
+* Accepted: 2026-10-14
 
 ## Context
 
 An IDE UI needs high-quality text rendering, input methods, clipboard, accessibility, keyboard handling, multiple panels, and responsive rendering. Writing all of this from scratch would dominate the project. Choosing a web stack would accelerate UI work but weaken the goal of learning Zig and can add a large runtime. Choosing a young native Zig toolkit may expose missing IDE-grade capabilities.
 
-## Proposed Decision
+## Decision
 
-Keep the UI behind an adapter and select the first toolkit through a time-boxed macOS arm64 spike. Do not begin the production editor view before this ADR becomes accepted or is superseded.
+Use **DVUI** for Zigide's current production UI direction. Mourad explicitly chose
+DVUI on 2026-10-14 because it is written in Zig. Start from the spike's pinned
+DVUI 0.5.0-dev revision `475280a68b79aa1fae2be08c5726367b5e560943`, SDL3 integration
+and AccessKit-C 0.23.0. Keep toolkit types inside the UI adapter and preserve the
+toolkit-independent domain/application boundary.
 
-The spike must implement:
+This accepts an implementation direction while physical IME, VoiceOver, performance
+and other qualification evidence remains incomplete. The lower preliminary DVUI
+evidence score is retained below; the human choice does not rescore unobserved
+behavior or qualify a release. Production integration belongs to its existing
+feature tickets and is not implemented by this decision update.
+
+A custom UI library inspired by imgui/egui and Zig philosophy remains a separate
+future project. It is not started here. Replacing the accepted adapter later needs
+its own reviewed decision and evidence.
+
+The comparison spike covers:
 
 * a window with explorer/editor/panel layout;
 * rendering and scrolling of a large UTF-8 document;
@@ -36,13 +51,17 @@ Correct text input and recoverable editing outrank visual novelty. Then consider
 
 ## Consequences
 
-* Architecture can proceed without pretending an untested UI choice is settled.
+* Production UI work has an accepted DVUI direction; qualification failures still block milestone exit.
 * Milestone 0 includes throwaway work.
 * The adapter boundary protects domain code but cannot eliminate toolkit-specific layout and accessibility work.
 
 ## Validation
 
-Publish the spike code, measurements, screenshots, failures, and a scored comparison. Update this record with the accepted choice or supersede it.
+Retain the spike code, versions, licenses, measurements, failures and scored
+comparison. Complete the remaining target-device IME, accessibility and performance
+checks honestly; missing observations stay unrun. ZIT-038–ZIT-040 remain incomplete,
+so ZIT-041 and Milestone 0 completion remain blocked by their declared prerequisites
+even though this architectural choice is accepted.
 
 ## Spike implementation and decision gate (2026-10-13)
 
@@ -68,16 +87,19 @@ controls, focus and results, and a Unicode paste was observed. The remaining
 interactive checks were blocked by the closed computer-use transport. The target
 Mac initially had no Japanese IME enabled. The user subsequently added the
 built-in Japanese Kana input source, whose availability was verified read-only.
-The user requested silent testing; no input switching, visible interaction or
-VoiceOver activation is authorized while timing approval is pending. Arabic round-trip coverage does not establish marked-text composition
-or rendered RTL correctness.
+The user initially requested silent testing. Later task history records explicit
+permission to resume brief qualification with temporary input/VoiceOver changes,
+followed by an interrupted run without completed manual qualification. No such
+interaction is performed by this decision update. Arabic round-trip coverage does
+not establish marked-text composition or rendered RTL correctness.
 
 ### Preliminary scored comparison
 
 Each cell is 0 (failed/unverified), 1 (partial), or 2 (passed). Scores use the shared
 weights: input 35, accessibility 25, performance 15, packaging 10, Zig ownership 10,
 maintenance 5. This table scores available evidence and implementation costs,
-not undocumented claims about toolkit capabilities.
+not undocumented claims about toolkit capabilities. These are the preliminary
+2026-10-13 observations, retained unchanged after the 2026-10-14 DVUI selection.
 
 | Candidate | Input | Accessibility | Performance | Packaging | Zig ownership | Maintenance | Score / 200 | Production eligible |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -85,8 +107,8 @@ not undocumented claims about toolkit capabilities.
 | DVUI + SDL3 + AccessKit | 0 | 0 | 1 | 2 | 2 | 1 | 60 | No |
 | System WKWebView | 1 | 0 | 1 | 2 | 0 | 2 | 80 | No |
 
-AppKit is the provisional recommendation because its input-client probes and
-observed native text exposure provide the strongest evidence so far. Its binding
+At spike time, AppKit was the provisional recommendation because its input-client
+probes and observed native text exposure provided the strongest evidence. Its binding
 surface, platform-specific implementation and large-document layout/memory costs
 remain material. DVUI offers the most Zig UI ownership but its physical composition,
 font fallback and VoiceOver costs are unverified. WKWebView adds HTML/CSS/JavaScript,
@@ -103,7 +125,7 @@ and uploads bundles; CI does not certify physical-device input or screen-reader 
 Automated probes are now offscreen and report that mode explicitly; offscreen
 timings must not replace the retained earlier visible-window observations.
 
-**Status remains Proposed.** ZIT-038–ZIT-041 cannot be declared complete until the
-remaining target-device input/accessibility and performance observations exist.
-The production editor view remains blocked. A later independent Zig UI project
-can replace the chosen adapter through the same boundary after its own evidence.
+**DVUI is the accepted direction as of 2026-10-14.** Remaining target-device
+input/accessibility and performance observations are still required; the choice
+does not complete ZIT-038–ZIT-041 or Milestone 0. The production executable is still
+headless, and the production shell/editor implementation tickets remain unimplemented.

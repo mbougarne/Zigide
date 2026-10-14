@@ -1398,6 +1398,290 @@
         "committed": false,
         "pushed": false
       }
+    },
+    {
+      "id": "2de3c405-5d97-4bba-ba0b-6b5d1b2584b3",
+      "timestamp": "2026-10-14T11:17:09Z",
+      "kind": "repository-instructions",
+      "summary": "Apply the supplied repository contributor rules",
+      "intentTags": [
+        "governance",
+        "traceability"
+      ],
+      "conversation": "conversations/2026-10-14-11-17-09-2de3c405-5d97-4bba-ba0b-6b5d1b2584b3.md",
+      "research": "researches/2026-10-14-11-17-09-2de3c405-5d97-4bba-ba0b-6b5d1b2584b3.md",
+      "commands": "commands/2026-10-14-11-17-09-2de3c405-5d97-4bba-ba0b-6b5d1b2584b3.md",
+      "artifacts": [
+        "AGENTIC_RULES.md",
+        "agents/README.md"
+      ],
+      "decisions": [
+        "use-the-single-normative-rules-source",
+        "record-only-observed-current-inputs"
+      ],
+      "verification": [
+        "Read AGENTIC_RULES.md, agents/README.md, ticket conventions and accepted architecture records",
+        "Original checkout clean; implementation isolated from user artifacts"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "2e87fb0a-55fa-4eb7-8961-6d7285c2bc66",
+      "timestamp": "2026-10-14T11:23:07Z",
+      "kind": "dependable-editor-exit-suite",
+      "summary": "Define ZIT-042 and expose ZIT-043 prerequisite blockers",
+      "intentTags": [
+        "ZIT-042",
+        "ZIT-043",
+        "dependable-editor",
+        "verification",
+        "zig-tooling"
+      ],
+      "conversation": "conversations/2026-10-14-11-23-07-2e87fb0a-55fa-4eb7-8961-6d7285c2bc66.md",
+      "research": "researches/2026-10-14-11-23-07-2e87fb0a-55fa-4eb7-8961-6d7285c2bc66.md",
+      "commands": "commands/2026-10-14-11-23-07-2e87fb0a-55fa-4eb7-8961-6d7285c2bc66.md",
+      "artifacts": [
+        "README.md",
+        "build.zig",
+        "tickets/dependable-editor.md",
+        "tests/dependable_editor/README.md",
+        "tests/dependable_editor/suite.zig",
+        "tests/dependable_editor/fixtures/main.zig",
+        "tests/dependable_editor/fixtures/message.zig",
+        "tools/dependable_editor.zig"
+      ],
+      "decisions": [
+        "define-all-roadmap-exit-evidence",
+        "keep-journey-blocked-by-unimplemented-dependencies",
+        "readiness-cannot-pass-acceptance",
+        "new-tooling-in-zig",
+        "preserve-ignored-local-evidence"
+      ],
+      "verification": [
+        "PR #9 confirmed merged; current main 76c51d7691e9a849bd5d283270d18cd1dfdceae9; no open duplicate PR",
+        "Seven focused ReleaseSafe tests and maintained fixture compilation passed",
+        "ReleaseSafe zig build check passed 71 tests, formatting, links, trace checks and negative compile fixtures before adding these records",
+        "ReleaseSafe product build passed",
+        "Preflight generated ignored target/build/fixture evidence and exited 2: nine Planned dependencies and Proposed ADR-0004",
+        "Physical IME, VoiceOver, production crash/data-preservation journey and latency acceptance unrun",
+        "Final trace-aware checks, JSON Schema result, commit/push and exact-head CI pending at record creation"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "e92beb21-88e4-4075-9240-d102e486810f",
+      "timestamp": "2026-10-14T11:35:53Z",
+      "kind": "dependency-explanation",
+      "summary": "Explain the Dependable Editor dependency order",
+      "intentTags": [
+        "ZIT-042",
+        "ZIT-043",
+        "dependencies"
+      ],
+      "conversation": "conversations/2026-10-14-11-35-53-e92beb21-88e4-4075-9240-d102e486810f.md",
+      "research": "researches/2026-10-14-11-35-53-e92beb21-88e4-4075-9240-d102e486810f.md",
+      "commands": "commands/2026-10-14-11-35-53-e92beb21-88e4-4075-9240-d102e486810f.md",
+      "artifacts": [
+        "tickets/dependable-editor.md",
+        "tickets/foundations-and-spikes.md"
+      ],
+      "decisions": [
+        "explain-before-authorizing-more-work",
+        "distinguish-deliverable-from-ticket-completion"
+      ],
+      "verification": [
+        "Read the nine prerequisite ticket branches and ADR-0004",
+        "No implementation or PR update performed during the requested read-only explanation"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "dd32aa1c-1720-41a2-99b3-289e4e316b68",
+      "timestamp": "2026-10-14T11:35:53Z",
+      "kind": "toolkit-history-check",
+      "summary": "Check whether the UI toolkit choice was already settled",
+      "intentTags": [
+        "ADR-0004",
+        "history",
+        "documentation"
+      ],
+      "conversation": "conversations/2026-10-14-11-35-53-dd32aa1c-1720-41a2-99b3-289e4e316b68.md",
+      "research": "researches/2026-10-14-11-35-53-dd32aa1c-1720-41a2-99b3-289e4e316b68.md",
+      "commands": "commands/2026-10-14-11-35-53-dd32aa1c-1720-41a2-99b3-289e4e316b68.md",
+      "artifacts": [
+        "docs/architecture/decisions/0004-ui-toolkit-selection.md",
+        "src/ui/module.zig",
+        "src/composition/main.zig",
+        "tools/ui_spike.zig"
+      ],
+      "decisions": [
+        "do-not-infer-human-intent-from-proposed-metadata",
+        "separate-existing-toolkit-direction-from-specific-adapter-selection"
+      ],
+      "verification": [
+        "Read repository decision history and the prior UI toolkit task",
+        "Found prior steering to use available UI technology now and build a custom Zig UI separately later",
+        "No explicit final AppKit/DVUI/WKWebView production selection found in inspected records; no architecture changes made"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "ded1625b-3dc7-458c-a192-a07e914a6c1c",
+      "timestamp": "2026-10-14T11:35:53Z",
+      "kind": "ticket-status-correction",
+      "summary": "Correct ZIT-042 completion status without expanding scope",
+      "intentTags": [
+        "ZIT-042",
+        "ZIT-002",
+        "traceability",
+        "correction"
+      ],
+      "conversation": "conversations/2026-10-14-11-35-53-ded1625b-3dc7-458c-a192-a07e914a6c1c.md",
+      "research": "researches/2026-10-14-11-35-53-ded1625b-3dc7-458c-a192-a07e914a6c1c.md",
+      "commands": "commands/2026-10-14-11-35-53-ded1625b-3dc7-458c-a192-a07e914a6c1c.md",
+      "artifacts": [
+        "tickets/dependable-editor.md",
+        "agents/history.json"
+      ],
+      "decisions": [
+        "retain-implemented-contract-and-definition-checkboxes",
+        "block-ticket-completion-on-ZIT-002",
+        "preserve-old-records-and-unrun-acceptance",
+        "leave-ADR-selection-unchanged"
+      ],
+      "verification": [
+        "Existing PR #10 remains open and draft at b37d9d6362b985d31e7ebc2dc5708ea7461a4f37 before this correction",
+        "ZIT-002 remains In Progress; ZIT-042 corrected from Done to Blocked",
+        "Seven focused ReleaseSafe tests and maintained fixture compilation passed after the status correction",
+        "Final trace checks, schema validation, publication and new exact-head CI pending at record creation"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "a7709797-f2df-44e4-901a-1c418ed291f7",
+      "timestamp": "2026-10-14T11:38:25Z",
+      "kind": "accept-dvui-direction",
+      "summary": "Record the explicit DVUI choice without claiming input/accessibility or milestone qualification",
+      "intentTags": [
+        "ADR-0004",
+        "DVUI",
+        "ZIT-041",
+        "ZIT-042",
+        "ZIT-043"
+      ],
+      "conversation": "conversations/2026-10-14-11-38-25-a7709797-f2df-44e4-901a-1c418ed291f7.md",
+      "research": "researches/2026-10-14-11-38-25-a7709797-f2df-44e4-901a-1c418ed291f7.md",
+      "commands": "commands/2026-10-14-11-38-25-a7709797-f2df-44e4-901a-1c418ed291f7.md",
+      "artifacts": [
+        "docs/architecture/decisions/0004-ui-toolkit-selection.md",
+        "docs/architecture/decisions/README.md",
+        "tickets/ui-toolkit-spike.md",
+        "tickets/dependable-editor.md",
+        "src/ui/spike/README.md",
+        "tests/dependable_editor/README.md"
+      ],
+      "decisions": [
+        "accept-explicit-human-dvui-choice",
+        "preserve-preliminary-comparison-and-pending-qualification",
+        "keep-ZIT-041-and-ZIT-042-blocked-on-prerequisites",
+        "defer-custom-zig-ui-to-separate-future-project"
+      ],
+      "verification": [
+        "Seven focused ReleaseSafe tests and fixture compilation passed after the documentation update",
+        "Preflight reports ADR accepted=true, all nine production dependencies Planned and journey blocked with executable exit 2",
+        "VoiceOver, physical IME and production qualification remain unrun",
+        "Final aggregate/schema/publication/exact-head CI pending at immutable record creation"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "f55eb0e3-df05-47f3-b11e-30c72e251968",
+      "timestamp": "2026-10-14T11:47:19Z",
+      "kind": "verify-merged-milestone-evidence",
+      "summary": "Confirm PR #1 published the initial ZIT-002 snapshot and distinguish remaining qualification/consolidation acceptance",
+      "intentTags": [
+        "ZIT-002",
+        "ZIT-042",
+        "PR-1",
+        "acceptance",
+        "correction"
+      ],
+      "conversation": "conversations/2026-10-14-11-47-19-f55eb0e3-df05-47f3-b11e-30c72e251968.md",
+      "research": "researches/2026-10-14-11-47-19-f55eb0e3-df05-47f3-b11e-30c72e251968.md",
+      "commands": "commands/2026-10-14-11-47-19-f55eb0e3-df05-47f3-b11e-30c72e251968.md",
+      "artifacts": [
+        "tickets/foundations-and-spikes.md",
+        "tickets/dependable-editor.md"
+      ],
+      "decisions": [
+        "verify-merged-content-instead-of-status-label",
+        "credit-completed-implementation-evidence",
+        "retain-only-concrete-pending-qualification-and-consolidation",
+        "preserve-ignored-milestone-policy"
+      ],
+      "verification": [
+        "PR #1 confirmed merged at e6628df2118694bdc8175c4eb8e8b6d492cf69f2 from ab5ed64937d11368965936ba7f17743f9bf9cc65",
+        "Original report explicitly says not exit-ready and PR #1 deliberately changes ZIT-002 Planned to In Progress",
+        "Later report changes and current implementation inspected; concrete remaining UI observations identified",
+        "Known-limitations criterion marked satisfied; final-evidence criterion and dependency completion remain pending",
+        "Final checks, publication and exact-head CI pending at immutable record creation"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "d79c2f18-7acf-4b1f-a4c8-f2e45036b296",
+      "timestamp": "2026-10-14T11:58:56Z",
+      "kind": "explicit-ai-disclosure",
+      "summary": "Explicitly disclose substantial Codex implementation assistance and pending recorded human review in PR #10",
+      "intentTags": [
+        "AI-disclosure",
+        "traceability",
+        "PR-10"
+      ],
+      "conversation": "conversations/2026-10-14-11-58-56-d79c2f18-7acf-4b1f-a4c8-f2e45036b296.md",
+      "research": "researches/2026-10-14-11-58-56-d79c2f18-7acf-4b1f-a4c8-f2e45036b296.md",
+      "commands": "commands/2026-10-14-11-58-56-d79c2f18-7acf-4b1f-a4c8-f2e45036b296.md",
+      "artifacts": [
+        "https://github.com/mbougarne/Zigide/pull/10",
+        "agents/history.json"
+      ],
+      "decisions": [
+        "keep-no-AI-not-applicable-option-unchecked",
+        "positively-identify-substantial-AI-contribution",
+        "distinguish-Codex-record-review-from-human-code-review",
+        "link-real-conversation-and-ledger-records"
+      ],
+      "verification": [
+        "PR #10 open/draft at 14f604ee36e6e4b41fd5e186610e8fc23b2a41a9 before the disclosure update",
+        "GitHub reviews array empty and reviewDecision empty; no completed review recorded on PR",
+        "Template and trace requirements inspected; no product code or extra feature work",
+        "Record validation, publication, PR body readback and new exact-head CI pending at record creation"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
     }
   ]
 }

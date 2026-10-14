@@ -42,6 +42,11 @@ The [protocol spike](src/adapters/protocol/README.md) adds bounded framing and a
 
 Product test targets can also be run separately with `zig build unit-test` and `zig build integration-test`.
 
+The [Dependable Editor exit contract and journey procedure](tests/dependable_editor/README.md)
+add `zig build dependable-editor-test` for suite/tooling checks and
+`zig build dependable-editor-preflight` for a readiness report. Preflight exits
+nonzero while journey acceptance is blocked or unrun; it does not qualify the milestone.
+
 CI runs the same `zig build check` on macOS arm64 plus a JSON Schema validation of the trace ledger. The checks are implemented in Zig so one implementation runs identically in your terminal, the pre-commit hook, and CI.
 
 ## Where to Look
