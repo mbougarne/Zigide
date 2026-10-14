@@ -1648,6 +1648,40 @@
         "committed": false,
         "pushed": false
       }
+    },
+    {
+      "id": "d79c2f18-7acf-4b1f-a4c8-f2e45036b296",
+      "timestamp": "2026-10-14T11:58:56Z",
+      "kind": "explicit-ai-disclosure",
+      "summary": "Explicitly disclose substantial Codex implementation assistance and pending recorded human review in PR #10",
+      "intentTags": [
+        "AI-disclosure",
+        "traceability",
+        "PR-10"
+      ],
+      "conversation": "conversations/2026-10-14-11-58-56-d79c2f18-7acf-4b1f-a4c8-f2e45036b296.md",
+      "research": "researches/2026-10-14-11-58-56-d79c2f18-7acf-4b1f-a4c8-f2e45036b296.md",
+      "commands": "commands/2026-10-14-11-58-56-d79c2f18-7acf-4b1f-a4c8-f2e45036b296.md",
+      "artifacts": [
+        "https://github.com/mbougarne/Zigide/pull/10",
+        "agents/history.json"
+      ],
+      "decisions": [
+        "keep-no-AI-not-applicable-option-unchecked",
+        "positively-identify-substantial-AI-contribution",
+        "distinguish-Codex-record-review-from-human-code-review",
+        "link-real-conversation-and-ledger-records"
+      ],
+      "verification": [
+        "PR #10 open/draft at 14f604ee36e6e4b41fd5e186610e8fc23b2a41a9 before the disclosure update",
+        "GitHub reviews array empty and reviewDecision empty; no completed review recorded on PR",
+        "Template and trace requirements inspected; no product code or extra feature work",
+        "Record validation, publication, PR body readback and new exact-head CI pending at record creation"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
     }
   ]
 }
