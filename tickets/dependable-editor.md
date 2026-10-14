@@ -20,9 +20,11 @@ The [maintained exit suite](../tests/dependable_editor/README.md) maps every roa
 deliverable and exit outcome to owners, checks and blocking evidence. Its Zig
 contract/parser tests run through `zig build dependable-editor-test` and the
 aggregate checks. The exit-contract deliverable is implemented and the definition
-criteria above are satisfied. Ticket completion remains blocked on ZIT-002, which
-is still In Progress; neither Milestone 0 completion nor Milestone 1 qualification
-is implied.
+criteria above are satisfied. Ticket completion remains blocked on
+[ZIT-002's final evidence consolidation](foundations-and-spikes.md#zit-002-publish-milestone-0-evidence-report),
+including its missing target-device UI qualification evidence; PR #1 already
+delivered the initial report snapshot. Neither Milestone 0 completion nor
+Milestone 1 qualification is implied.
 
 ## ZIT-043: Verify the End-to-End Editing Journey
 

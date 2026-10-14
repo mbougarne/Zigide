@@ -1611,6 +1611,43 @@
         "committed": false,
         "pushed": false
       }
+    },
+    {
+      "id": "f55eb0e3-df05-47f3-b11e-30c72e251968",
+      "timestamp": "2026-10-14T11:47:19Z",
+      "kind": "verify-merged-milestone-evidence",
+      "summary": "Confirm PR #1 published the initial ZIT-002 snapshot and distinguish remaining qualification/consolidation acceptance",
+      "intentTags": [
+        "ZIT-002",
+        "ZIT-042",
+        "PR-1",
+        "acceptance",
+        "correction"
+      ],
+      "conversation": "conversations/2026-10-14-11-47-19-f55eb0e3-df05-47f3-b11e-30c72e251968.md",
+      "research": "researches/2026-10-14-11-47-19-f55eb0e3-df05-47f3-b11e-30c72e251968.md",
+      "commands": "commands/2026-10-14-11-47-19-f55eb0e3-df05-47f3-b11e-30c72e251968.md",
+      "artifacts": [
+        "tickets/foundations-and-spikes.md",
+        "tickets/dependable-editor.md"
+      ],
+      "decisions": [
+        "verify-merged-content-instead-of-status-label",
+        "credit-completed-implementation-evidence",
+        "retain-only-concrete-pending-qualification-and-consolidation",
+        "preserve-ignored-milestone-policy"
+      ],
+      "verification": [
+        "PR #1 confirmed merged at e6628df2118694bdc8175c4eb8e8b6d492cf69f2 from ab5ed64937d11368965936ba7f17743f9bf9cc65",
+        "Original report explicitly says not exit-ready and PR #1 deliberately changes ZIT-002 Planned to In Progress",
+        "Later report changes and current implementation inspected; concrete remaining UI observations identified",
+        "Known-limitations criterion marked satisfied; final-evidence criterion and dependency completion remain pending",
+        "Final checks, publication and exact-head CI pending at immutable record creation"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
     }
   ]
 }

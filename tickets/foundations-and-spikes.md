@@ -25,4 +25,22 @@
 - **Description:** Consolidate exact tool versions, checks, measurements, failures, and resolved decisions into the Milestone 0 completion report.
 - **Acceptance criteria:**
   - [ ] The report links all required test, benchmark, protocol, and UI evidence.
-  - [ ] Known limitations and unverified assumptions are explicit before Milestone 1 is declared started.
+  - [x] Known limitations and unverified assumptions are explicit before Milestone 1 is declared started.
+
+PR [#1](https://github.com/mbougarne/Zigide/pull/1) merged the initial evidence
+snapshot on 2026-09-14. That report explicitly stated that Milestone 0 was not
+exit-ready, and the same change deliberately moved ZIT-002 from Planned to
+In Progress. The [historical report](https://github.com/mbougarne/Zigide/blob/e6628df2118694bdc8175c4eb8e8b6d492cf69f2/docs/milestones/milestone-0-evidence-report.md)
+and [contemporaneous record](../agents/conversations/2026-09-14-10-29-35-e0bbc10c-b24c-46c9-84c7-f0194dc21507.md)
+distinguish publishing that snapshot from completing its prerequisite-owned evidence.
+
+The old report's missing implementation list is historical: module boundaries,
+foundation services, headless lifecycle, protocol/ZLS and text-model evidence now
+exist, and ADR-0004 accepts DVUI. The remaining ZIT-041 prerequisite evidence is
+physical IME composition, observed VoiceOver use and the outstanding target-device
+UI measurements described in [the spike acceptance record](ui-toolkit-spike.md#implementation-evidence-and-remaining-acceptance).
+Final completion also requires consolidating that evidence, exact revisions/builds
+and limitations into the final report. These requirements remain pending; a merged
+initial report or successful build/CI does not supply the missing observations.
+Milestone reports remain local under ignored `docs/milestones/`; none is restored
+to tracking or relocated by this clarification.
