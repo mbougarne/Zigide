@@ -1398,6 +1398,81 @@
         "committed": false,
         "pushed": false
       }
+    },
+    {
+      "id": "2de3c405-5d97-4bba-ba0b-6b5d1b2584b3",
+      "timestamp": "2026-10-14T11:17:09Z",
+      "kind": "repository-instructions",
+      "summary": "Apply the supplied repository contributor rules",
+      "intentTags": [
+        "governance",
+        "traceability"
+      ],
+      "conversation": "conversations/2026-10-14-11-17-09-2de3c405-5d97-4bba-ba0b-6b5d1b2584b3.md",
+      "research": "researches/2026-10-14-11-17-09-2de3c405-5d97-4bba-ba0b-6b5d1b2584b3.md",
+      "commands": "commands/2026-10-14-11-17-09-2de3c405-5d97-4bba-ba0b-6b5d1b2584b3.md",
+      "artifacts": [
+        "AGENTIC_RULES.md",
+        "agents/README.md"
+      ],
+      "decisions": [
+        "use-the-single-normative-rules-source",
+        "record-only-observed-current-inputs"
+      ],
+      "verification": [
+        "Read AGENTIC_RULES.md, agents/README.md, ticket conventions and accepted architecture records",
+        "Original checkout clean; implementation isolated from user artifacts"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "2e87fb0a-55fa-4eb7-8961-6d7285c2bc66",
+      "timestamp": "2026-10-14T11:23:07Z",
+      "kind": "dependable-editor-exit-suite",
+      "summary": "Define ZIT-042 and expose ZIT-043 prerequisite blockers",
+      "intentTags": [
+        "ZIT-042",
+        "ZIT-043",
+        "dependable-editor",
+        "verification",
+        "zig-tooling"
+      ],
+      "conversation": "conversations/2026-10-14-11-23-07-2e87fb0a-55fa-4eb7-8961-6d7285c2bc66.md",
+      "research": "researches/2026-10-14-11-23-07-2e87fb0a-55fa-4eb7-8961-6d7285c2bc66.md",
+      "commands": "commands/2026-10-14-11-23-07-2e87fb0a-55fa-4eb7-8961-6d7285c2bc66.md",
+      "artifacts": [
+        "README.md",
+        "build.zig",
+        "tickets/dependable-editor.md",
+        "tests/dependable_editor/README.md",
+        "tests/dependable_editor/suite.zig",
+        "tests/dependable_editor/fixtures/main.zig",
+        "tests/dependable_editor/fixtures/message.zig",
+        "tools/dependable_editor.zig"
+      ],
+      "decisions": [
+        "define-all-roadmap-exit-evidence",
+        "keep-journey-blocked-by-unimplemented-dependencies",
+        "readiness-cannot-pass-acceptance",
+        "new-tooling-in-zig",
+        "preserve-ignored-local-evidence"
+      ],
+      "verification": [
+        "PR #9 confirmed merged; current main 76c51d7691e9a849bd5d283270d18cd1dfdceae9; no open duplicate PR",
+        "Seven focused ReleaseSafe tests and maintained fixture compilation passed",
+        "ReleaseSafe zig build check passed 71 tests, formatting, links, trace checks and negative compile fixtures before adding these records",
+        "ReleaseSafe product build passed",
+        "Preflight generated ignored target/build/fixture evidence and exited 2: nine Planned dependencies and Proposed ADR-0004",
+        "Physical IME, VoiceOver, production crash/data-preservation journey and latency acceptance unrun",
+        "Final trace-aware checks, JSON Schema result, commit/push and exact-head CI pending at record creation"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
     }
   ]
 }
