@@ -78,9 +78,10 @@ An accepted superseding UI ADR requires an explicit gate update and review.
 
 ## Release-like journey (ZIT-043)
 
-Run only after the declared dependency tickets are Done, ADR-0004 is accepted or
-superseded through review, and production evidence adapters are available. This
-procedure is currently blocked; neither the headless executable nor a UI spike
+Run only after the declared dependency tickets are Done, an accepted UI decision
+exists, and production evidence adapters are available. ADR-0004 now accepts DVUI;
+the dependency and qualification requirements remain unmet. This procedure is
+currently blocked; neither the headless executable nor a UI spike
 can stand in for the production editor. Add automation against the real production
 command/input paths as their owning tickets land; do not mark this ticket Done
 from preflight results alone.

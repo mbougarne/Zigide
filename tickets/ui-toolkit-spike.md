@@ -91,7 +91,13 @@
 - **Description:** Publish the scored comparison and accept, reject, or supersede ADR-0004 with the selected production UI strategy.
 - **Acceptance criteria:**
   - [ ] Source, versions, licenses, measurements, screenshots, and failures are linked.
-  - [ ] Production editor UI work remains blocked until an accepted ADR exists.
+  - [x] Production editor UI work remains blocked until an accepted ADR exists.
+
+The decision component is recorded: Mourad selected DVUI on 2026-10-14 and
+[ADR-0004](../docs/architecture/decisions/0004-ui-toolkit-selection.md) is Accepted.
+ZIT-041 remains Blocked because its ZIT-038–ZIT-040 qualification prerequisites
+are incomplete. The accepted direction does not claim that physical IME,
+VoiceOver, performance or other unrun checks passed.
 
 ## Implementation evidence and remaining acceptance
 
@@ -104,15 +110,16 @@ no milestone document is added.
 
 ZIT-038 and ZIT-039 remain blocked: automated contracts and AppKit device inspection
 exist, but physical Japanese IME and VoiceOver checks for every viable candidate do
-not. The user chose the existing Arabic input source and silent/offscreen tests;
-the user has since added Japanese Kana input, verified read-only. No agent input
-switching or VoiceOver activation is authorized, and timing approval for visible
-interaction is pending. Arabic/RTL
+not. The user initially chose the existing Arabic input source and silent/offscreen
+tests, then added Japanese Kana input and authorized a brief qualification session.
+The subsequent run was interrupted without completing manual evidence. Arabic/RTL
 coverage is separate from marked-text composition. The computer-use transport
 closed before the remaining inspections. Visible checks are deferred until an
 uninterrupted, explicitly authorized review.
 ZIT-040 has reproducible warm-launch, RSS, fixture-scroll, background and packaging
 measurements; physical scrolling under input, display-scale changes, cold launches
-and complete WebKit process memory remain unverified. ZIT-041 has a scored
-provisional recommendation, but ADR-0004 remains Proposed and production editor UI
-remains blocked. These gaps are not replaced by synthetic events or CI success.
+and complete WebKit process memory remain unverified. The preliminary comparison
+favored AppKit; Mourad subsequently selected DVUI as the accepted implementation
+direction. ZIT-041 remains blocked on qualification prerequisites. Production
+shell/editor feature tickets are still unimplemented. These gaps are not replaced
+by the architectural choice, synthetic events or CI success.
