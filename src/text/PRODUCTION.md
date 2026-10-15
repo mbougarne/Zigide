@@ -101,5 +101,3 @@ stay in ignored `.zig-cache/`; no milestone logs or artifacts are restored.
 CI retains measurements, without qualifying hardware-specific budgets.
 
 See [budget evidence](production-budgets.md) and [deferred tooling limits](../../internals/production-text-follow-ups.md).
-
-[Operator manual-testing checklist](../../internals/production-text-manual-testing.md) lists isolated commands, expected results, cleanup and explicit unrun acceptance. Heavy testing is paused at the user's request.

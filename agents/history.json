@@ -1935,6 +1935,127 @@
         "committed": false,
         "pushed": false
       }
+    },
+    {
+      "id": "2e33573e-e19b-4824-b0c0-ba9ee2d6f639",
+      "timestamp": "2026-10-15T16:08:05Z",
+      "kind": "local-only-operator-check-delivery",
+      "summary": "Preserve ignored operator checks, deliver through Library and prepare normal tracked-copy removal",
+      "intentTags": [
+        "ZIT-044–051",
+        "documentation",
+        "private-delivery",
+        "exclusive-queue"
+      ],
+      "conversation": "conversations/2026-10-15-16-08-05-2e33573e-e19b-4824-b0c0-ba9ee2d6f639.md",
+      "research": "researches/2026-10-15-16-08-05-2e33573e-e19b-4824-b0c0-ba9ee2d6f639.md",
+      "commands": "commands/2026-10-15-16-08-05-2e33573e-e19b-4824-b0c0-ba9ee2d6f639.md",
+      "artifacts": [
+        "src/text/PRODUCTION.md",
+        "tickets/production-text-model.md",
+        "https://github.com/mbougarne/Zigide/pull/11"
+      ],
+      "decisions": [
+        "Preserve complete ignored/local copies and private Library identity",
+        "Remove current tracked copy with normal follow-up history",
+        "Keep earlier immutable records and acceptance disclosures",
+        "Defer test-running hook until local slot granted"
+      ],
+      "verification": [
+        "PR open/draft and head verified before edits",
+        "Byte-preserving copies, SHA-256 and git check-ignore confirmed",
+        "Library upload and local identity metadata confirmed",
+        "PR body cleanup confirmed through API readback",
+        "No new builds, tests, hooks or UI; removal commit/push pending"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "a7329845-56c7-4974-9f14-483bfe6ee85a",
+      "timestamp": "2026-10-15T16:48:57Z",
+      "kind": "pause-project-work-for-user-review",
+      "summary": "Preserve staged cleanup and stop project work without automatic resumption",
+      "intentTags": [
+        "ZIT-044–051",
+        "documentation-cleanup",
+        "exclusive-local-queue"
+      ],
+      "conversation": "conversations/2026-10-15-16-48-57-a7329845-56c7-4974-9f14-483bfe6ee85a.md",
+      "research": "researches/2026-10-15-16-48-57-a7329845-56c7-4974-9f14-483bfe6ee85a.md",
+      "commands": "commands/2026-10-15-16-48-57-a7329845-56c7-4974-9f14-483bfe6ee85a.md",
+      "artifacts": [],
+      "decisions": [
+        "Preserve ignored checklist and attachment",
+        "Only the current normal removal commit is authorized",
+        "Use required full hook with one worker after explicit slot",
+        "No future automatic work or UI/benchmark execution"
+      ],
+      "verification": [
+        "Read-only checkpoint confirmed PR #11 remained open/draft at 48f05ef597a9ba894f0100503c086e7549035809. Seven cleanup/trace files remained staged with no unstaged implementation changes. Both ignored and durable local checklist copies were present. Previously owned caffeinate PIDs were absent. No builds, tests, hooks, reruns, commits or pushes started; the cleanup remained pending. This trace is created later when the user authorizes finishing the current batch."
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "1a674261-4d19-423b-a94f-92a9278609e3",
+      "timestamp": "2026-10-15T16:48:57Z",
+      "kind": "finish-current-cleanup-only-after-slot",
+      "summary": "Limit remaining work to the current checklist-removal batch and await an explicit slot",
+      "intentTags": [
+        "ZIT-044–051",
+        "documentation-cleanup",
+        "exclusive-local-queue"
+      ],
+      "conversation": "conversations/2026-10-15-16-48-57-1a674261-4d19-423b-a94f-92a9278609e3.md",
+      "research": "researches/2026-10-15-16-48-57-1a674261-4d19-423b-a94f-92a9278609e3.md",
+      "commands": null,
+      "artifacts": [],
+      "decisions": [
+        "Preserve ignored checklist and attachment",
+        "Only the current normal removal commit is authorized",
+        "Use required full hook with one worker after explicit slot",
+        "No future automatic work or UI/benchmark execution"
+      ],
+      "verification": [
+        "Confirmed the cleanup would stay staged until the explicit slot grant. No shell command, test, build, hook, UI work, publication or future automation was performed for this prompt. Scope remains the normal removal commit and exact-head CI for the current batch only."
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "49d92ac4-d299-4646-9870-4f048a6302cc",
+      "timestamp": "2026-10-15T16:48:57Z",
+      "kind": "serial-slot-for-checklist-removal",
+      "summary": "Authorize the exclusive serial hook and normal follow-up cleanup publication",
+      "intentTags": [
+        "ZIT-044–051",
+        "documentation-cleanup",
+        "exclusive-local-queue"
+      ],
+      "conversation": "conversations/2026-10-15-16-48-57-49d92ac4-d299-4646-9870-4f048a6302cc.md",
+      "research": "researches/2026-10-15-16-48-57-49d92ac4-d299-4646-9870-4f048a6302cc.md",
+      "commands": "commands/2026-10-15-16-48-57-49d92ac4-d299-4646-9870-4f048a6302cc.md",
+      "artifacts": [],
+      "decisions": [
+        "Preserve ignored checklist and attachment",
+        "Only the current normal removal commit is authorized",
+        "Use required full hook with one worker after explicit slot",
+        "No future automatic work or UI/benchmark execution"
+      ],
+      "verification": [
+        "Preflight reports normal memory pressure (level 1, 54% available). The only remaining Zig processes are the same pre-existing idle Zigide ZLS check-only watchers at 0% CPU; no other project active build/test workload was found and none was stopped. PR #11 remains open/draft at the expected head, with no checklist mention in its body. The repository-local Markdown remains ignored and the original scoped staged cleanup is intact. The existing task-local launcher will forward the unchanged hook to pinned Zig build check -j1, retaining the full dependency graph and default mode. Hook execution, normal follow-up commit/push and new exact-head CI are pending at this immutable record creation. The local slot will be released immediately after hook completion."
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
     }
   ]
 }

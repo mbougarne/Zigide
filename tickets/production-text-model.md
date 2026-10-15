@@ -109,6 +109,4 @@ explicit thresholds is outstanding. No milestone artifacts are restored. This
 implements production text contracts; DVUI/physical input, operator journey and
 full milestone qualification remain with their existing tickets.
 
-[Operator manual-testing checklist](../internals/production-text-manual-testing.md) lists isolated commands, expected results, cleanup and explicit unrun acceptance. Operator acceptance remains unrun; the exclusive serial headless publication hook is separately authorized.
-
 Numeric threshold acceptance may remain explicitly pending in a draft PR. The original ZIT-051 criterion requires accepted reasons and follow-ups for missed budgets before milestone exit; it does not add a separate numeric-approval gate before draft publication.
