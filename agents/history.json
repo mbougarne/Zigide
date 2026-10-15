@@ -1682,6 +1682,380 @@
         "committed": false,
         "pushed": false
       }
+    },
+    {
+      "id": "eba0db3d-79b4-4666-947b-69bc286ca85f",
+      "timestamp": "2026-10-15T14:56:32Z",
+      "kind": "production-text-model",
+      "summary": "Implement ZIT-044–051 production text contracts with seeded and allocation tests and target-Mac budget evidence",
+      "intentTags": [
+        "ZIT-044",
+        "ZIT-045",
+        "ZIT-046",
+        "ZIT-047",
+        "ZIT-048",
+        "ZIT-049",
+        "ZIT-050",
+        "ZIT-051",
+        "AI-assisted"
+      ],
+      "conversation": "conversations/2026-10-15-14-56-32-eba0db3d-79b4-4666-947b-69bc286ca85f.md",
+      "research": "researches/2026-10-15-14-56-32-eba0db3d-79b4-4666-947b-69bc286ca85f.md",
+      "commands": "commands/2026-10-15-14-56-32-eba0db3d-79b4-4666-947b-69bc286ca85f.md",
+      "artifacts": [
+        "src/text/document.zig",
+        "src/text/storage.zig",
+        "src/text/line_index.zig",
+        "src/text/metadata.zig",
+        "src/text/semantics.zig",
+        "tests/production_text.zig",
+        "tools/text_benchmark.zig",
+        "tools/text_workloads.zig",
+        "tools/production_text_summary.zig",
+        "src/text/PRODUCTION.md",
+        "src/text/production-budgets.md",
+        "tickets/production-text-model.md",
+        ".github/workflows/ci.yml",
+        "internals/production-text-follow-ups.md",
+        "build.zig"
+      ],
+      "decisions": [
+        "The existing piece-table recommendation and byte-coordinate semantics remain the design. Atomic staging, independent snapshot copies, incremental line starts and transactional compaction satisfy the production contracts without UI or protocol dependencies. Numeric historic budget thresholds are unavailable; publish explicit new checkpoint proposals and keep ZIT-051 In Progress pending maintainer acceptance."
+      ],
+      "verification": [
+        "Fetched origin/main at 46f6eb3d9f5b69368ef69e0c3dd9a9eff729339f; PR #10 merged; no open duplicate PRs",
+        "Per-ticket focused Zig tests passed; production property suite replays 32 seeds × 512 atomic batches plus fragmented and mixed-ending cases",
+        "Fixed and retained seed 0x5a4954044051 prefix 26 for lost prefix line starts",
+        "Compaction and batch/snapshot allocation failures run with the leak-detecting test allocator",
+        "Two ReleaseFast final runs each retain 7,330 observations and 85 validated groups; budget checks pass",
+        "A measured 17.329 ms p95 long-line insertion miss was fixed by narrowing scans; final p95 1.459 and 10.250 microseconds",
+        "Final aggregate/schema checks will be recorded from their actual completed outputs below; publication and exact-head CI remain pending at record creation",
+        "Final ReleaseSafe zig build check: 42/42 steps and 86/86 tests pass, including formatting, links, integration and negative module fixtures"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "6a0aa137-45f7-4a6e-a378-73a10168ac1a",
+      "timestamp": "2026-10-15T15:27:13Z",
+      "kind": "production-text-startup-checkpoint",
+      "summary": "Inspect local skill availability and report verified production-text startup facts",
+      "intentTags": [
+        "ZIT-044–051",
+        "checkpoint"
+      ],
+      "conversation": "conversations/2026-10-15-15-27-13-6a0aa137-45f7-4a6e-a378-73a10168ac1a.md",
+      "research": "researches/2026-10-15-15-27-13-6a0aa137-45f7-4a6e-a378-73a10168ac1a.md",
+      "commands": "commands/2026-10-15-15-27-13-6a0aa137-45f7-4a6e-a378-73a10168ac1a.md",
+      "artifacts": [],
+      "decisions": [
+        "No .agents/skills directory exists in either original checkout or worktree. The named memory summary was searched read-only when a host I/O problem appeared; it supplied no concrete matching workaround and did not override checkout facts."
+      ],
+      "verification": [
+        "Repository-local .agents/skills absent",
+        "Memory summary searched read-only; no memory file changed",
+        "Source-thread message attempt failed with thread not found"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "4997034a-2072-494e-9763-8d7d57d2f79a",
+      "timestamp": "2026-10-15T15:27:13Z",
+      "kind": "production-text-current-checkpoint",
+      "summary": "Report ZIT-051 progress and the concrete host I/O blocker without restarting implementation",
+      "intentTags": [
+        "ZIT-044–051",
+        "checkpoint"
+      ],
+      "conversation": "conversations/2026-10-15-15-27-13-4997034a-2072-494e-9763-8d7d57d2f79a.md",
+      "research": "researches/2026-10-15-15-27-13-4997034a-2072-494e-9763-8d7d57d2f79a.md",
+      "commands": "commands/2026-10-15-15-27-13-4997034a-2072-494e-9763-8d7d57d2f79a.md",
+      "artifacts": [],
+      "decisions": [
+        "The source thread is not reachable through the exposed Codex app messenger, and no cloud-thread sending capability is exposed. Report this limitation explicitly and keep a checkpoint in the task workspace."
+      ],
+      "verification": [
+        "Available tool inventory and app thread inventory checked",
+        "Second direct send failed; no source-thread message claimed delivered",
+        "Task-workspace checkpoint preserved implementation status and retained raw evidence"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "7f4abd70-0c99-4110-80f6-4348812b4814",
+      "timestamp": "2026-10-15T15:27:13Z",
+      "kind": "production-text-io-workaround",
+      "summary": "Preserve the complete task worktree while resolving observed macOS file-I/O stalls",
+      "intentTags": [
+        "ZIT-044–051",
+        "checkpoint"
+      ],
+      "conversation": "conversations/2026-10-15-15-27-13-7f4abd70-0c99-4110-80f6-4348812b4814.md",
+      "research": "researches/2026-10-15-15-27-13-7f4abd70-0c99-4110-80f6-4348812b4814.md",
+      "commands": "commands/2026-10-15-15-27-13-7f4abd70-0c99-4110-80f6-4348812b4814.md",
+      "artifacts": [],
+      "decisions": [
+        "Sampling localized Git to mmap on a pre-existing ledger record and the checker to preadv on another record under the Documents worktree. The underlying OS cause is unknown. Relocating the intact task worktree to a task-specific temporary directory is a reversible workaround, not a permission-policy change."
+      ],
+      "verification": [
+        "Only this task's blocked sessions were interrupted through their own handles",
+        "git worktree move preserved source edits and ignored measurement artifacts",
+        "No other task process was stopped; no global cleanup, permission, accessibility or power-setting change",
+        "Git diff completed after relocation; broad tests completed"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "3b098050-9cf3-41a1-b3cc-546d78e6eb77",
+      "timestamp": "2026-10-15T15:27:13Z",
+      "kind": "pause-heavy-validation",
+      "summary": "Stop task-owned heavy work after the user reports host RAM pressure",
+      "intentTags": [
+        "ZIT-044–051",
+        "checkpoint"
+      ],
+      "conversation": "conversations/2026-10-15-15-27-13-3b098050-9cf3-41a1-b3cc-546d78e6eb77.md",
+      "research": "researches/2026-10-15-15-27-13-3b098050-9cf3-41a1-b3cc-546d78e6eb77.md",
+      "commands": "commands/2026-10-15-15-27-13-3b098050-9cf3-41a1-b3cc-546d78e6eb77.md",
+      "artifacts": [],
+      "decisions": [
+        "The latest ReleaseSafe aggregate and schema process had already completed before their session handles were interrupted. No further builds/tests or UI work are started. The owned background caffeinate child survived shell interruption; terminate only its explicitly recorded PID and verify it is gone."
+      ],
+      "verification": [
+        "Validation sessions returned completed status; no task-owned build/test processes remain",
+        "Only task-owned caffeinate PID 87528 terminated, then absent from process query",
+        "Implementation and raw measurements preserved; no commit or PR published"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "0a1cc96c-550c-404d-83ff-707c49871f72",
+      "timestamp": "2026-10-15T15:27:13Z",
+      "kind": "operator-manual-test-checklist",
+      "summary": "Document isolated operator testing for ZIT-044–051 while heavy validation remains paused",
+      "intentTags": [
+        "ZIT-044–051",
+        "checkpoint"
+      ],
+      "conversation": "conversations/2026-10-15-15-27-13-0a1cc96c-550c-404d-83ff-707c49871f72.md",
+      "research": "researches/2026-10-15-15-27-13-0a1cc96c-550c-404d-83ff-707c49871f72.md",
+      "commands": "commands/2026-10-15-15-27-13-0a1cc96c-550c-404d-83ff-707c49871f72.md",
+      "artifacts": [
+        "internals/production-text-manual-testing.md",
+        "src/text/PRODUCTION.md",
+        "tickets/production-text-model.md"
+      ],
+      "decisions": [
+        "This batch is a headless domain library. Existing Zig targets exercise its contracts; UI integration is not claimed. The normal commit hook invokes another build/test pass, so do not disable or restart it during the pause. Publication remains pending."
+      ],
+      "verification": [
+        "Operator checklist marks all operator/manual cases unrun",
+        "Earlier aggregate evidence is distinguished from operator acceptance",
+        "Heavy commit-hook validation, draft PR and exact-head CI remain pending"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "7c919f72-9e2f-4964-a8dc-3b5ec3898360",
+      "timestamp": "2026-10-15T15:29:01Z",
+      "kind": "clarify-budget-approval-and-hook",
+      "summary": "Separate proposed numeric acceptance from draft publication and report the uncapped hook",
+      "intentTags": [
+        "ZIT-044–051",
+        "publication",
+        "resource-control"
+      ],
+      "conversation": "conversations/2026-10-15-15-29-01-7c919f72-9e2f-4964-a8dc-3b5ec3898360.md",
+      "research": "researches/2026-10-15-15-29-01-7c919f72-9e2f-4964-a8dc-3b5ec3898360.md",
+      "commands": "commands/2026-10-15-15-29-01-7c919f72-9e2f-4964-a8dc-3b5ec3898360.md",
+      "artifacts": [
+        "tickets/production-text-model.md",
+        "src/text/production-budgets.md",
+        "internals/production-text-manual-testing.md"
+      ],
+      "decisions": [
+        "Numeric acceptance can stay pending in a draft PR",
+        "Distinguish milestone acceptance from publication prerequisites",
+        "No inferred total-RAM guarantee from per-process prior measurements"
+      ],
+      "verification": [
+        "Proposed gates are open p95 50 ms, edit/batch/sustained/churn p95 16 ms, snapshot p95 10 ms, lookup p95 10 microseconds, and requested-byte peak <= 8 × fixture bytes + 512 KiB including four snapshots. Worst results across two final runs are 27.884 ms, 12.945 ms, 0.939 ms, 0.250 microseconds and 23,805,768 bytes. Human maintainers retain final product authority; no separate named budget approver or pre-PR numeric gate is specified. ZIT-051 can remain In Progress in a draft PR. Earlier wording overstated numeric approval as a publication prerequisite; the actual blocker then was the heavy-work pause and an uncapped commit hook. The hook runs exec zig build check. Read-only inspection ran, with no new build/UI. A subsequent clarification-save tool call could not start because the execution transport disconnected; this later record preserves the response."
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "b869d69c-d714-4984-b5a9-c44357186b57",
+      "timestamp": "2026-10-15T15:36:11Z",
+      "kind": "exclusive-serial-publication",
+      "summary": "Authorize one serial headless publication hook in the exclusive local queue",
+      "intentTags": [
+        "ZIT-044–051",
+        "publication",
+        "resource-control"
+      ],
+      "conversation": "conversations/2026-10-15-15-36-11-b869d69c-d714-4984-b5a9-c44357186b57.md",
+      "research": "researches/2026-10-15-15-36-11-b869d69c-d714-4984-b5a9-c44357186b57.md",
+      "commands": "commands/2026-10-15-15-36-11-b869d69c-d714-4984-b5a9-c44357186b57.md",
+      "artifacts": [
+        "tickets/production-text-model.md",
+        "src/text/production-budgets.md",
+        "internals/production-text-manual-testing.md"
+      ],
+      "decisions": [
+        "Honor exclusive local queue and normal-memory preflight",
+        "Keep all required hook checks and default mode while enforcing one build job",
+        "Do not restart UI or benchmarks",
+        "Keep proposed budget acceptance pending in draft",
+        "Publish one draft PR and check exact-head remote CI after releasing local slot"
+      ],
+      "verification": [
+        "Lightweight process/memory inspection reports normal pressure (level 1, 63% available); no other project active build/test was found. Two pre-existing Zigide ZLS --watch --check-only processes were idle at 0% CPU and were not stopped. The unchanged pre-commit hook has no job cap. A task-local PATH launcher will forward its exact check target to pinned Zig with -j1 and the existing task cache, retaining every required check and default optimization mode. It changes no repository hook or global setting. Record creation precedes hook execution/publication; those results and exact-head hosted CI remain pending. Manual/operator/UI acceptance and benchmark reruns remain unrun. Release the local slot immediately after the hook finishes."
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "2e33573e-e19b-4824-b0c0-ba9ee2d6f639",
+      "timestamp": "2026-10-15T16:08:05Z",
+      "kind": "local-only-operator-check-delivery",
+      "summary": "Preserve ignored operator checks, deliver through Library and prepare normal tracked-copy removal",
+      "intentTags": [
+        "ZIT-044–051",
+        "documentation",
+        "private-delivery",
+        "exclusive-queue"
+      ],
+      "conversation": "conversations/2026-10-15-16-08-05-2e33573e-e19b-4824-b0c0-ba9ee2d6f639.md",
+      "research": "researches/2026-10-15-16-08-05-2e33573e-e19b-4824-b0c0-ba9ee2d6f639.md",
+      "commands": "commands/2026-10-15-16-08-05-2e33573e-e19b-4824-b0c0-ba9ee2d6f639.md",
+      "artifacts": [
+        "src/text/PRODUCTION.md",
+        "tickets/production-text-model.md",
+        "https://github.com/mbougarne/Zigide/pull/11"
+      ],
+      "decisions": [
+        "Preserve complete ignored/local copies and private Library identity",
+        "Remove current tracked copy with normal follow-up history",
+        "Keep earlier immutable records and acceptance disclosures",
+        "Defer test-running hook until local slot granted"
+      ],
+      "verification": [
+        "PR open/draft and head verified before edits",
+        "Byte-preserving copies, SHA-256 and git check-ignore confirmed",
+        "Library upload and local identity metadata confirmed",
+        "PR body cleanup confirmed through API readback",
+        "No new builds, tests, hooks or UI; removal commit/push pending"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "a7329845-56c7-4974-9f14-483bfe6ee85a",
+      "timestamp": "2026-10-15T16:48:57Z",
+      "kind": "pause-project-work-for-user-review",
+      "summary": "Preserve staged cleanup and stop project work without automatic resumption",
+      "intentTags": [
+        "ZIT-044–051",
+        "documentation-cleanup",
+        "exclusive-local-queue"
+      ],
+      "conversation": "conversations/2026-10-15-16-48-57-a7329845-56c7-4974-9f14-483bfe6ee85a.md",
+      "research": "researches/2026-10-15-16-48-57-a7329845-56c7-4974-9f14-483bfe6ee85a.md",
+      "commands": "commands/2026-10-15-16-48-57-a7329845-56c7-4974-9f14-483bfe6ee85a.md",
+      "artifacts": [],
+      "decisions": [
+        "Preserve ignored checklist and attachment",
+        "Only the current normal removal commit is authorized",
+        "Use required full hook with one worker after explicit slot",
+        "No future automatic work or UI/benchmark execution"
+      ],
+      "verification": [
+        "Read-only checkpoint confirmed PR #11 remained open/draft at 48f05ef597a9ba894f0100503c086e7549035809. Seven cleanup/trace files remained staged with no unstaged implementation changes. Both ignored and durable local checklist copies were present. Previously owned caffeinate PIDs were absent. No builds, tests, hooks, reruns, commits or pushes started; the cleanup remained pending. This trace is created later when the user authorizes finishing the current batch."
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "1a674261-4d19-423b-a94f-92a9278609e3",
+      "timestamp": "2026-10-15T16:48:57Z",
+      "kind": "finish-current-cleanup-only-after-slot",
+      "summary": "Limit remaining work to the current checklist-removal batch and await an explicit slot",
+      "intentTags": [
+        "ZIT-044–051",
+        "documentation-cleanup",
+        "exclusive-local-queue"
+      ],
+      "conversation": "conversations/2026-10-15-16-48-57-1a674261-4d19-423b-a94f-92a9278609e3.md",
+      "research": "researches/2026-10-15-16-48-57-1a674261-4d19-423b-a94f-92a9278609e3.md",
+      "commands": null,
+      "artifacts": [],
+      "decisions": [
+        "Preserve ignored checklist and attachment",
+        "Only the current normal removal commit is authorized",
+        "Use required full hook with one worker after explicit slot",
+        "No future automatic work or UI/benchmark execution"
+      ],
+      "verification": [
+        "Confirmed the cleanup would stay staged until the explicit slot grant. No shell command, test, build, hook, UI work, publication or future automation was performed for this prompt. Scope remains the normal removal commit and exact-head CI for the current batch only."
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "49d92ac4-d299-4646-9870-4f048a6302cc",
+      "timestamp": "2026-10-15T16:48:57Z",
+      "kind": "serial-slot-for-checklist-removal",
+      "summary": "Authorize the exclusive serial hook and normal follow-up cleanup publication",
+      "intentTags": [
+        "ZIT-044–051",
+        "documentation-cleanup",
+        "exclusive-local-queue"
+      ],
+      "conversation": "conversations/2026-10-15-16-48-57-49d92ac4-d299-4646-9870-4f048a6302cc.md",
+      "research": "researches/2026-10-15-16-48-57-49d92ac4-d299-4646-9870-4f048a6302cc.md",
+      "commands": "commands/2026-10-15-16-48-57-49d92ac4-d299-4646-9870-4f048a6302cc.md",
+      "artifacts": [],
+      "decisions": [
+        "Preserve ignored checklist and attachment",
+        "Only the current normal removal commit is authorized",
+        "Use required full hook with one worker after explicit slot",
+        "No future automatic work or UI/benchmark execution"
+      ],
+      "verification": [
+        "Preflight reports normal memory pressure (level 1, 54% available). The only remaining Zig processes are the same pre-existing idle Zigide ZLS check-only watchers at 0% CPU; no other project active build/test workload was found and none was stopped. PR #11 remains open/draft at the expected head, with no checklist mention in its body. The repository-local Markdown remains ignored and the original scoped staged cleanup is intact. The existing task-local launcher will forward the unchanged hook to pinned Zig build check -j1, retaining the full dependency graph and default mode. Hook execution, normal follow-up commit/push and new exact-head CI are pending at this immutable record creation. The local slot will be released immediately after hook completion."
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
     }
   ]
 }

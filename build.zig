@@ -100,6 +100,15 @@ pub fn build(b: *std.Build) void {
     text_test_step.dependOn(&run_text_tests.step);
     text_test_step.dependOn(&run_equivalence.step);
 
+    const production_module = b.createModule(.{ .root_source_file = b.path("tests/production_text.zig"), .target = target, .optimize = optimize });
+    production_module.addImport("text", modules.get("text").?);
+    const production_tests = b.addTest(.{ .root_module = production_module });
+    const run_production_tests = b.addRunArtifact(production_tests);
+    const production_step = b.step("production-text-test", "Run production batch, snapshot, metadata and seeded oracle tests");
+    production_step.dependOn(&run_text_tests.step);
+    production_step.dependOn(&run_production_tests.step);
+    text_test_step.dependOn(production_step);
+
     const command_tests = b.addTest(.{ .root_module = modules.get("commands").? });
     const run_command_tests = b.addRunArtifact(command_tests);
 
@@ -223,6 +232,19 @@ pub fn build(b: *std.Build) void {
     run_benchmark.setCwd(b.path("."));
     if (b.args) |args| run_benchmark.addArgs(args);
     b.step("text-benchmark", "Measure storage candidates and retain raw CSV (use -Doptimize=ReleaseFast)").dependOn(&run_benchmark.step);
+    const summary_module = b.createModule(.{ .root_source_file = b.path("tools/production_text_summary.zig"), .target = target, .optimize = optimize });
+    const summary_tests = b.addTest(.{ .root_module = summary_module });
+    test_step.dependOn(&b.addRunArtifact(summary_tests).step);
+    const summary_exe = b.addExecutable(.{ .name = "production-text-summary", .root_module = summary_module });
+    const run_summary = b.addRunArtifact(summary_exe);
+    run_summary.setCwd(b.path("."));
+    if (b.args) |args| run_summary.addArgs(args);
+    b.step("production-text-summary", "Summarize raw text CSV using nearest-rank median and p95").dependOn(&run_summary.step);
+    const run_production_benchmark = b.addRunArtifact(text_benchmark);
+    run_production_benchmark.setCwd(b.path("."));
+    run_production_benchmark.addArg("production");
+    if (b.args) |args| run_production_benchmark.addArgs(args);
+    b.step("production-text-benchmark", "Measure production text using approved spike workloads (use ReleaseFast)").dependOn(&run_production_benchmark.step);
 
     const ui_scenario = b.createModule(.{ .root_source_file = b.path("src/ui/spike/scenario.zig"), .target = target, .optimize = optimize });
     const ui_tests = b.addTest(.{ .root_module = ui_scenario });

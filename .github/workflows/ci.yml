@@ -51,10 +51,17 @@ jobs:
         run: zig build text-test -Doptimize=ReleaseSafe -j2 --summary all
       - name: Retain ReleaseFast measurements (budgets require recorded target hardware)
         run: zig build text-benchmark -Doptimize=ReleaseFast -j2 --summary all -- .zig-cache/text-benchmark-ci.csv
+      - name: Retain production text measurements (target budgets require recorded hardware)
+        run: |
+          zig build production-text-benchmark -Doptimize=ReleaseFast -j2 --summary all -- .zig-cache/production-text-ci.csv
+          zig build production-text-summary -Doptimize=ReleaseFast -j2 -- .zig-cache/production-text-ci.csv .zig-cache/production-text-summary-ci.csv
       - uses: actions/upload-artifact@v4
         with:
           name: zigide-text-model-${{ github.sha }}
-          path: .zig-cache/text-benchmark-ci.csv
+          path: |
+            .zig-cache/text-benchmark-ci.csv
+            .zig-cache/production-text-ci.csv
+            .zig-cache/production-text-summary-ci.csv
 
   ui-spike:
     name: UI candidate builds and artifact tests

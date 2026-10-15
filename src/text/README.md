@@ -1,5 +1,7 @@
 # Text-model spike contract
 
+The versioned production API is documented in [Production text contract](PRODUCTION.md).
+
 [ZIT-027–033](../../tickets/text-model-spike.md) compare an independent contiguous
 [reference model](reference.zig) with an owned [piece table](piece_table.zig).
 These are single-edit storage candidates, not the versioned production document
