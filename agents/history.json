@@ -2056,6 +2056,181 @@
         "committed": false,
         "pushed": false
       }
+    },
+    {
+      "id": "fd2447fd-0072-4c78-bc91-ae9ec074be9f",
+      "timestamp": "2026-10-19T12:25:14Z",
+      "kind": "repository-entry",
+      "summary": "Read repository rules, architecture decisions and trace policy before lifecycle implementation.",
+      "intentTags": [
+        "AGENTS",
+        "architecture",
+        "traceability"
+      ],
+      "conversation": "conversations/2026-10-19-12-25-14-fd2447fd-0072-4c78-bc91-ae9ec074be9f.md",
+      "research": "researches/2026-10-19-12-25-14-fd2447fd-0072-4c78-bc91-ae9ec074be9f.md",
+      "commands": "commands/2026-10-19-12-25-14-fd2447fd-0072-4c78-bc91-ae9ec074be9f.md",
+      "artifacts": [],
+      "decisions": [
+        "Preserve original checkout and unrelated changes",
+        "Retain accepted domain and DVUI boundaries",
+        "Record substantial Codex assistance truthfully",
+        "Keep new internal notes and raw evidence ignored"
+      ],
+      "verification": [
+        "Repository instructions and accepted ADRs read",
+        "Original checkout clean at 46f6eb3",
+        "No tests or builds run for setup"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "8dc69ade-a114-425c-8038-fc6608fac153",
+      "timestamp": "2026-10-19T12:25:45Z",
+      "kind": "implement-workspace-lifecycle",
+      "summary": "Implement canonical resources, workspace/document ownership, dirty state, close decisions and stale-result admission.",
+      "intentTags": [
+        "ZIT-052",
+        "ZIT-053",
+        "ZIT-054",
+        "ZIT-055",
+        "ZIT-056",
+        "ZIT-057",
+        "AI-assisted"
+      ],
+      "conversation": "conversations/2026-10-19-12-25-45-8dc69ade-a114-425c-8038-fc6608fac153.md",
+      "research": "researches/2026-10-19-12-25-45-8dc69ade-a114-425c-8038-fc6608fac153.md",
+      "commands": "commands/2026-10-19-12-25-45-8dc69ade-a114-425c-8038-fc6608fac153.md",
+      "artifacts": [
+        "src/workspace/session.zig",
+        "src/workspace/resource.zig",
+        "src/adapters/local_resources.zig",
+        "src/application/workspace.zig",
+        "src/workspace/README.md"
+      ],
+      "decisions": [
+        "Preserve original checkout and unrelated changes",
+        "Retain accepted domain and DVUI boundaries",
+        "Record substantial Codex assistance truthfully",
+        "Keep new internal notes and raw evidence ignored"
+      ],
+      "verification": [
+        "Remote main verified at 5743d4136bad50c02abb53e0956c3f9474df1a45",
+        "Required ZIT-019/044/046/047 contracts present on main",
+        "ZIT-051 numeric budget acceptance remains In Progress outside this batch",
+        "Zig 0.16.0 formatting and git diff --check passed",
+        "Compilation, focused tests, regression, commit, push and PR creation pending"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "6a771a2c-f44a-448d-9bd0-f17325733b5f",
+      "timestamp": "2026-10-19T12:25:45Z",
+      "kind": "coordination-checkpoint",
+      "summary": "Report successful startup, verified baseline and pending lifecycle validation slot.",
+      "intentTags": [
+        "ZIT-057",
+        "coordination"
+      ],
+      "conversation": "conversations/2026-10-19-12-25-45-6a771a2c-f44a-448d-9bd0-f17325733b5f.md",
+      "research": "researches/2026-10-19-12-25-45-6a771a2c-f44a-448d-9bd0-f17325733b5f.md",
+      "commands": "commands/2026-10-19-12-25-45-6a771a2c-f44a-448d-9bd0-f17325733b5f.md",
+      "artifacts": [],
+      "decisions": [
+        "Preserve original checkout and unrelated changes",
+        "Retain accepted domain and DVUI boundaries",
+        "Record substantial Codex assistance truthfully",
+        "Keep new internal notes and raw evidence ignored"
+      ],
+      "verification": [
+        "Original checkout preserved",
+        "Lifecycle branch based on remote main 5743d41",
+        "No heavy validation started",
+        "PR and publication pending"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "5b7fe5c4-9488-41f3-9fb9-7996fad7141f",
+      "timestamp": "2026-10-19T12:25:45Z",
+      "kind": "queued-review",
+      "summary": "Hold heavy validation and strengthen lifecycle edge cases and public trace records.",
+      "intentTags": [
+        "ZIT-052",
+        "ZIT-056",
+        "ZIT-057",
+        "traceability"
+      ],
+      "conversation": "conversations/2026-10-19-12-25-45-5b7fe5c4-9488-41f3-9fb9-7996fad7141f.md",
+      "research": "researches/2026-10-19-12-25-45-5b7fe5c4-9488-41f3-9fb9-7996fad7141f.md",
+      "commands": "commands/2026-10-19-12-25-45-5b7fe5c4-9488-41f3-9fb9-7996fad7141f.md",
+      "artifacts": [
+        "src/workspace/session.zig",
+        "src/workspace/resource.zig",
+        "src/adapters/local_resources.zig",
+        "src/application/workspace.zig",
+        "src/workspace/README.md"
+      ],
+      "decisions": [
+        "Preserve original checkout and unrelated changes",
+        "Retain accepted domain and DVUI boundaries",
+        "Record substantial Codex assistance truthfully",
+        "Keep new internal notes and raw evidence ignored"
+      ],
+      "verification": [
+        "Formatting and whitespace checks passed before publication",
+        "No compiler, test suite, browser or UI run started",
+        "Test slot and all compilation/runtime checks pending"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "f52776ff-eae7-4098-a818-5971815464e3",
+      "timestamp": "2026-10-19T13:01:20Z",
+      "kind": "validate-lifecycle-slot",
+      "summary": "Validate ZIT-052–057 headless contracts and prepare hook/publication.",
+      "intentTags": [
+        "ZIT-052–057",
+        "validation",
+        "AI-disclosure"
+      ],
+      "conversation": "conversations/2026-10-19-13-01-20-f52776ff-eae7-4098-a818-5971815464e3.md",
+      "research": "researches/2026-10-19-13-01-20-f52776ff-eae7-4098-a818-5971815464e3.md",
+      "commands": "commands/2026-10-19-13-01-20-f52776ff-eae7-4098-a818-5971815464e3.md",
+      "artifacts": [
+        "tickets/document-and-workspace-lifecycle.md",
+        "src/workspace/README.md"
+      ],
+      "decisions": [
+        "Use granted test slot with two jobs",
+        "Preserve full required hook and default hook mode",
+        "Publish one scoped PR without merging",
+        "Release local slot after required hook"
+      ],
+      "verification": [
+        "Focused ReleaseSafe workspace-test: 21/21 tests passed",
+        "ReleaseSafe integration-test: 22/22 tests passed",
+        "Final ReleaseSafe check: 45/45 steps and 104/104 tests passed",
+        "Native ignored hook launcher compiled",
+        "Commit hook, publication and exact-head CI pending at record creation",
+        "No physical UI or safe-file-persistence qualification claimed"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
     }
   ]
 }

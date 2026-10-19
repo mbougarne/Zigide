@@ -4,3 +4,5 @@ pub const ExternalPorts = @import("context.zig").ExternalPorts;
 pub const Service = @import("context.zig").Service;
 pub const Phase = @import("context.zig").Phase;
 pub const State = @import("context.zig").State;
+
+pub const Workspace = @import("workspace.zig").Workspace;

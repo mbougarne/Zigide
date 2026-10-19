@@ -19,3 +19,8 @@ test {
     _ = transport;
     _ = @import("clock.zig");
 }
+
+pub const LocalResources = @import("local_resources.zig").LocalResources;
+test {
+    _ = @import("local_resources.zig");
+}
