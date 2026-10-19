@@ -109,6 +109,12 @@ pub fn build(b: *std.Build) void {
     production_step.dependOn(&run_production_tests.step);
     text_test_step.dependOn(production_step);
 
+    const workspace_tests = b.addTest(.{ .root_module = modules.get("workspace").? });
+    const run_workspace_tests = b.addRunArtifact(workspace_tests);
+    const workspace_test_step = b.step("workspace-test", "Run resource, document and workspace lifecycle tests");
+    workspace_test_step.dependOn(&run_workspace_tests.step);
+    workspace_test_step.dependOn(&run_adapter_tests.step);
+
     const command_tests = b.addTest(.{ .root_module = modules.get("commands").? });
     const run_command_tests = b.addRunArtifact(command_tests);
 
@@ -129,6 +135,7 @@ pub fn build(b: *std.Build) void {
     integration_module.addImport("foundation", modules.get("foundation").?);
     integration_module.addImport("commands", modules.get("commands").?);
     integration_module.addImport("ports", modules.get("ports").?);
+    integration_module.addImport("workspace", modules.get("workspace").?);
     const integration_tests = b.addTest(.{ .root_module = integration_module });
     const run_integration_tests = b.addRunArtifact(integration_tests);
     run_integration_tests.setCwd(b.path("."));
@@ -169,6 +176,7 @@ pub fn build(b: *std.Build) void {
     unit_test_step.dependOn(&run_foundation_tests.step);
     unit_test_step.dependOn(&run_adapter_tests.step);
     unit_test_step.dependOn(&run_command_tests.step);
+    unit_test_step.dependOn(workspace_test_step);
     unit_test_step.dependOn(text_test_step);
 
     const integration_test_step = b.step("integration-test", "Run product integration tests");
@@ -183,6 +191,7 @@ pub fn build(b: *std.Build) void {
     test_step.dependOn(&run_foundation_tests.step);
     test_step.dependOn(&run_adapter_tests.step);
     test_step.dependOn(&run_command_tests.step);
+    test_step.dependOn(workspace_test_step);
     test_step.dependOn(text_test_step);
 
     const check_step = b.step("check", "Run repository checks: unit tests, hygiene, Markdown links, trace ledger, zig fmt");

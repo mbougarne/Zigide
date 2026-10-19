@@ -41,3 +41,15 @@ pub const Scheduler = struct {
     context: *anyopaque,
     post: *const fn (*anyopaque, Task) Error!void,
 };
+
+pub const Resource = @import("workspace").Resource;
+pub const ResourceKind = enum { folder, file };
+pub const ResourceError = error{ NotFound, AccessDenied, NotDirectory, NotFile, InvalidPath, Unavailable, OutOfMemory };
+
+/// Resolves an existing readable resource. Relative input uses explicit base;
+/// absolute input ignores it. Success transfers an owned physical identity.
+/// No directory enumeration, file writes or workspace code execution.
+pub const Resources = struct {
+    context: *anyopaque,
+    resolve: *const fn (*anyopaque, std.mem.Allocator, []const u8, []const u8, ResourceKind) ResourceError!Resource,
+};

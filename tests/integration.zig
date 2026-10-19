@@ -119,3 +119,7 @@ test {
     _ = @import("protocol_transport.zig");
     _ = @import("protocol_stress.zig");
 }
+
+test {
+    _ = @import("workspace_lifecycle.zig");
+}
