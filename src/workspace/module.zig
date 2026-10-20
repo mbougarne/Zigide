@@ -10,6 +10,9 @@ pub const Edit = lifecycle.Edit;
 pub const Snapshot = lifecycle.Snapshot;
 pub const DocumentId = lifecycle.DocumentId;
 pub const ClosePolicy = lifecycle.ClosePolicy;
+pub const Selection = @import("text").Selection;
+pub const EditTransaction = @import("text").EditTransaction;
+pub const HistoryLimits = @import("text").HistoryLimits;
 test {
     _ = lifecycle;
     _ = @import("session_tests.zig");

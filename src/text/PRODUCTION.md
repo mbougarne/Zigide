@@ -31,6 +31,13 @@ content, version, metadata and lookups. Reserved capacity may grow on failure.
 A single application thread owns each mutable document; reentrant mutation and
 copying owning structs are unsupported. Implementation fields are not read APIs.
 
+`prepare` exposes the same validated mutation before publication. Its owned
+`Prepared` value supports candidate-position validation, then exactly one `commit`
+or `deinit`. The document stays at a stable address and is not accessed while a
+prepared value borrows it. This lets [selection/history](HISTORY.md) allocate
+inverse edits and validate post-edit selections before committing text, metadata,
+selection and history together. Ordinary `apply` prepares and commits directly.
+
 ## Ownership and indexing
 
 Construction copies valid UTF-8 into an owned original buffer. Coalesced pieces

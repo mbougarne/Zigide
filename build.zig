@@ -100,6 +100,14 @@ pub fn build(b: *std.Build) void {
     text_test_step.dependOn(&run_text_tests.step);
     text_test_step.dependOn(&run_equivalence.step);
 
+    const history_module = b.createModule(.{ .root_source_file = b.path("tests/edit_history.zig"), .target = target, .optimize = optimize });
+    history_module.addImport("text", modules.get("text").?);
+    const history_tests = b.addTest(.{ .root_module = history_module });
+    const history_test_step = b.step("history-test", "Run selection, transaction, undo/redo and seeded history tests");
+    history_test_step.dependOn(&run_text_tests.step);
+    history_test_step.dependOn(&b.addRunArtifact(history_tests).step);
+    text_test_step.dependOn(history_test_step);
+
     const production_module = b.createModule(.{ .root_source_file = b.path("tests/production_text.zig"), .target = target, .optimize = optimize });
     production_module.addImport("text", modules.get("text").?);
     const production_tests = b.addTest(.{ .root_module = production_module });
