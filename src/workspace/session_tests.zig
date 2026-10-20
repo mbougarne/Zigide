@@ -54,6 +54,7 @@ const Events = struct {
         switch (event) {
             .active => self.active += 1,
             .dirty => self.dirty += 1,
+            .selection => {},
         }
     }
     fn destroy(raw: *anyopaque, _: std.mem.Allocator) void {
@@ -313,4 +314,42 @@ test "ZIT-056 earlier successful saves remain acknowledged if a later save fails
     try std.testing.expect((try session.view(two)).dirty);
     try std.testing.expectEqual(@as(usize, 2), session.documents.items.len);
     try std.testing.expectEqual(two, session.active.?);
+}
+
+test "ZIT-058–062 workspace undo dirty save stale results and focus boundaries" {
+    var session = Session.init(a);
+    defer cleanup(&session);
+    try open(&session, "/work");
+    const one = try document(&session, "/work/one", "");
+    const two = try document(&session, "/work/two", "other");
+    try session.activate(one);
+    try session.transaction(one, .{ .version = 0, .edits = &.{.{ .start = 0, .end = 0, .inserted = "a" }}, .command = .{ .kind = .typing } });
+    try session.transaction(one, .{ .version = 1, .edits = &.{.{ .start = 1, .end = 1, .inserted = "é" }}, .command = .{ .kind = .typing } });
+    try session.activate(two);
+    try session.activate(one);
+    try session.transaction(one, .{ .version = 2, .edits = &.{.{ .start = 3, .end = 3, .inserted = "😀" }}, .command = .{ .kind = .typing } });
+    var source: foundation.cancellation.Source = .{};
+    const work = try session.beginWork(one, .analyze, source.token());
+    _ = try session.undo(one);
+    var before = try session.snapshot(one, a);
+    defer before.deinit();
+    try std.testing.expectEqualStrings("aé", before.bytes);
+    _ = try session.undo(one);
+    try std.testing.expect(!(try session.view(one)).dirty);
+    try std.testing.expect((try session.view(one)).can_redo);
+    try std.testing.expect(!try session.complete(work));
+    _ = try session.redo(one);
+    try std.testing.expect((try session.view(one)).dirty);
+    var saved = try session.snapshot(one, a);
+    defer saved.deinit();
+    const save = try session.beginWork(one, .save, source.token());
+    try std.testing.expect(try session.acknowledgeSave(save, &saved));
+    try session.transaction(one, .{ .version = saved.version, .edits = &.{.{ .start = 3, .end = 3, .inserted = "!" }}, .command = .{ .kind = .typing } });
+    _ = try session.undo(one);
+    try std.testing.expect(!(try session.view(one)).dirty);
+    try std.testing.expectEqual(@as(usize, 3), (try session.view(one)).selection.active);
+    try session.closeDocument(one, null);
+    const reopened = try document(&session, "/work/one", "aé");
+    try std.testing.expect(!(try session.view(reopened)).can_undo);
+    try std.testing.expect(!(try session.view(reopened)).can_redo);
 }

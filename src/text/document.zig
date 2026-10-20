@@ -65,6 +65,39 @@ pub const Document = struct {
     /// Accepts arbitrary input order, rejects overlaps and coincident starts.
     /// Empty batches and empty insertions alone do not advance the version.
     pub fn apply(self: *Document, edits: []const semantics.Edit) !void {
+        var prepared = (try self.prepare(edits)) orelse return;
+        prepared.commit();
+    }
+    /// One prepared edit may borrow a document at a time. Do not access its
+    /// owner until commit/deinit. Aborting preserves bytes, metadata and version.
+    pub const Prepared = struct {
+        owner: *Document,
+        storage: Storage.Pending,
+        lines: LineIndex,
+        counts: metadata_types.Counts,
+        version: u64,
+
+        pub fn position(self: *const Prepared, at: usize) semantics.Invalid!semantics.Position {
+            const view = self.storage.view();
+            return self.lines.position(&view, at);
+        }
+        pub fn deinit(self: *Prepared) void {
+            self.lines.deinit(self.owner.storage.allocator);
+            self.storage.deinit();
+            self.* = undefined;
+        }
+        pub fn commit(self: *Prepared) void {
+            self.owner.lines.deinit(self.owner.storage.allocator);
+            self.storage.commit();
+            self.owner.lines = self.lines;
+            self.owner.ending_counts = self.counts;
+            self.owner.version = self.version;
+            self.* = undefined;
+        }
+    };
+    /// Selection/history owners can validate and allocate before publishing.
+    /// null means a validated batch with no text/version transition.
+    pub fn prepare(self: *Document, edits: []const semantics.Edit) !?Prepared {
         var changed = false;
         for (edits) |e| {
             try self.storage.validateRange(e.start, e.end);
@@ -78,7 +111,7 @@ pub const Document = struct {
         for (sorted, 0..) |e, i| {
             if (i > 0 and (e.start < sorted[i - 1].end or e.start == sorted[i - 1].start)) return error.OverlappingEdits;
         }
-        if (!changed) return;
+        if (!changed) return null;
         const next_version = try std.math.add(u64, self.version, 1);
         var pending = try self.storage.prepare(sorted);
         errdefer pending.deinit();
@@ -96,11 +129,7 @@ pub const Document = struct {
                 .cr = counts.cr - removed.cr + inserted.cr,
             };
         }
-        self.lines.deinit(allocator);
-        pending.commit();
-        self.lines = lines;
-        self.ending_counts = counts;
-        self.version = next_version;
+        return .{ .owner = self, .storage = pending, .lines = lines, .counts = counts, .version = next_version };
     }
     pub fn edit(self: *Document, edit_value: semantics.Edit) !void {
         try self.apply(&.{edit_value});

@@ -19,6 +19,7 @@ pub const ClosePolicy = struct {
 pub const Change = union(enum) {
     active: struct { previous: ?DocumentId, current: ?DocumentId },
     dirty: struct { document: DocumentId, dirty: bool },
+    selection: struct { document: DocumentId, selection: text.Selection },
 };
 pub const Changes = foundation.events.Event(Change);
 pub const WorkKind = enum { load, analyze, save, discover };
@@ -42,6 +43,7 @@ const Document = struct {
     id: DocumentId,
     resource: Resource,
     model: text.Document,
+    history: text.History,
     saved: text.Snapshot,
     external_changed: bool = false,
     revision: u64 = 0,
@@ -49,6 +51,7 @@ const Document = struct {
 
     fn deinit(self: *Document, allocator: std.mem.Allocator) void {
         self.saved.deinit();
+        self.history.deinit();
         self.model.deinit();
         self.resource.deinit();
         allocator.destroy(self);
@@ -78,6 +81,9 @@ pub const View = struct {
     model: *const text.Document,
     dirty: bool,
     external_changed: bool,
+    selection: text.Selection,
+    can_undo: bool,
+    can_redo: bool,
 };
 
 pub const Session = struct {
@@ -91,6 +97,7 @@ pub const Session = struct {
     operation_ids: foundation.ids.Generator(foundation.ids.OperationId) = .{},
     pending: std.ArrayList(Work) = .empty,
     busy: bool = false,
+    history_limits: text.HistoryLimits = .{},
 
     pub fn init(allocator: std.mem.Allocator) Session {
         return .{ .allocator = allocator, .changes = Changes.init(allocator) };
@@ -113,7 +120,7 @@ pub const Session = struct {
     }
     pub fn view(self: *const Session, id: DocumentId) !View {
         const doc = self.find(id) orelse return error.DocumentClosed;
-        return .{ .id = id, .resource = doc.resource.path, .model = &doc.model, .dirty = doc.dirty, .external_changed = doc.external_changed };
+        return .{ .id = id, .resource = doc.resource.path, .model = &doc.model, .dirty = doc.dirty, .external_changed = doc.external_changed, .selection = doc.history.selection, .can_undo = doc.history.canUndo(), .can_redo = doc.history.canRedo() };
     }
     pub fn lookup(self: *const Session, resource: Resource) ?DocumentId {
         for (self.documents.items) |doc| if (doc.resource.eql(resource)) return doc.id;
@@ -122,6 +129,8 @@ pub const Session = struct {
     fn setActive(self: *Session, id: ?DocumentId) void {
         if (self.active == id) return;
         const previous = self.active;
+        if (previous) |value| if (self.find(value)) |doc| doc.history.boundary();
+        if (id) |value| if (self.find(value)) |doc| doc.history.boundary();
         self.active = id;
         self.changes.dispatch(.{ .active = .{ .previous = previous, .current = id } });
     }
@@ -150,7 +159,7 @@ pub const Session = struct {
         errdefer saved.deinit();
         try self.documents.ensureUnusedCapacity(self.allocator, 1);
         const id = try self.document_ids.next();
-        doc.* = .{ .id = id, .resource = owned, .model = model, .saved = saved };
+        doc.* = .{ .id = id, .resource = owned, .model = model, .history = text.History.init(self.allocator, model.version, self.history_limits), .saved = saved };
         self.documents.appendAssumeCapacity(doc);
         self.setActive(id);
         return id;
@@ -162,18 +171,64 @@ pub const Session = struct {
         self.changes.dispatch(.{ .dirty = .{ .document = doc.id, .dirty = dirty } });
     }
     fn apply(self: *Session, doc: *Document, edits: []const text.Edit) !void {
+        try self.transact(doc, .{ .version = doc.model.version, .edits = edits });
+    }
+    fn transact(self: *Session, doc: *Document, request: text.EditTransaction) !void {
         const revision = try std.math.add(u64, doc.revision, 1);
         const previous = doc.model.version;
-        try doc.model.apply(edits);
+        const selection = doc.history.selection;
+        _ = try doc.history.commit(&doc.model, request);
         if (previous != doc.model.version) doc.revision = revision;
         self.refreshDirty(doc);
+        if (!selection.eql(doc.history.selection)) self.changes.dispatch(.{ .selection = .{ .document = doc.id, .selection = doc.history.selection } });
     }
-    /// Undo/redo submit their ordinary inverse/forward batch here; clean state
-    /// compares exact bytes with the last acknowledged snapshot, not a version.
+    /// Ordinary commands share transactions with typed input and background edits.
     pub fn edit(self: *Session, id: DocumentId, edits: []const text.Edit) !void {
         try self.enter();
         defer self.busy = false;
         try self.apply(self.find(id) orelse return error.DocumentClosed, edits);
+    }
+    pub fn transaction(self: *Session, id: DocumentId, request: text.EditTransaction) !void {
+        try self.enter();
+        defer self.busy = false;
+        try self.transact(self.find(id) orelse return error.DocumentClosed, request);
+    }
+    pub fn select(self: *Session, id: DocumentId, selection: text.Selection) !void {
+        try self.enter();
+        defer self.busy = false;
+        const doc = self.find(id) orelse return error.DocumentClosed;
+        const previous = doc.history.selection;
+        try doc.history.select(&doc.model, selection);
+        if (!previous.eql(selection)) self.changes.dispatch(.{ .selection = .{ .document = id, .selection = selection } });
+    }
+    pub fn historyBoundary(self: *Session, id: DocumentId) !void {
+        try self.enter();
+        defer self.busy = false;
+        (self.find(id) orelse return error.DocumentClosed).history.boundary();
+    }
+    pub fn setHistoryLimits(self: *Session, id: DocumentId, limits: text.HistoryLimits) !void {
+        try self.enter();
+        defer self.busy = false;
+        (self.find(id) orelse return error.DocumentClosed).history.setLimits(limits);
+    }
+    fn replay(self: *Session, id: DocumentId, redo_value: bool) !text.HistoryOutcome {
+        try self.enter();
+        defer self.busy = false;
+        const doc = self.find(id) orelse return error.DocumentClosed;
+        const revision = try std.math.add(u64, doc.revision, 1);
+        const outcome = if (redo_value) try doc.history.redo(&doc.model) else try doc.history.undo(&doc.model);
+        if (outcome == .applied) {
+            doc.revision = revision;
+            self.refreshDirty(doc);
+            self.changes.dispatch(.{ .selection = .{ .document = id, .selection = doc.history.selection } });
+        }
+        return outcome;
+    }
+    pub fn undo(self: *Session, id: DocumentId) !text.HistoryOutcome {
+        return self.replay(id, false);
+    }
+    pub fn redo(self: *Session, id: DocumentId) !text.HistoryOutcome {
+        return self.replay(id, true);
     }
     pub fn snapshot(self: *const Session, id: DocumentId, allocator: std.mem.Allocator) !text.Snapshot {
         return (self.find(id) orelse return error.DocumentClosed).model.snapshot(allocator);
@@ -192,6 +247,7 @@ pub const Session = struct {
         doc.saved.deinit();
         doc.saved = replacement;
         doc.external_changed = false;
+        doc.history.boundary();
         self.refreshDirty(doc);
         return true;
     }
@@ -201,6 +257,7 @@ pub const Session = struct {
         const doc = self.find(id) orelse return error.DocumentClosed;
         doc.revision = try std.math.add(u64, doc.revision, 1);
         doc.external_changed = true;
+        doc.history.boundary();
         self.refreshDirty(doc);
     }
     pub fn openWorkspace(self: *Session, resource: Resource, policy: ?ClosePolicy) !void {
@@ -269,6 +326,7 @@ pub const Session = struct {
             choice.doc.saved = saved.*;
             choice.saved = null;
             choice.doc.external_changed = false;
+            choice.doc.history.boundary();
             self.refreshDirty(choice.doc);
         };
     }

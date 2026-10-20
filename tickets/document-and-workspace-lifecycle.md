@@ -78,5 +78,6 @@ physical-path identity, single-folder session, document registry, byte-exact sav
 baseline, typed events, close decisions and application-thread result admission.
 `workspace-test` and `integration-test` cover these domain/application contracts,
 including inverse edits that restore clean state, deterministic access-denied
-errors and real temporary-folder/symlink cases. The later undo-history service,
-safe file persistence and DVUI prompt integration retain their own feature scope.
+errors and real temporary-folder/symlink cases. The [selection/undo feature](selection-undo-and-redo.md)
+integrates history with the same lifecycle guards. Safe file persistence and DVUI
+prompt integration retain their own feature scope.

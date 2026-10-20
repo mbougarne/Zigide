@@ -2231,6 +2231,136 @@
         "committed": false,
         "pushed": false
       }
+    },
+    {
+      "id": "fc115362-cf04-4533-aced-bdfeb1df0607",
+      "timestamp": "2026-10-20T12:28:05Z",
+      "kind": "implement-selection-history",
+      "summary": "Implement selection, undo and redo ZIT-058–063",
+      "intentTags": [
+        "ZIT-058",
+        "ZIT-059",
+        "ZIT-060",
+        "ZIT-061",
+        "ZIT-062",
+        "ZIT-063"
+      ],
+      "conversation": "conversations/2026-10-20-12-28-05-fc115362-cf04-4533-aced-bdfeb1df0607.md",
+      "research": "researches/2026-10-20-12-28-05-fc115362-cf04-4533-aced-bdfeb1df0607.md",
+      "commands": "commands/2026-10-20-12-28-05-fc115362-cf04-4533-aced-bdfeb1df0607.md",
+      "artifacts": [
+        "src/text/history.zig",
+        "src/text/selection.zig",
+        "src/text/HISTORY.md",
+        "tests/edit_history.zig"
+      ],
+      "decisions": [
+        "Preserve original checkout and unrelated work",
+        "Respect heavy-validation slot gate",
+        "Keep domain independent from input toolkit",
+        "Disclose substantial AI implementation truthfully"
+      ],
+      "verification": [
+        "Read current repository rules, backlog, architecture and relevant source. Added focused cases, allocation-failure checks and a 16-seed × 256-step contiguous-string oracle. Formatting/whitespace checks passed. No compilation, tests or app launches have run at this record snapshot.",
+        "Compilation, behavioral execution, final regression, hook and publication remain pending until the assigned slot. Physical input/DVUI work is outside this domain scope."
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "f255f98a-dd0b-4623-8776-a32d3513d18c",
+      "timestamp": "2026-10-20T12:42:01Z",
+      "kind": "task-sleep-prevention",
+      "summary": "Keep task-owned sleep prevention active during work",
+      "intentTags": [
+        "coordination",
+        "sleep-prevention"
+      ],
+      "conversation": "conversations/2026-10-20-12-42-01-f255f98a-dd0b-4623-8776-a32d3513d18c.md",
+      "research": "researches/2026-10-20-12-42-01-f255f98a-dd0b-4623-8776-a32d3513d18c.md",
+      "commands": "commands/2026-10-20-12-42-01-f255f98a-dd0b-4623-8776-a32d3513d18c.md",
+      "artifacts": [],
+      "decisions": [
+        "Preserve original checkout and unrelated work",
+        "Respect heavy-validation slot gate",
+        "Keep domain independent from input toolkit",
+        "Disclose substantial AI implementation truthfully"
+      ],
+      "verification": [
+        "The caffeinate session started without error. A read-only assertion inventory confirmed active sleep-prevention assertions. A sandboxed process-list attempt was denied; the owned execution session provides a direct cleanup handle without touching other processes.",
+        "The temporary process is active at this record snapshot and has not yet been cleaned up. No credential, permission or persistent power-setting changes were made."
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "8b2aa982-b624-45d2-8573-f780a8715f49",
+      "timestamp": "2026-10-20T12:42:01Z",
+      "kind": "selection-history-checkpoint",
+      "summary": "Record readiness while waiting for the heavy test slot",
+      "intentTags": [
+        "ZIT-063",
+        "coordination",
+        "traceability"
+      ],
+      "conversation": "conversations/2026-10-20-12-42-01-8b2aa982-b624-45d2-8573-f780a8715f49.md",
+      "research": "researches/2026-10-20-12-42-01-8b2aa982-b624-45d2-8573-f780a8715f49.md",
+      "commands": "commands/2026-10-20-12-42-01-8b2aa982-b624-45d2-8573-f780a8715f49.md",
+      "artifacts": [],
+      "decisions": [
+        "Preserve original checkout and unrelated work",
+        "Respect heavy-validation slot gate",
+        "Keep domain independent from input toolkit",
+        "Disclose substantial AI implementation truthfully"
+      ],
+      "verification": [
+        "Inspected both requested checkout locations for .agents/.codex skills; neither directory exists. Reviewed grouping edge cases, corrected declaration-shadowing names and explicit-caret grouping checks, added metadata restoration and retained-byte/group-cap cases, and refreshed current workspace documentation. No compiler, build, test suite or app was launched.",
+        "Formatting/whitespace checks pass. The shared heavy-testing gate remains in force. Task-owned sleep prevention remains active."
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "d02ec1d9-7243-453d-ba06-64b79e258946",
+      "timestamp": "2026-10-20T12:49:30Z",
+      "kind": "validate-selection-history",
+      "summary": "Validate ZIT-058–063 headless contracts and prepare required hook and PR.",
+      "intentTags": [
+        "ZIT-058–063",
+        "validation",
+        "AI-disclosure"
+      ],
+      "conversation": "conversations/2026-10-20-12-49-30-d02ec1d9-7243-453d-ba06-64b79e258946.md",
+      "research": "researches/2026-10-20-12-49-30-d02ec1d9-7243-453d-ba06-64b79e258946.md",
+      "commands": "commands/2026-10-20-12-49-30-d02ec1d9-7243-453d-ba06-64b79e258946.md",
+      "artifacts": [
+        "tickets/selection-undo-and-redo.md",
+        "src/text/HISTORY.md",
+        "tests/edit_history.zig"
+      ],
+      "decisions": [
+        "Run focused and full checks only in the assigned slot",
+        "Bound compiler jobs and retain the full required hook",
+        "Publish one scoped draft PR without merging",
+        "Keep raw evidence and local tooling ignored"
+      ],
+      "verification": [
+        "Focused ReleaseSafe history/workspace checks: 49/49 tests passed",
+        "Final ReleaseSafe check: 48/48 steps and 119/119 tests passed",
+        "No physical DVUI qualification claimed for the headless scope",
+        "Required hook, publication and exact-head CI pending at record creation",
+        "Task-owned sleep prevention remains active pending completion"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
     }
   ]
 }

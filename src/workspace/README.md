@@ -50,11 +50,18 @@ registry and active state unchanged. Close releases every document, baseline and
 pending stamp; workspace close also releases all scoped event contexts.
 `deinit` requires a completed close and never implies permission to discard edits.
 
+Each document now owns the [selection and undo/redo history](../text/HISTORY.md).
+`transaction`, `select`, `undo` and `redo` run through the existing admission guard.
+Views expose the versioned selection and history availability. Focus changes,
+save acknowledgements and external notifications break typing groups. Closed
+documents release history, and reopened resources start with a fresh history.
+
 Dirty means bytes differ from the acknowledged snapshot, or an unresolved external
 change was reported. The comparison preserves UTF-8, BOM, line endings and final
 newline exactly. A successful inverse edit can return to clean despite a higher
-text version. This supports the later undo service without introducing its history
-here. A save acknowledgement must match a current save operation and exact
+text version. Undo/redo use the same byte-exact dirty comparison and advance the
+lifecycle revision, rejecting older background results. A save acknowledgement
+must match a current save operation and exact
 snapshot bytes/version. Late acknowledgements cannot clear newer edits or external
 changes. An external notification marks conflict/dirty and leaves buffer bytes
 untouched; actual reload/conflict resolution remains the file service's decision.
