@@ -299,10 +299,12 @@ test "ZIT-067 macOS replacement preserves extended attributes and resource-fork 
     defer source.close(io);
     try expect(fsetxattr(source.handle, "org.zigide.fixture", "metadata", 8, 0, 0) == 0);
     try expect(fsetxattr(source.handle, "com.apple.ResourceFork", "fork", 4, 0, 0) == 0);
+    try source.setTimestamps(io, .{ .modify_timestamp = .{ .new = .{ .nanoseconds = 1_000_000_000 } } });
     const id = try f.app.openFile("file");
     try f.app.session.edit(id, &.{.{ .start = 4, .end = 4, .inserted = "!" }});
     try f.app.saveFile(id, null);
     try f.disk("file", "base!");
+    try expect((try f.temp.dir.statFile(io, "file", .{})).mtime.nanoseconds > 1_000_000_000);
     const replacement = try f.temp.dir.openFile(io, "file", .{});
     defer replacement.close(io);
     var buffer: [32]u8 = undefined;

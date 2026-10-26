@@ -88,6 +88,6 @@ The [Safe File I/O review guide](../docs/safe-file-io.md) maps each ticket to
 observable failure behavior and recovery, and documents macOS metadata, conflict
 and durability limits. `zig build safe-file-io-test -j2 --summary all` passes nine
 disposable scenarios. The required `zig build check -j2 --summary all` passed
-50 steps and 127 tests before the final metadata-preservation addition; the
-required pre-commit hook validates the final tree. No milestone UI or power-loss
+50 steps and 128 tests including native metadata preservation; the unchanged
+required pre-commit hook validates the committed tree. No milestone UI or power-loss
 qualification is claimed.

@@ -42,7 +42,8 @@ undo history and saved baseline. Reload prepares the entire replacement first.
   directory rename rights would permit replacement. Hard-linked files are
   rejected to avoid silently splitting aliases. The macOS adapter uses `fcopyfile(COPYFILE_METADATA)` to copy stat/security
   metadata, ACLs and extended attributes (including resource forks) before sync.
-  Metadata-copy errors abort replacement. Xattrs/resource forks are tested;
+  The replacement mtime is refreshed after copying, so incremental tools see
+  edited content. Metadata-copy errors abort replacement. Xattrs/resource forks are tested;
   custom ACL and ownership cases remain unqualified. Other platforms reject
   replacement until a metadata-preserving adapter is supplied.
 

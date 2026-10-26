@@ -147,6 +147,9 @@ pub const LocalFiles = struct {
             const rc = fcopyfile(source_fd, temp.handle, null, 0b111);
             if (rc != 0) return error.MetadataCopyFailed;
             try temp.setPermissions(self.io, .fromMode(value.permissions.toMode() & 0o777));
+            // COPYFILE_STAT copied old times; publishing edited bytes must
+            // advance mtime so incremental tools observe the save.
+            try temp.setTimestamps(self.io, .{ .modify_timestamp = .now });
         }
         try self.at(.sync);
         try temp.sync(self.io);
