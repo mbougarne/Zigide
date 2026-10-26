@@ -40,6 +40,9 @@ zig build hooks   # once per clone: points git at .githooks so pre-commit runs t
 
 The [protocol spike](src/adapters/protocol/README.md) adds bounded framing and a real-server fixture: `zig build zls-spike -Dzls=/absolute/path/to/zls` requires ZLS 0.16.0.
 
+The [Safe File I/O review guide](docs/safe-file-io.md) maps ZIT-064–070 to
+`zig build safe-file-io-test` failure and recovery evidence.
+
 Product test targets can also be run separately with `zig build unit-test` and `zig build integration-test`.
 
 The [Dependable Editor exit contract and journey procedure](tests/dependable_editor/README.md)

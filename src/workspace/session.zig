@@ -3,6 +3,7 @@
 const std = @import("std");
 const foundation = @import("foundation");
 const text = @import("text");
+const FileStamp = @import("file_stamp.zig").FileStamp;
 const Resource = @import("resource.zig").Resource;
 
 pub const DocumentId = enum(u64) { _ };
@@ -45,6 +46,7 @@ const Document = struct {
     model: text.Document,
     history: text.History,
     saved: text.Snapshot,
+    base_stamp: ?FileStamp = null,
     external_changed: bool = false,
     revision: u64 = 0,
     dirty: bool = false,
@@ -250,6 +252,63 @@ pub const Session = struct {
         doc.history.boundary();
         self.refreshDirty(doc);
         return true;
+    }
+    pub fn baseStamp(self: *const Session, id: DocumentId) !?FileStamp {
+        return (self.find(id) orelse return error.DocumentClosed).base_stamp;
+    }
+    pub fn setBaseStamp(self: *Session, id: DocumentId, stamp: FileStamp) !void {
+        try self.enter();
+        defer self.busy = false;
+        (self.find(id) orelse return error.DocumentClosed).base_stamp = stamp;
+    }
+    /// Prepare allocations and admission before writing. Callback borrows this
+    /// locked session; success commits without any further fallible operations.
+    pub fn persist(self: *Session, id: DocumentId, target: Resource, context: *anyopaque, write: *const fn (*anyopaque, []const u8, []const u8, ?FileStamp) anyerror!FileStamp) anyerror!void {
+        try self.enter();
+        defer self.busy = false;
+        const doc = self.find(id) orelse return error.DocumentClosed;
+        const root = self.root orelse return error.WorkspaceClosed;
+        if (!root.contains(target) or root.eql(target)) return error.OutsideWorkspace;
+        if (self.lookup(target)) |other| if (other != id) return error.DestinationOpen;
+        const revision = try std.math.add(u64, doc.revision, 1);
+        var resource = try target.clone(self.allocator);
+        errdefer resource.deinit();
+        var saved = try doc.model.snapshot(self.allocator);
+        errdefer saved.deinit();
+        const stamp = try write(context, resource.path, saved.bytes, if (doc.resource.eql(target)) doc.base_stamp else null);
+        doc.resource.deinit();
+        doc.resource = resource;
+        doc.saved.deinit();
+        doc.saved = saved;
+        doc.base_stamp = stamp;
+        doc.external_changed = false;
+        doc.revision = revision;
+        doc.history.boundary();
+        self.refreshDirty(doc);
+    }
+    /// Dirty reload needs an independent explicit discard decision. All
+    /// preparation happens before replacing model, history and saved baseline.
+    pub fn reload(self: *Session, id: DocumentId, bytes: []const u8, stamp: FileStamp, discard_dirty: bool) !void {
+        try self.enter();
+        defer self.busy = false;
+        const doc = self.find(id) orelse return error.DocumentClosed;
+        if (doc.dirty and !discard_dirty) return error.DiscardDecisionRequired;
+        const revision = try std.math.add(u64, doc.revision, 1);
+        var model = try text.Document.init(self.allocator, bytes);
+        errdefer model.deinit();
+        var saved = try model.snapshot(self.allocator);
+        errdefer saved.deinit();
+        doc.model.deinit();
+        doc.saved.deinit();
+        doc.history.deinit();
+        doc.model = model;
+        doc.saved = saved;
+        doc.history = text.History.init(self.allocator, model.version, self.history_limits);
+        doc.base_stamp = stamp;
+        doc.external_changed = false;
+        doc.revision = revision;
+        self.refreshDirty(doc);
+        self.changes.dispatch(.{ .selection = .{ .document = id, .selection = doc.history.selection } });
     }
     pub fn externalChange(self: *Session, id: DocumentId) !void {
         try self.enter();

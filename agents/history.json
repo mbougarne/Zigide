@@ -2361,6 +2361,49 @@
         "committed": false,
         "pushed": false
       }
+    },
+    {
+      "id": "e96a1040-602d-49a9-a6c7-1f860e948cf7",
+      "timestamp": "2026-10-26T11:40:16Z",
+      "kind": "implementation",
+      "summary": "Implement ZIT-064–070 safe local file reads, atomic saves, conflict resolution and failure/recovery evidence",
+      "intentTags": [
+        "ZIT-064",
+        "ZIT-065",
+        "ZIT-066",
+        "ZIT-067",
+        "ZIT-068",
+        "ZIT-069",
+        "ZIT-070"
+      ],
+      "conversation": "conversations/2026-10-26-11-40-16-e96a1040-602d-49a9-a6c7-1f860e948cf7.md",
+      "research": "researches/2026-10-26-11-40-16-e96a1040-602d-49a9-a6c7-1f860e948cf7.md",
+      "commands": "commands/2026-10-26-11-40-16-e96a1040-602d-49a9-a6c7-1f860e948cf7.md",
+      "artifacts": [
+        "src/adapters/safe_files.zig",
+        "src/workspace/file_stamp.zig",
+        "src/workspace/session.zig",
+        "src/application/workspace.zig",
+        "src/ports/module.zig",
+        "tests/safe_file_io.zig",
+        "docs/safe-file-io.md",
+        "tickets/safe-file-io.md"
+      ],
+      "decisions": [
+        "Reject invalid UTF-8 before editable admission",
+        "Create-only Save As; explicit conflict and dirty reload decisions",
+        "Preserve native macOS metadata before atomic replacement"
+      ],
+      "verification": [
+        "Focused Safe File I/O: 9 scenarios passed",
+        "Required check before final metadata addition: 50 steps and 127 tests passed",
+        "Final hook, publication and CI pending at record creation",
+        "No power-loss, custom ACL/ownership or physical UI qualification"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
     }
   ]
 }

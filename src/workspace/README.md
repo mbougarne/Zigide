@@ -5,7 +5,8 @@ snapshots, active-document state, scoped subscriptions and pending operation
 stamps. `application.Workspace` resolves paths through `ports.Resources` before
 calling the domain. `adapters.LocalResources` implements existing local resources.
 No domain method opens dialogs, reads/writes files, executes workspace code or
-imports DVUI. File decoding/safe save and the production UI remain separate tickets.
+imports DVUI. Safe file persistence is described in the [review guide](../../docs/safe-file-io.md);
+the production UI remains separate.
 
 ## Resource identity (ZIT-052)
 
@@ -26,7 +27,8 @@ the pathname through atomic file replacement rather than pinning an inode.
 A workspace symlink may resolve to its physical root. An interior symlink outside
 that root is rejected for document admission, as is a sibling sharing a string
 prefix. `/` contains all absolute identities; the root itself is not a document.
-New-file/Save As identities and rename reconciliation belong to their file tickets.
+Save As resolves the physical parent and uses create-only replacement; see the
+safe file review guide for collision and permission policy.
 
 Canonical paths describe admission at resolution time. They are not filesystem
 capabilities or a hostile-code sandbox. Concurrent rename/link changes require

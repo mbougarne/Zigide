@@ -149,6 +149,13 @@ pub fn build(b: *std.Build) void {
     run_integration_tests.setCwd(b.path("."));
     run_integration_tests.step.dependOn(&zigide.step);
 
+    const file_io_module = b.createModule(.{ .root_source_file = b.path("tests/safe_file_io.zig"), .target = target, .optimize = optimize });
+    for ([_][]const u8{ "application", "adapters", "ports", "workspace" }) |name| file_io_module.addImport(name, modules.get(name).?);
+    const file_io_tests = b.addTest(.{ .root_module = file_io_module });
+    const run_file_io_tests = b.addRunArtifact(file_io_tests);
+    run_file_io_tests.setCwd(b.path("."));
+    b.step("safe-file-io-test", "Run bounded local file, conflict, atomic-save and fault-recovery fixtures").dependOn(&run_file_io_tests.step);
+
     const foundation_spec = for (product_modules) |spec| {
         if (std.mem.eql(u8, spec.name, "foundation")) break spec;
     } else unreachable;
@@ -189,9 +196,11 @@ pub fn build(b: *std.Build) void {
 
     const integration_test_step = b.step("integration-test", "Run product integration tests");
     integration_test_step.dependOn(&run_integration_tests.step);
+    integration_test_step.dependOn(&run_file_io_tests.step);
 
     const test_step = b.step("test", "Run repository, unit, integration, and module-boundary tests");
     test_step.dependOn(&run_tests.step);
+    test_step.dependOn(&run_file_io_tests.step);
     test_step.dependOn(&run_unit_tests.step);
     test_step.dependOn(&run_integration_tests.step);
     test_step.dependOn(&forbidden_import.step);
