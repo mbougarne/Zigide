@@ -7,77 +7,87 @@
 
 ## ZIT-064: Implement Bounded File Reads
 
-- **Status:** Planned
+- **Status:** Done
 - **Priority:** P0
 - **Estimate:** 2-3 days
 - **Dependencies:** ZIT-019, ZIT-052
 - **Description:** Read local files under explicit size limits and capture stable metadata for later conflict checks.
 - **Acceptance criteria:**
-  - [ ] Missing, unreadable, non-regular, and oversized files produce distinct errors.
-  - [ ] Reads cannot allocate directly from untrusted file size without limits.
+  - [x] Missing, unreadable, non-regular, and oversized files produce distinct errors.
+  - [x] Reads cannot allocate directly from untrusted file size without limits.
 
 ## ZIT-065: Implement Text Decoding Policy
 
-- **Status:** Planned
+- **Status:** Done
 - **Priority:** P0
 - **Estimate:** 2-3 days
 - **Dependencies:** ZIT-049, ZIT-064
 - **Description:** Detect UTF-8 validity and apply the approved invalid-input policy without implicit replacement.
 - **Acceptance criteria:**
-  - [ ] Invalid input remains recoverable or is rejected before editable decoding, as documented.
-  - [ ] Saving cannot silently destroy undecodable bytes.
+  - [x] Invalid input remains recoverable or is rejected before editable decoding, as documented.
+  - [x] Saving cannot silently destroy undecodable bytes.
 
 ## ZIT-066: Implement Atomic Save Replacement
 
-- **Status:** Planned
+- **Status:** Done
 - **Priority:** P0
 - **Estimate:** 3-5 days
 - **Dependencies:** ZIT-019, ZIT-049
 - **Description:** Write a complete temporary replacement, sync according to documented guarantees, and atomically rename it over the destination.
 - **Acceptance criteria:**
-  - [ ] The original remains intact until the replacement is ready.
-  - [ ] Failure at tested write stages preserves dirty in-memory content and reports context.
+  - [x] The original remains intact until the replacement is ready.
+  - [x] Failure at tested write stages preserves dirty in-memory content and reports context.
 
 ## ZIT-067: Implement Save As and Permission Handling
 
-- **Status:** Planned
+- **Status:** Done
 - **Priority:** P0
 - **Estimate:** 2-4 days
 - **Dependencies:** ZIT-052, ZIT-066
 - **Description:** Save to a new resource identity and preserve or set permissions according to a documented macOS policy.
 - **Acceptance criteria:**
-  - [ ] Save As updates document identity only after successful replacement.
-  - [ ] Permission errors and destination collisions leave the original document state intact.
+  - [x] Save As updates document identity only after successful replacement.
+  - [x] Permission errors and destination collisions leave the original document state intact.
 
 ## ZIT-068: Capture and Compare External File Metadata
 
-- **Status:** Planned
+- **Status:** Done
 - **Priority:** P0
 - **Estimate:** 2-3 days
 - **Dependencies:** ZIT-064, ZIT-066
 - **Description:** Compare stable base metadata before save and detect external modifications or replacement.
 - **Acceptance criteria:**
-  - [ ] External changes are detected before overwrite.
-  - [ ] Metadata limitations and false-positive/negative risks are documented.
+  - [x] External changes are detected before overwrite.
+  - [x] Metadata limitations and false-positive/negative risks are documented.
 
 ## ZIT-069: Implement External-Change Resolution Flow
 
-- **Status:** Planned
+- **Status:** Done
 - **Priority:** P0
 - **Estimate:** 2-4 days
 - **Dependencies:** ZIT-056, ZIT-068
 - **Description:** Request reload, inspect, overwrite, or cancel decisions without silently resolving disk divergence.
 - **Acceptance criteria:**
-  - [ ] Cancel leaves disk and in-memory state unchanged.
-  - [ ] Reload cannot discard dirty edits without a separate explicit decision.
+  - [x] Cancel leaves disk and in-memory state unchanged.
+  - [x] Reload cannot discard dirty edits without a separate explicit decision.
 
 ## ZIT-070: Fault-Test File Open and Save
 
-- **Status:** Planned
+- **Status:** Done
 - **Priority:** P0
 - **Estimate:** 3-5 days
 - **Dependencies:** ZIT-065, ZIT-067, ZIT-069
 - **Description:** Exercise temporary filesystems, permission failures, partial writes, rename failures, disk changes, and line-ending round trips.
 - **Acceptance criteria:**
-  - [ ] Tested failures do not corrupt the last valid disk file or dirty document.
-  - [ ] Verified durability claims are scoped to the tested macOS/filesystem behavior.
+  - [x] Tested failures do not corrupt the last valid disk file or dirty document.
+  - [x] Verified durability claims are scoped to the tested macOS/filesystem behavior.
+
+## Validation and review
+
+The [Safe File I/O review guide](../docs/safe-file-io.md) maps each ticket to
+observable failure behavior and recovery, and documents macOS metadata, conflict
+and durability limits. `zig build safe-file-io-test -j2 --summary all` passes nine
+disposable scenarios. The required `zig build check -j2 --summary all` passed
+50 steps and 127 tests before the final metadata-preservation addition; the
+required pre-commit hook validates the final tree. No milestone UI or power-loss
+qualification is claimed.

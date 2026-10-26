@@ -17,3 +17,5 @@ test {
     _ = lifecycle;
     _ = @import("session_tests.zig");
 }
+
+pub const FileStamp = @import("file_stamp.zig").FileStamp;

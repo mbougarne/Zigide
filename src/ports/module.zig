@@ -53,3 +53,22 @@ pub const Resources = struct {
     context: *anyopaque,
     resolve: *const fn (*anyopaque, std.mem.Allocator, []const u8, []const u8, ResourceKind) ResourceError!Resource,
 };
+
+/// Synchronous local text persistence. Success transfers owned read buffers.
+/// A null expected stamp means create-only, including Save As; never clobber.
+pub const FileStamp = @import("workspace").FileStamp;
+pub const FileData = struct {
+    allocator: std.mem.Allocator,
+    bytes: []u8,
+    stamp: FileStamp,
+    pub fn deinit(self: *FileData) void {
+        self.allocator.free(self.bytes);
+        self.* = undefined;
+    }
+};
+pub const SafeFiles = struct {
+    context: *anyopaque,
+    read: *const fn (*anyopaque, std.mem.Allocator, []const u8) anyerror!FileData,
+    destination: *const fn (*anyopaque, std.mem.Allocator, []const u8, []const u8) anyerror!Resource,
+    save: *const fn (*anyopaque, []const u8, []const u8, ?FileStamp) anyerror!FileStamp,
+};

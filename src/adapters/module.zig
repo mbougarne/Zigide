@@ -24,3 +24,6 @@ pub const LocalResources = @import("local_resources.zig").LocalResources;
 test {
     _ = @import("local_resources.zig");
 }
+
+pub const LocalFiles = @import("safe_files.zig").LocalFiles;
+pub const FileStage = @import("safe_files.zig").Stage;
