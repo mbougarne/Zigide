@@ -14,6 +14,7 @@ jobs:
     name: Repository checks (Zig)
     # macOS arm64 is the first-release target platform (docs/architecture/01-vision-and-scope.md).
     runs-on: macos-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - # Resolves the Zig version from minimum_zig_version in build.zig.zon,
@@ -21,13 +22,6 @@ jobs:
         uses: mlugg/setup-zig@v2
       - name: Hygiene, links, trace ledger, zig fmt
         run: zig build check
-
-  zls-spike:
-    name: Real ZLS 0.16.0 handshake
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: mlugg/setup-zig@v2
       - name: Install pinned ZLS
         run: |
           curl --fail --location --retry 3 https://github.com/zigtools/zls/releases/download/0.16.0/zls-aarch64-macos.tar.xz -o "$RUNNER_TEMP/zls.tar.xz"
@@ -36,21 +30,8 @@ jobs:
           tar -xJf "$RUNNER_TEMP/zls.tar.xz" -C "$RUNNER_TEMP/zigide-zls"
       - name: Initialize and cleanly stop real ZLS
         run: zig build zls-spike -Dzls="$RUNNER_TEMP/zigide-zls/zls" --summary all
-
-  schema:
-    name: Trace ledger JSON Schema
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
       - name: Validate agents/history.json against its schema
         run: npx -y ajv-cli@5.0.0 validate --spec=draft2020 -s agents/history.schema.json -d agents/history.json
-
-  text-spike:
-    name: Text equivalence and benchmark evidence
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: mlugg/setup-zig@v2
       - name: ReleaseSafe text correctness and seeded equivalence
         run: zig build text-test -Doptimize=ReleaseSafe -j2 --summary all
       - name: Retain ReleaseFast measurements (budgets require recorded target hardware)
@@ -67,13 +48,6 @@ jobs:
             .zig-cache/text-benchmark-ci.csv
             .zig-cache/production-text-ci.csv
             .zig-cache/production-text-summary-ci.csv
-
-  ui-spike:
-    name: UI candidate builds and artifact tests
-    runs-on: macos-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: mlugg/setup-zig@v2
       - name: Shared scenario and system candidate build
         run: zig build ui-test ui-spike -Doptimize=ReleaseSafe -j2 --summary all
       - name: Bundle and package regression tests

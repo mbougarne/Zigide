@@ -2433,6 +2433,64 @@
         "committed": false,
         "pushed": false
       }
+    },
+    {
+      "id": "33678b34-ba3f-4b7d-a4b4-53800b4b3840",
+      "timestamp": "2026-10-27T23:24:19Z",
+      "kind": "ci-job-consolidation",
+      "summary": "Consolidate five equivalent platform checks into one macOS job",
+      "intentTags": [
+        "CI",
+        "consolidation",
+        "cost"
+      ],
+      "conversation": "conversations/2026-10-27-23-24-19-33678b34-ba3f-4b7d-a4b4-53800b4b3840.md",
+      "research": "researches/2026-10-27-23-24-19-33678b34-ba3f-4b7d-a4b4-53800b4b3840.md",
+      "commands": "commands/2026-10-27-23-24-19-33678b34-ba3f-4b7d-a4b4-53800b4b3840.md",
+      "artifacts": [
+        ".github/workflows/ci.yml"
+      ],
+      "decisions": [
+        "Keep all macOS checks and artifact payloads",
+        "Distinguish job counts from executed/billed minutes"
+      ],
+      "verification": [
+        "actionlint and whitespace passed",
+        "Full hook and publication pending at record creation"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
+    },
+    {
+      "id": "54c5f8d5-5454-470b-80e2-29edb66b7051",
+      "timestamp": "2026-10-27T23:24:19Z",
+      "kind": "ci-job-consolidation",
+      "summary": "Consolidate five equivalent platform checks into one macOS job",
+      "intentTags": [
+        "CI",
+        "consolidation",
+        "cost"
+      ],
+      "conversation": "conversations/2026-10-27-23-24-19-54c5f8d5-5454-470b-80e2-29edb66b7051.md",
+      "research": "researches/2026-10-27-23-24-19-54c5f8d5-5454-470b-80e2-29edb66b7051.md",
+      "commands": "commands/2026-10-27-23-24-19-54c5f8d5-5454-470b-80e2-29edb66b7051.md",
+      "artifacts": [
+        ".github/workflows/ci.yml"
+      ],
+      "decisions": [
+        "Keep all macOS checks and artifact payloads",
+        "Distinguish job counts from executed/billed minutes"
+      ],
+      "verification": [
+        "actionlint and whitespace passed",
+        "Full hook and publication pending at record creation"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
     }
   ]
 }
