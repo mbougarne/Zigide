@@ -2404,6 +2404,35 @@
         "committed": false,
         "pushed": false
       }
+    },
+    {
+      "id": "b66e2e95-3ca9-4cc0-acc0-eeb052486cd8",
+      "timestamp": "2026-10-27T23:04:02Z",
+      "kind": "ci-optimization",
+      "summary": "Cancel superseded PR checks and bound non-release evidence retention",
+      "intentTags": [
+        "CI",
+        "cost",
+        "validation"
+      ],
+      "conversation": "conversations/2026-10-27-23-04-02-b66e2e95-3ca9-4cc0-acc0-eeb052486cd8.md",
+      "research": "researches/2026-10-27-23-04-02-b66e2e95-3ca9-4cc0-acc0-eeb052486cd8.md",
+      "commands": "commands/2026-10-27-23-04-02-b66e2e95-3ca9-4cc0-acc0-eeb052486cd8.md",
+      "artifacts": [
+        ".github/workflows/ci.yml"
+      ],
+      "decisions": [
+        "Retain every check and main push validation",
+        "Seven-day non-release artifact retention"
+      ],
+      "verification": [
+        "actionlint 1.7.11 passed; shellcheck unavailable",
+        "Required commit hook and publication pending at record creation"
+      ],
+      "publication": {
+        "committed": false,
+        "pushed": false
+      }
     }
   ]
 }
